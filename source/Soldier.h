@@ -53,6 +53,7 @@ public:
 	void	Update(float const dt) override; 
 	void	SetAnimationState() override;
 	void	Damage(int damage) override;
+	void	Alert(); 
 	void	Reset();
 
 private:

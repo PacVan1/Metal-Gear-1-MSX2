@@ -46,8 +46,35 @@ void Soldiers::SetAlertLevel(int level)
 	switch (alertLevel)
 	{
 	case OFF:	Game::SetTheme(&Game::mainTheme); break; 
-	case LOW:	Game::SetTheme(&Game::alertTheme); break;
-	case HIGH:	Game::SetTheme(&Game::alertTheme); spawnTimer.reset(); break;
+	case LOW:
+	{
+		Game::SetTheme(&Game::alertTheme);
+
+		for (int i = 0; i < pool.SIZE; i++)
+		{
+			if (pool.active[i] && !pool[i].destroyed)
+			{
+				pool[i].Alert(); 
+			}
+		}
+
+		break;
+	}
+	case HIGH:
+	{
+		Game::SetTheme(&Game::alertTheme);
+		spawnTimer.reset();
+
+		for (int i = 0; i < pool.SIZE; i++)
+		{
+			if (pool.active[i] && !pool[i].destroyed)
+			{
+				pool[i].Alert();
+			}
+		}
+
+		break;
+	}
 	}
 }
 
@@ -78,9 +105,7 @@ void Soldiers::SpawnReinforcement()
 	if (pool.activeCount >= SOLDIER_COUNT) return;
 
 	Soldier& soldier = pool[pool.WakeObject()]; 
+	soldier.Alert(); 
 	soldier.SetPosition(/*TileToPixel(FindSpawnTile())*/ 100.0f);  
-	soldier.SetState(Soldier::PERSUE);
-	soldier.DecideCardinal();  
-	soldier.SetAnimation();
 	soldier.ResetHealth();
 }

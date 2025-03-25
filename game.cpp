@@ -57,7 +57,7 @@ void Game::Init()
 
 	world.InitWorld();
 
-	Soldier::SetType(Soldier::types::GRAY);    
+	Soldier::SetType(Soldier::types::RED);      
 
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);

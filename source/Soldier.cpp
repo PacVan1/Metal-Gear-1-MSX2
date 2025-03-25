@@ -61,6 +61,13 @@ void Soldier::Damage(int damage)
 	SetAnimation(); 
 }
 
+void Soldier::Alert()
+{
+	SetState(PERSUE); 
+	DecideCardinal();
+	SetAnimation();
+}
+
 void Soldier::Reset() 
 {
 	InitState();
