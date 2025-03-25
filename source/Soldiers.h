@@ -28,5 +28,7 @@ public:
 	static void Damage(int idx, int damage);  
 	static int2 FindSpawnTile();
 	static void SpawnReinforcement();
+	static int2 FindSpawnTileOnSide(int cardinal);
+	static void SpawnReinforcementOnSide(int cardinal);
 };
 

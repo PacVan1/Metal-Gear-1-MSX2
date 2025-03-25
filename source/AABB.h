@@ -2,8 +2,8 @@
 
 #include "Cardinals.h"
 
-class TileMap; 
 class Tilemap;
+class TileArea; 
 
 class AABB 
 {
@@ -43,6 +43,7 @@ public:
 	static bool Detect(AABB const& bbox0, f32 right, f32 top, f32 left, f32 bottom);
 	static bool Detect(float2 point, f32 right, f32 top, f32 left, f32 bottom);
 	static bool Detect(int2 point, int right, int top, int left, int bottom); 
+	static bool DetectTilemap(TileArea& area);  
 
 public:
 	AABB() = default; 
@@ -55,8 +56,9 @@ public:
 #else
 	bool Detect(AABB const& other) const; 
 #endif
-	bool Detect(float2 point) const;   
-	bool DetectTilemap(int cardinal, f32 distance) const; 
+	bool Detect(float2 point) const;
+	bool DetectTilemap() const; 
+	bool DetectTilemap(int cardinal, f32 distance) const;
 	inline float2 GetCenter() const; 
 	inline float2 GetTopLeft() const; 
 	inline float2 GetBottomRight() const; 

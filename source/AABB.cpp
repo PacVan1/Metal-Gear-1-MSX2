@@ -121,7 +121,13 @@ bool AABB::Detect(float2 point) const
 			point.y >= topLeft.y && 
 			point.x <= bottomRight.x && 
 			point.y <= bottomRight.y;  
-} 
+}
+
+bool AABB::DetectTilemap() const
+{
+	TileArea area = SubPixelToTileArea(GetCenter() - HALF_SIZE, GetCenter() + HALF_SIZE);
+	return DetectTilemap(area);  
+}
 
 bool AABB::DetectTilemap(int card, f32 dist) const
 {
@@ -174,6 +180,15 @@ bool AABB::DetectTilemap(int card, f32 dist) const
 	}
 
 	return false;
+}
+
+bool AABB::DetectTilemap(TileArea& area)
+{
+	for (int y = area.tlCoord.y; y < area.brCoord.y; y++) for (int x = area.tlCoord.x; x < area.brCoord.x; x++)
+	{
+		uint8_t tileState = currentTilemap->GetTileState({ x, y });
+		if (tileState == TilePalette::Tile::SOLID) return true;
+	}
 }
 
 inline float2 AABB::GetCenter() const

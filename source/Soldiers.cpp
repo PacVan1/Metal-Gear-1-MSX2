@@ -97,15 +97,53 @@ void Soldiers::Damage(int idx, int damage)
 
 int2 Soldiers::FindSpawnTile()
 {
-	return int2(RandomUInt() * (Tilemap::COLUMNS - 1), RandomUInt() * (Tilemap::ROWS - 1));
+	for (int i = 0; i < cardinals::COUNT; i++)
+	{
+		int2 coord = FindSpawnTileOnSide(i);
+		if (coord != int2(-1, -1)) return coord; 
+	}
+	return int2(-1, -1); 
 }
 
 void Soldiers::SpawnReinforcement()
 {
 	if (pool.activeCount >= SOLDIER_COUNT) return;
 
+	int2 coord = FindSpawnTile();
+	if (coord == int2(-1, -1)) return; 
+
 	Soldier& soldier = pool[pool.WakeObject()]; 
+	soldier.SetPosition(TileToPixel(coord));  
 	soldier.Alert(); 
-	soldier.SetPosition(/*TileToPixel(FindSpawnTile())*/ 100.0f);  
+	soldier.ResetHealth(); 
+}
+
+int2 Soldiers::FindSpawnTileOnSide(int cardinal)
+{
+	// TODO devise a more sophisticated approach: 
+	// give it ten chances:
+	int2 side = CardinalToInt2(cardinal);  
+	for (int i = 0; i < 10; i++) 
+	{
+		int2 coord = int2(	side.x * (RandomUInt() % Tilemap::COLUMNS),
+							side.y * (RandomUInt() % Tilemap::ROWS));
+		float2 pos = TileToPixel(coord);
+		TileArea area = SubPixelToTileArea(pos - pool[0].bboxTile.HALF_SIZE, pos + pool[0].bboxTile.HALF_SIZE);
+		if (AABB::DetectTilemap(area)) return coord; 
+	}
+
+	return int2(-1, -1); 
+}
+
+void Soldiers::SpawnReinforcementOnSide(int cardinal)
+{
+	if (pool.activeCount >= SOLDIER_COUNT) return;
+
+	int2 coord = FindSpawnTileOnSide(cardinal);
+	if (coord == int2(-1, -1)) return;
+
+	Soldier& soldier = pool[pool.WakeObject()];
+	soldier.SetPosition(TileToPixel(coord));
+	soldier.Alert();
 	soldier.ResetHealth();
 }
