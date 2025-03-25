@@ -28,6 +28,7 @@ void Game::Init()
 #endif BAKE_MODE 
 
 	TilePalette::InitPalettes();
+	Soldier::InitSoldierTypes(); 
 	Enemy::target		= &player;
 	Projectile::player	= &player; 
 
@@ -55,6 +56,8 @@ void Game::Init()
 	world.scenes[16]	= Scene("assets/scenes/scene17/scene.scene");  
 
 	world.InitWorld();
+
+	Soldier::SetType(Soldier::types::GRAY);    
 
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);

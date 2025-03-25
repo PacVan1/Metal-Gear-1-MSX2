@@ -35,7 +35,12 @@ void World::SwitchScene(cardinals cardinal)
 			currentSceneIdx		= sceneIdx;
 			currentSceneCoord	= coord; 
 
-			Soldiers::pool.ReturnAll(); 
+			Soldiers::pool.ReturnAll();
+
+			if (Soldiers::alertLevel == Soldiers::alertLevels::LOW)
+			{
+				Soldiers::SetAlertLevel(Soldiers::alertLevels::OFF); 
+			}
 
 			currentScene		= &scenes[currentSceneIdx];
 
@@ -51,7 +56,6 @@ void World::SwitchScene(cardinals cardinal)
 			}
 
 			AABB::currentTilemap = currentScene->tilemap;
-			//Soldier::SetAlertState(Soldier::alertStates::OFF);
  		}
 	}
 }

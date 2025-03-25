@@ -6,15 +6,28 @@
 #include "Game.h"
 #include "Soldiers.h"
 
+void Soldier::InitSoldierTypes()
+{
+	typeData[GRAY].palette		= ColorPalette8("assets/color_palettes/gray_soldier.cpalette");
+	typeData[GRAY].alertLevel	= Soldiers::alertLevels::LOW;
+	typeData[RED ].palette		= ColorPalette8("assets/color_palettes/damaged.cpalette"); 
+	typeData[RED ].alertLevel	= Soldiers::alertLevels::HIGH; 
+}
+
+void Soldier::SetType(int type)
+{
+	Soldier::type = type; 
+	spriteSheet.sprite.palette	= &typeData[type].palette; 
+}
+
 Soldier::Soldier() :
 	Enemy(spriteSheet, 2) 
 {
 	InitState();
+	bbox.group = AABB::ENEMY; 
 	speed = 0.08f;
 	maxHealth = 10;
 	ResetHealth();
-	spriteSheet.sprite.palette = &palettes[type];
-	bbox.group = AABB::ENEMY; 
 }
 
 void Soldier::Update(float const dt) 
@@ -67,7 +80,7 @@ void Soldier::IdleState()
 	{
 		SetState(PERSUE);
 		SetAnimation();
-		Soldiers::SetAlertLevel(Soldiers::alertLevels::HIGH); 
+		Soldiers::SetAlertLevel(typeData[type].alertLevel); 
 		return;
 	}
 
@@ -96,7 +109,7 @@ void Soldier::PatrolState(float const dt)
 		shootTimer.reset(); 
 		SetState(PERSUE);
 		SetAnimation();
-		Soldiers::SetAlertLevel(Soldiers::alertLevels::HIGH); 
+		Soldiers::SetAlertLevel(typeData[type].alertLevel); 
 		return;
 	}
 
