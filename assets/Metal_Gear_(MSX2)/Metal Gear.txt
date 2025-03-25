@@ -1,0 +1,54 @@
+***********************************************
+* VGM music package                           *
+* http://vgmrips.net/                         *
+***********************************************
+Game name:           Metal Gear
+System:              MSX2
+Music hardware:      AY-3-8910A
+
+Music author:        Iku Mizutani,
+                     Shigehiro Takenouchi,
+                     Motoaki Furukawa
+Game developer:      Konami
+Game publisher:      Konami
+Game release date:   1987
+
+Package created by:  sdsnatcher73
+Package version:     2.00
+
+Song list, in approximate game order:
+Song name                           Length:
+                                    Total  Loop
+01 Title                            0:01   -
+02 Operation Intrude N313           0:11   -
+03 Theme of Tara                    1:40   1:32
+04 -!- Red Alert                    0:40   0:38
+05 Sneaking Mission                 0:31   0:31
+06 Mercenary                        0:19   0:16
+07 TX-55 Metal Gear                 0:19   0:13
+08 Escape -Beyond Big Boss-         0:55   0:32
+09 Return of Fox Hounder            0:53   0:30
+10 Just Another Dead Soldier        0:09   -
+11 -!- Red Alert (Alternate,
+   Unused)                          0:42   0:38
+
+Total Length                        6:21  11:11
+
+
+Notes:
+
+v2.00 Update comments:
+- Reripped from KSS because of bad trims which
+  were mostly audible on real hardware
+- Split up Operation Intrude N313 and Theme of
+  Tara into separate tracks
+- Original Red Alert track in pack is not used
+  in the game so I added the one that is used
+  and moved the unused to the back of the pack
+  (if track 11 is used let me know)
+-sdsnatcher73
+
+
+Package history:
+1.00 2013-04-15 Sonic of 8!: Initial release.
+2.00 2020-07-28 sdsnatcher73: Complete reip.

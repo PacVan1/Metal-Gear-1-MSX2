@@ -1,0 +1,3 @@
+Sprite: snake.sprite
+AnimSet: snake.animset
+FrameCount: 42
