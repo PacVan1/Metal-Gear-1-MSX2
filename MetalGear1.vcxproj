@@ -122,9 +122,6 @@
   <!-- END Custom section -->
   <ItemGroup>
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="Gun.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="Soldiers.cpp" />
     <ClCompile Include="source\Actor.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Animation.cpp" />
@@ -136,11 +133,14 @@
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\Files.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
+    <ClCompile Include="source\Gun.cpp" />
     <ClCompile Include="source\Image.cpp" />
     <ClCompile Include="source\Player.cpp" />
+    <ClCompile Include="source\Projectile.cpp" />
     <ClCompile Include="source\Scene.cpp" />
     <ClCompile Include="source\Sequence.cpp" />
     <ClCompile Include="source\Soldier.cpp" />
+    <ClCompile Include="source\Soldiers.cpp" />
     <ClCompile Include="source\SpriteSheet.cpp" />
     <ClCompile Include="source\Tile.cpp" />
     <ClCompile Include="source\TileMap.cpp" />
@@ -160,10 +160,6 @@
   <ItemGroup>
     <ClInclude Include="cl\tools.cl" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="Gun.h" />
-    <ClInclude Include="IDamageable.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="Soldiers.h" />
     <ClInclude Include="source\Actor.h" />
     <ClInclude Include="source\AnimatedSprite.h" />
     <ClInclude Include="source\Animation.h" />
@@ -175,13 +171,17 @@
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\Files.h" />
     <ClInclude Include="source\GameObject.h" />
+    <ClInclude Include="source\Gun.h" />
+    <ClInclude Include="source\IDamageable.h" />
     <ClInclude Include="source\Image.h" />
     <ClInclude Include="source\ObjectPool.h" />
     <ClInclude Include="source\Player.h" />
+    <ClInclude Include="source\Projectile.h" />
     <ClInclude Include="source\Scene.h" />
     <ClInclude Include="source\Sequence.h" />
     <ClInclude Include="source\Settings.h" />
     <ClInclude Include="source\Soldier.h" />
+    <ClInclude Include="source\Soldiers.h" />
     <ClInclude Include="source\SpriteSheet.h" />
     <ClInclude Include="source\Tile.h" />
     <ClInclude Include="source\TileMap.h" />

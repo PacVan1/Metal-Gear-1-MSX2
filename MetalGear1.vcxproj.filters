@@ -80,9 +80,15 @@
     <ClCompile Include="source\Dog.cpp">
       <Filter>metal gear 1\actors\enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Gun.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="Soldiers.cpp" />
+    <ClCompile Include="source\Soldiers.cpp">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gun.cpp">
+      <Filter>metal gear 1\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Projectile.cpp">
+      <Filter>metal gear 1\items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -176,13 +182,21 @@
     <ClInclude Include="source\Dog.h">
       <Filter>metal gear 1\actors\enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Gun.h" />
-    <ClInclude Include="Projectile.h" />
     <ClInclude Include="source\ObjectPool.h">
       <Filter>metal gear 1\utility</Filter>
     </ClInclude>
-    <ClInclude Include="IDamageable.h" />
-    <ClInclude Include="Soldiers.h" />
+    <ClInclude Include="source\IDamageable.h">
+      <Filter>metal gear 1\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldiers.h">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Projectile.h">
+      <Filter>metal gear 1\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gun.h">
+      <Filter>metal gear 1\items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cl\kernels.cl">
