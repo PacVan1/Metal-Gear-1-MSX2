@@ -50,19 +50,7 @@
     <ClCompile Include="source\Actor.cpp">
       <Filter>metal gear 1 msx2\actors</Filter>
     </ClCompile>
-    <ClCompile Include="source\Dog.cpp">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Enemy.cpp">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClCompile>
     <ClCompile Include="source\Player.cpp">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Soldier.cpp">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Soldiers.cpp">
       <Filter>metal gear 1 msx2\actors</Filter>
     </ClCompile>
     <ClCompile Include="source\Tile.cpp">
@@ -88,6 +76,18 @@
     </ClCompile>
     <ClCompile Include="source\Projectile.cpp">
       <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Soldier.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Soldiers.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Dog.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,19 +155,7 @@
     <ClInclude Include="source\Actor.h">
       <Filter>metal gear 1 msx2\actors</Filter>
     </ClInclude>
-    <ClInclude Include="source\Dog.h">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Enemy.h">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClInclude>
     <ClInclude Include="source\Player.h">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Soldier.h">
-      <Filter>metal gear 1 msx2\actors</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Soldiers.h">
       <Filter>metal gear 1 msx2\actors</Filter>
     </ClInclude>
     <ClInclude Include="source\Tile.h">
@@ -196,6 +184,18 @@
     </ClInclude>
     <ClInclude Include="source\Gun.h">
       <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldier.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldiers.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Dog.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +228,9 @@
     </Filter>
     <Filter Include="metal gear 1 msx2\items">
       <UniqueIdentifier>{f5ec312f-c34c-43c5-a4f5-b22453596c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\actors\enemies">
+      <UniqueIdentifier>{affccc38-334e-40eb-82ad-741c3c4abd58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

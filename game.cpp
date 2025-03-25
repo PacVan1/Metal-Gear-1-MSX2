@@ -16,6 +16,7 @@
 #include "Dog.h"
 #include "World.h"
 #include "Projectile.h"
+#include "Soldiers.h"
 
 void Game::Init()
 {
@@ -58,7 +59,7 @@ void Game::Init()
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);
 	currentTheme = &mainTheme;
-	//currentTheme->play(); 
+	currentTheme->play(); 
 }
 
 void Game::Tick(float dt)  
@@ -68,8 +69,8 @@ void Game::Tick(float dt)
 
 	if (world.currentScene->tilemap) world.currentScene->tilemap->Render(screen8); 
 
-	soldiers.Update(dt);
-	soldiers.Render(screen8); 
+	Soldiers::Update(dt);
+	Soldiers::Render(screen8); 
 	player.Render(screen8);
 	Projectile::UpdatePool(dt); 
 	Projectile::RenderPool(screen8);
@@ -80,7 +81,14 @@ void Game::Tick(float dt)
 	screen8->Print(std::to_string(int(1.0f / (dt / 1000.0f))).c_str(), 0, 0, 181);
 }
 
-void Game::HandlePlayerLeaveScreen() 
+void Game::SetTheme(Audio::Sound* sound)
+{
+	currentTheme->stop();
+	currentTheme = sound;
+	currentTheme->replay();  
+}
+
+void Game::HandlePlayerLeaveScreen()
 {
 	if (player.bbox.iPos.x > NATIVE_SCREEN_WIDTH - 1)  
 	{ 

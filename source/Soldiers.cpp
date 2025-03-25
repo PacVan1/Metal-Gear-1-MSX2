@@ -15,14 +15,17 @@ void Soldiers::Update(float const dt)
 	}
 
 	// call new reinforcements:
-	if (spawnTimer.elapsed() > 3.0f)
+	if (alertLevel == HIGH)
 	{
-		spawnTimer.reset();
-		SpawnReinforcement();
+		if (spawnTimer.elapsed() > SPAWN_TIME) 
+		{
+			spawnTimer.reset();
+			SpawnReinforcement();
+		}
 	}
 }
 
-void Soldiers::Render(Surface8* screen) const
+void Soldiers::Render(Surface8* screen)
 {
 	for (int i = 0; i < pool.SIZE; i++)
 	{
@@ -31,6 +34,38 @@ void Soldiers::Render(Surface8* screen) const
 			pool[i].Render(screen);
 		}
 	}
+}
+
+#include "Game.h"
+
+void Soldiers::SetAlertLevel(int level)
+{
+	if (alertLevel == level) return; 
+
+	alertLevel = level; 
+	switch (alertLevel)
+	{
+	case OFF:	Game::SetTheme(&Game::mainTheme); break; 
+	case LOW:	Game::SetTheme(&Game::alertTheme); break;
+	case HIGH:	Game::SetTheme(&Game::alertTheme); spawnTimer.reset(); break;
+	}
+}
+
+void Soldiers::Damage(int idx, int damage)
+{
+	// damage:
+	pool[idx].Damage(damage);
+
+	// check if everybody is dead:
+	for (int i = 0; i < SOLDIER_COUNT; i++)
+	{
+		if (pool.active[i] && !pool[i].destroyed)
+		{
+			return; 
+		}
+	}
+
+	SetAlertLevel(OFF);
 }
 
 int2 Soldiers::FindSpawnTile()

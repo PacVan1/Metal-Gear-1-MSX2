@@ -129,8 +129,7 @@ void Player::Destroy()
 	SetAnimation(); 
 }
 
-#include "Soldier.h"
-#include "Game.h"
+#include "Soldiers.h"
 
 void Player::Punch()
 {
@@ -140,15 +139,12 @@ void Player::Punch()
 	// place bbox in correct spot and do collision test:
 	// TODO make pixel perfect:
 	bboxPunch.Update(GetPosition());
-	ObjectPool<Soldier>& pool = Game::soldiers.pool; 
-	for (int i = 0; i < pool.SIZE; i++) 
+	for (int i = 0; i < Soldiers::pool.SIZE; i++) 
 	{
-		if (!pool.active[i] || pool[i].destroyed) continue;
-
-		Soldier& soldier = pool[i]; 
-		if (AABB::Detect(bboxPunch, soldier.bbox)) 
+		if (!Soldiers::pool.active[i] || Soldiers::pool[i].destroyed) continue;
+		if (AABB::Detect(bboxPunch, Soldiers::pool[i].bbox))
 		{
-			soldier.Damage(2);  
+			Soldiers::Damage(i, 2);
 		}
 	}
 }

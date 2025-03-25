@@ -6,7 +6,6 @@
 
 #include "World.h"
 #include "Player.h" 
-#include "Soldiers.h"
 
 namespace Tmpl8
 {
@@ -18,7 +17,6 @@ public:
 
 	// ACTORS /////////////////////////////////////////////////////////////////////////////
 	Player		player; 
-	inline static Soldiers	soldiers; 
 
 	inline static Audio::Sound* currentTheme = nullptr; 
 	inline static Audio::Sound mainTheme{ "assets/audio/02. Theme of Tara.mp3" };
@@ -29,6 +27,8 @@ public:
 	void Init();
 	void Tick(float deltaTime);
 	void Shutdown() {}
+
+	static void SetTheme(Audio::Sound* sound); 
 	void HandlePlayerLeaveScreen(); 
 	// input handling
 	void MouseUp( int ) {}

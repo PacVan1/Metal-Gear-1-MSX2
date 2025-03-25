@@ -4,6 +4,7 @@
 #include "Tilemap.h" 
 #include "Projectile.h"
 #include "Game.h"
+#include "Soldiers.h"
 
 Soldier::Soldier() :
 	Enemy(spriteSheet, 2) 
@@ -66,7 +67,7 @@ void Soldier::IdleState()
 	{
 		SetState(PERSUE);
 		SetAnimation();
-		//SetAlertState(LOW); 
+		Soldiers::SetAlertLevel(Soldiers::alertLevels::HIGH); 
 		return;
 	}
 
@@ -95,7 +96,7 @@ void Soldier::PatrolState(float const dt)
 		shootTimer.reset(); 
 		SetState(PERSUE);
 		SetAnimation();
-		//SetAlertState(LOW);
+		Soldiers::SetAlertLevel(Soldiers::alertLevels::HIGH); 
 		return;
 	}
 

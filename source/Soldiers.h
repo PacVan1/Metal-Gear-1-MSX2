@@ -13,17 +13,20 @@ public:
 
 public:
 	static uint constexpr SOLDIER_COUNT = 6;  
+	static float constexpr SPAWN_TIME	= 3.0f; 
 
 public:
-	ObjectPool<Soldier> pool; 
-	Timer spawnTimer; 
+	inline static ObjectPool<Soldier>	pool = ObjectPool<Soldier>(SOLDIER_COUNT);
+	inline static int					alertLevel = OFF;
+	inline static Timer					spawnTimer; 
 
 public:
-	Soldiers() = default; 
-	void Update(float const dt);
-	void Render(Surface8* screen) const;
+	static void Update(float const dt);
+	static void Render(Surface8* screen);
 
-	int2 FindSpawnTile();
-	void SpawnReinforcement();
+	static void SetAlertLevel(int alertLevel);  
+	static void Damage(int idx, int damage);  
+	static int2 FindSpawnTile();
+	static void SpawnReinforcement();
 };
 

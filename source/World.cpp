@@ -2,8 +2,7 @@
 #include "World.h"
 
 #include "AABB.h" 
-#include "Soldier.h"
-#include "Game.h"
+#include "Soldiers.h"
 
 void World::InitWorld()
 {
@@ -13,9 +12,9 @@ void World::InitWorld()
 
 	for (int i = 0; i < currentScene->soldierCount; i++)
 	{
-		if (Game::soldiers.pool.activeCount < Soldiers::SOLDIER_COUNT)
+		if (Soldiers::pool.activeCount < Soldiers::SOLDIER_COUNT) 
 		{
-			Soldier& soldier = Game::soldiers.pool[Game::soldiers.pool.WakeObject()]; 
+			Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 			soldier.sequencer.SetSequence(currentScene->paths[i]);
 			soldier.SetState(Soldier::IDLE);
 			soldier.ResetHealth();
@@ -36,15 +35,15 @@ void World::SwitchScene(cardinals cardinal)
 			currentSceneIdx		= sceneIdx;
 			currentSceneCoord	= coord; 
 
-			Game::soldiers.pool.ReturnAll(); 
+			Soldiers::pool.ReturnAll(); 
 
 			currentScene		= &scenes[currentSceneIdx];
 
 			for (int i = 0; i < currentScene->soldierCount; i++)
 			{
-				if (Game::soldiers.pool.activeCount < Soldiers::SOLDIER_COUNT)
+				if (Soldiers::pool.activeCount < Soldiers::SOLDIER_COUNT)
 				{
-					Soldier& soldier = Game::soldiers.pool[Game::soldiers.pool.WakeObject()];
+					Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 					soldier.sequencer.SetSequence(currentScene->paths[i]);
 					soldier.SetState(Soldier::IDLE);
 					soldier.ResetHealth(); 
