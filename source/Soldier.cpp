@@ -147,7 +147,7 @@ void Soldier::ShootState()
 		if (!shot) // !shot
 		{
 			float2 dir = normalize(target->GetPosition() - GetPosition());
-			Projectile::Launch(GetPosition(), normalize(dir) * 0.1f, AABB::PLAYER);  
+			Projectile::Launch(GetPosition(), normalize(dir) * 0.1f, 1, AABB::PLAYER);  
 			shot = true;
 		}
 		else

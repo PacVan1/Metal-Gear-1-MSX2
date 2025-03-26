@@ -5,8 +5,9 @@
 #define MOVE_NORTH			'W'   
 #define MOVE_WEST			'A'   
 #define MOVE_SOUTH			'S'   
+#define USE_WEAPON			'G'
 #define TOGGLE_INVENTORY	VK_TAB  
-#define TRIGGER_PUNCH		VK_SPACE	 		
+#define TRIGGER_PUNCH		VK_SPACE
 #define START_GAME			VK_ENTER        
 
 // debugging modes:

@@ -2,6 +2,7 @@
 #include "Projectile.h"
 
 #include "Player.h"
+#include "Soldiers.h"
 #include "TileMap.h"
 
 ObjectPool<Projectile> Projectile::projectiles = ObjectPool<Projectile>(100);  
@@ -31,7 +32,19 @@ void Projectile::UpdatePool(float const dt)
 			if (AABB::DetectGroup(player->bbox, projectiles[i].bbox))
 			{
 				projectiles.active[i] = false;
-				player->Damage(1);
+				player->Damage(projectiles[i].damage); 
+			}
+
+			for (int i = 0; i < Soldiers::pool.SIZE; i++)
+			{
+				if (Soldiers::pool.active[i] && !Soldiers::pool[i].destroyed)
+				{
+					if (AABB::DetectGroup(Soldiers::pool[i].bbox, projectiles[i].bbox)) 
+					{
+						projectiles.active[i] = false;
+						Soldiers::pool[i].Damage(projectiles[i].damage);
+					}
+				}
 			}
 		}
 	}
@@ -48,11 +61,12 @@ void Projectile::RenderPool(Surface8* screen)
 	}
 }
 
-void Projectile::Launch(float2 pos, float2 speed, int group)
+void Projectile::Launch(float2 pos, float2 speed, uint damage, int group)
 {
 	uint idx = projectiles.WakeObject();
 	projectiles[idx].SetPosition(pos);
 	projectiles[idx].speed = speed;
+	projectiles[idx].damage = damage;
 	projectiles[idx].bbox.group = group; 
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "Inventory.h"
 
 class Player : public Actor 
 {
@@ -16,6 +17,7 @@ private:
 	inline static ColorPalette8 damagedPalette		= ColorPalette8("assets/color_palettes/damaged.cpalette");  
 
 public:
+	Inventory	inventory; 
 	Timer		damageTimer;
 	Timer		colorCycle; 
 	bool		damaged;
@@ -28,6 +30,6 @@ public:
 	void		Damage(int damage) override;
 	void		Destroy() override; 
 	void		Punch(); 
-	inline bool IsArmed() const { return false; }  
+	inline bool IsArmed() const { return true; }  
 };
 
