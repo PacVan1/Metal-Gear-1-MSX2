@@ -5,6 +5,8 @@
 
 void Soldiers::Update(float const dt)
 {
+	if (pool.activeCount == 0) return; 
+
 	// update soldiers: 
 	for (int i = 0; i < pool.SIZE; i++)
 	{
@@ -27,6 +29,8 @@ void Soldiers::Update(float const dt)
 
 void Soldiers::Render(Surface8* screen)
 {
+	if (pool.activeCount == 0) return;
+
 	for (int i = 0; i < pool.SIZE; i++)
 	{
 		if (pool.active[i] && !pool[i].destroyed)
@@ -80,8 +84,12 @@ void Soldiers::SetAlertLevel(int level)
 
 void Soldiers::Damage(int idx, int damage)
 {
+	if (pool.activeCount == 0) return;
+
 	// damage:
 	pool[idx].Damage(damage);
+
+	if (pool.activeCount == 0) return;
 
 	// check if everybody is dead:
 	for (int i = 0; i < SOLDIER_COUNT; i++)

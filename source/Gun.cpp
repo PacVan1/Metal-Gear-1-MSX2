@@ -8,6 +8,7 @@
 Gun::Gun()
 {
 	frameIdx = 0; 
+	stackable = true; 
 	strcpy(name, "Handgun");
 }
 

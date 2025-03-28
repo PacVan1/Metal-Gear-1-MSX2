@@ -91,6 +91,8 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LandMine.cpp" />
+    <ClCompile Include="Binoculars.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -201,6 +203,8 @@
     </ClInclude>
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="LandMine.h" />
+    <ClInclude Include="Binoculars.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="kernel">

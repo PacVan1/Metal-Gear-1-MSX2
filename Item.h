@@ -18,8 +18,8 @@ public:
 public:
 	Item(); 
 	Item(Item const& item);
-	virtual void Equip() {}; 
-	virtual void Use() {};
+	virtual void Equip() {}
+	virtual void Use() {}
 	void Stack(uint const amount) { if (stackable) count += amount; } 
 };
 

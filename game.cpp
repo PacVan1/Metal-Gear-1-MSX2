@@ -13,7 +13,6 @@
 #include "TileMap.h"
 #include "Settings.h" 
 #include "AABB.h"
-#include "Dog.h"
 #include "World.h"
 #include "Projectile.h"
 #include "Soldiers.h"
@@ -58,9 +57,9 @@ void Game::Init()
 
 	world.InitWorld();
 
-	world.scenes[0].items = new ItemObject*[1];
-	world.scenes[0].items[0] = new ItemObject(Inventory::HANDGUN);
-	world.scenes[0].itemCount = 1; 
+	//world.scenes[0].items		= new ItemObject*[1];
+	//world.scenes[0].items[0]	= new ItemObject(Inventory::HANDGUN);
+	//world.scenes[0].itemCount	= 1; 
 
 	Soldier::SetType(Soldier::types::RED);      
 
@@ -102,9 +101,14 @@ void Game::Tick(float dt)
 	}
 
 	HandlePlayerLeaveScreen();
+	PerformanceReport(dt);  
+}
 
-	// performance report:
+void Game::PerformanceReport(float const dt) const
+{
+#if DEBUG_MODE
 	screen8->Print(std::to_string(int(1.0f / (dt / 1000.0f))).c_str(), 0, 0, 181);
+#endif
 }
 
 void Game::SetTheme(Audio::Sound* sound)

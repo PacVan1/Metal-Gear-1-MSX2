@@ -24,7 +24,7 @@ void World::InitWorld()
 	AABB::currentTilemap = currentScene->tilemap;
 }
 
-void World::SwitchScene(cardinals cardinal)
+void World::SwitchScene(int cardinal)
 {
 	int2 coord = currentSceneCoord + CardinalToInt2(cardinal);
 	if (AABB::Detect(coord, columns, 0, 0, rows))

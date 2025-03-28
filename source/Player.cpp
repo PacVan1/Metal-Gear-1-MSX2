@@ -14,6 +14,7 @@ Player::Player() :
 
 bool previ;
 bool previ2;
+bool previ3; 
 void Player::Update(float const dt)
 {	
 	display.animator.Play(dt);
@@ -55,6 +56,16 @@ void Player::Update(float const dt)
 		}
 		previ2 = now;
 
+		now = GetAsyncKeyState(USE_EQUIPMENT); 
+		if (!now && previ3)
+		{
+			if (inventory.selectedEquipment)
+			{
+				inventory.selectedEquipment->Use();
+			}
+		}
+		previ3 = now;
+
 		// punching
 		now = GetAsyncKeyState(TRIGGER_PUNCH);
 		if (!now && previ) Punch();
@@ -72,7 +83,7 @@ void Player::Update(float const dt)
 		if (GetAsyncKeyState(MOVE_WEST))	{ facing = WEST;	SetAnimation(); return; }
 		if (GetAsyncKeyState(MOVE_SOUTH))	{ facing = SOUTH;	SetAnimation(); return; }
 
-		bool now = GetAsyncKeyState(USE_WEAPON);
+		bool now = GetAsyncKeyState(GLFW_KEY_SPACE); 
 		if (!now && previ2)
 		{
 			previ2 = now;

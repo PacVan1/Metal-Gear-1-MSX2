@@ -12,11 +12,9 @@ namespace Tmpl8
 class Game : public TheApp
 {
 public:
-	World		world; 
+	inline static World		world; 
+	inline static Player	player; 
 	int2		mousePos;
-
-	// ACTORS /////////////////////////////////////////////////////////////////////////////
-	inline static Player player; 
 
 	inline static Audio::Sound* currentTheme = nullptr; 
 	inline static Audio::Sound mainTheme{ "assets/audio/02. Theme of Tara.mp3" };
@@ -27,6 +25,7 @@ public:
 	void Init();
 	void Tick(float deltaTime);
 	void Shutdown() {}
+	void PerformanceReport(float const dt) const; 
 
 	static void SetTheme(Audio::Sound* sound); 
 	void HandlePlayerLeaveScreen(); 

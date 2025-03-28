@@ -11,13 +11,14 @@ public:
 	inline static int			currentSceneIdx = 0;
 
 public: 
-	Scene*	scenes;
+	Scene*	scenes;	
+	//Scene*	extraScenes; // rooms, jeeps, etc
 	uint	columns;
 	uint	rows;
 	uint	sceneCount;
 
 public:
 	void InitWorld(); 
-	void SwitchScene(cardinals cardinal);  
+	void SwitchScene(int cardinal);
 };
 

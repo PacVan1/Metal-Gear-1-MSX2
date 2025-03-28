@@ -2,12 +2,27 @@
 #include "Inventory.h"
 
 #include "Gun.h" 
+#include "Binoculars.h"
+#include "LandMine.h"
 
-Inventory::Inventory() 
+Inventory::Inventory() :
+	selectedWeapon(nullptr),
+	selectedEquipment(nullptr)
 {
 	items[HANDGUN]		= new Gun();
-	//items[BINOCULAR]	= Binocular();
-	//items[MINE]			= Mine();
+	items[BINOCULARS]	= new Binoculars();
+	items[LAND_MINE]	= new LandMine();
+
+#if EVERYTHING_UNLOCKED
+	// default selected items: 
+	selectedWeapon		= items[HANDGUN]; 
+	selectedEquipment	= items[BINOCULARS];
+#endif
+}
+
+Inventory::~Inventory()
+{
+	delete[] items; 
 }
 
 void Inventory::PickUp(ItemObject& item) 
