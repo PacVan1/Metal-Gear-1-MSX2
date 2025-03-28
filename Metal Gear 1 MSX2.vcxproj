@@ -124,6 +124,7 @@
     <ClCompile Include="Binoculars.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LandMine.cpp" />
     <ClCompile Include="Passage.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="cl\tools.cl" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LandMine.h" />
     <ClInclude Include="Passage.h" />

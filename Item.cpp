@@ -5,7 +5,9 @@
 
 Item::Item() :
 	name(new char[32])
-{}
+{
+	strcpy(name, "No name");
+}
 
 Item::Item(Item const& item) :
 	name(new char[32]) // max name length

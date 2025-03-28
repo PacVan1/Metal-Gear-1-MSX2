@@ -8,6 +8,14 @@
 #include "Player.h" 
 #include "Passage.h" 
 
+enum gameStates : u8
+{
+	GAME_STATE_OPENING,
+	GAME_STATE_PLAYING,
+	GAME_STATE_INVENTORY,
+	GAME_STATE_GAME_OVER
+};
+
 namespace Tmpl8
 {
 class Game : public TheApp
@@ -19,6 +27,8 @@ public:
 	inline static Passage*	passage1;
 	inline static Passage*	passage2;
 
+	inline static int		state = GAME_STATE_OPENING; 
+
 	int2		mousePos;
 
 	inline static Audio::Sound* currentTheme = nullptr; 
@@ -26,14 +36,22 @@ public:
 	inline static Audio::Sound alertTheme{ "assets/audio/03. Red Alert.mp3" };
 
 public:
+	static void SetTheme(Audio::Sound* sound); 
+
+public:
 	// game flow methods
 	void Init();
-	void Tick(float deltaTime);
+	void Tick(float const dt);
 	void Shutdown() {}
-	void PerformanceReport(float const dt) const; 
 
-	static void SetTheme(Audio::Sound* sound); 
-	void HandlePlayerLeaveScreen(); 
+	void OpeningState(float const dt); 
+	void PlayingState(float const dt);
+	void InventoryState(float const dt); 
+	void GameOverState(float const dt); 
+
+	void PerformanceReport(float const dt) const; 
+	void HandlePlayerLeaveScreen();
+
 	// input handling
 	void MouseUp( int ) {}
 	void MouseDown( int ) {}

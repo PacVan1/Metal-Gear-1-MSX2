@@ -16,6 +16,13 @@ public:
 	{
 		BINOCULARS = WEAPON_COUNT,
 		CARD1,
+		CARD2,
+		CARD3,
+		CARD4,
+		CARD5,
+		CARD6,
+		CARD7,
+		CARD8,
 		//GASMASK, 
 		COUNT,
 		EQUIPMENT_COUNT = COUNT - WEAPON_COUNT,
@@ -23,18 +30,19 @@ public:
 	};
 
 public:
-#if EVERYTHING_UNLOCKED
-	bool	unlocked[COUNT] = { true };
-#else
 	bool	unlocked[COUNT] = { false };
-#endif
 	Item*	items[COUNT]	= { nullptr };
 	Item*	selectedWeapon; 
-	Item*	selectedEquipment; 
+	Item*	selectedEquipment;
+	Item*	unlockedWeapons[WEAPON_COUNT]		= { nullptr };
+	Item*	unlockedEquipment[EQUIPMENT_COUNT]	= { nullptr };
+	int		unlockedWeaponsCount	= 0; 
+	int		unlockedEquipmentCount	= 0; 
 
 public:
 	Inventory();
 	~Inventory(); 
 	void PickUp(ItemObject& item);
+	void Unlock(int itemType);  
 };
 

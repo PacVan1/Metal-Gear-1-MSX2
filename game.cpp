@@ -16,12 +16,14 @@
 #include "World.h"
 #include "Projectile.h"
 #include "Soldiers.h"
-#include "Item.h"
 #include "Passage.h" 
+#include "InventoryUI.h" 
 
 PassageProps		propsNorth;
 PassageProps		propsSouth;
 PassageSharedData	sharedData;
+
+InventoryUI inventoryUI;
 
 void Game::Init()
 {
@@ -105,24 +107,46 @@ void Game::Init()
 	if (!sharedData.unlocked)
 	{
 		world.scenes[0].tilemap->InsertMetaTile({ 12, 12 }, passage1->props.dataLocked);
-		world.scenes[0].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataLocked);
+		world.scenes[1].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataLocked);
 	}
 	else
 	{
 		world.scenes[0].tilemap->InsertMetaTile({ 12, 12 }, passage1->props.dataUnlocked);
-		world.scenes[0].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataUnlocked);
+		world.scenes[1].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataUnlocked);
 	}
 
 	Soldier::SetType(Soldier::types::RED);      
 
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);
-	SetTheme(&mainTheme);  
+	SetTheme(&mainTheme);
+
+	inventoryUI.inv = &player.inventory;  
 }
 
-void Game::Tick(float dt)  
+void Game::Tick(float const dt)  
 {
-	screen8->Clear(100);     
+	switch (state)
+	{
+	case GAME_STATE_OPENING:	OpeningState(dt);	break;
+	case GAME_STATE_PLAYING:	PlayingState(dt);	break; 
+	case GAME_STATE_INVENTORY:	InventoryState(dt); break; 
+	case GAME_STATE_GAME_OVER:	GameOverState(dt);	break;
+	default: break; 
+	}
+
+	PerformanceReport(dt);  
+}
+
+void Game::OpeningState(float const dt)
+{
+	state = GAME_STATE_PLAYING; 
+}
+
+void Game::PlayingState(float const dt)
+{
+	if (GetAsyncKeyState(TOGGLE_INVENTORY)) state = GAME_STATE_INVENTORY; 
+
 	player.Update(dt);
 
 	if (GetAsyncKeyState(PICKUP_ITEM))
@@ -135,15 +159,15 @@ void Game::Tick(float dt)
 			}
 		}
 	}
-
+	
 	if (world.currentScene->tilemap) world.currentScene->tilemap->Render(screen8); 
-
+	
 	Soldiers::Update(dt);
 	Soldiers::Render(screen8); 
 	player.Render(screen8);
 	Projectile::UpdatePool(dt); 
 	Projectile::RenderPool(screen8);
-
+	
 	for (int i = 0; i < world.currentScene->itemCount; i++)
 	{
 		if (!world.currentScene->items[i]->pickedUp)
@@ -151,14 +175,24 @@ void Game::Tick(float dt)
 			world.currentScene->items[i]->Render(screen8);
 		}
 	}
-
+	
 	passage1->Render(screen8);
 	passage2->Render(screen8);
 	passage1->TryEnter(); 
 	passage2->TryEnter(); 
-
+	
 	HandlePlayerLeaveScreen();
-	PerformanceReport(dt);  
+}
+
+void Game::InventoryState(float const dt)
+{
+	if (GetAsyncKeyState(TOGGLE_INVENTORY)) state = GAME_STATE_PLAYING;
+
+	inventoryUI.Render(screen8); 
+}
+
+void Game::GameOverState(float const dt)
+{
 }
 
 void Game::PerformanceReport(float const dt) const

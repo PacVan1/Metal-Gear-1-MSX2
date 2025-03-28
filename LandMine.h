@@ -7,6 +7,7 @@ class LandMine : public Item
 public:
 
 public:
+			LandMine();
 	void	Use() override; 
 };
 
