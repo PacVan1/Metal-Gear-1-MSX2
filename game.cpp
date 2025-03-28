@@ -17,6 +17,11 @@
 #include "Projectile.h"
 #include "Soldiers.h"
 #include "Item.h"
+#include "Passage.h" 
+
+PassageSharedData	sharedData;
+Passage				passage1;
+Passage				passage2; 
 
 void Game::Init()
 {
@@ -61,6 +66,18 @@ void Game::Init()
 	//world.scenes[0].items[0]	= new ItemObject(Inventory::HANDGUN);
 	//world.scenes[0].itemCount	= 1; 
 
+	sharedData.unlocked = true;
+	passage1.SetPosition(100);
+	passage2.SetPosition({ 200, 100 });
+	passage1.spawnPosition = { 100, 120 };
+	passage2.spawnPosition = { 200, 120 };
+	passage1.other = &passage2; 
+	passage2.other = &passage1;
+	passage1.sharedData = &sharedData; 
+	passage2.sharedData = &sharedData;
+	passage1.scene = &world.scenes[4];
+	passage2.scene = &world.scenes[5];
+
 	Soldier::SetType(Soldier::types::RED);      
 
 	alertTheme.setLooping(true); 
@@ -99,6 +116,11 @@ void Game::Tick(float dt)
 			world.currentScene->items[i]->Render(screen8);
 		}
 	}
+
+	passage1.bbox.Render(screen8);
+	passage2.bbox.Render(screen8);
+	passage1.TryEnter(); 
+	passage2.TryEnter(); 
 
 	HandlePlayerLeaveScreen();
 	PerformanceReport(dt);  

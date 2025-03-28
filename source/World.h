@@ -20,5 +20,6 @@ public:
 public:
 	void InitWorld(); 
 	void SwitchScene(int cardinal);
+	void SwitchScene(Scene* scene); 
 };
 

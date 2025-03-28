@@ -59,3 +59,28 @@ void World::SwitchScene(int cardinal)
  		}
 	}
 }
+
+void World::SwitchScene(Scene* scene)
+{
+	Soldiers::pool.ReturnAll();
+
+	if (Soldiers::alertLevel == Soldiers::alertLevels::LOW)
+	{
+		Soldiers::SetAlertLevel(Soldiers::alertLevels::OFF);
+	}
+
+	currentScene = scene; 
+
+	for (int i = 0; i < currentScene->soldierCount; i++)
+	{
+		if (Soldiers::pool.activeCount < Soldiers::SOLDIER_COUNT)
+		{
+			Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
+			soldier.sequencer.SetSequence(currentScene->paths[i]);
+			soldier.SetState(Soldier::IDLE);
+			soldier.ResetHealth();
+		}
+	}
+
+	AABB::currentTilemap = currentScene->tilemap;
+}
