@@ -19,46 +19,48 @@
 #include "Item.h"
 #include "Passage.h" 
 
+PassageProps		propsNorth;
+PassageProps		propsSouth;
 PassageSharedData	sharedData;
-Passage				passage1;
-Passage				passage2; 
+Passage*			passage1;
+Passage*			passage2;
 
 void Game::Init()
 {
 #if BAKE_MODE
-	Image* image1 = Image::LoadFromFile("assets/images/dog_sprite.png");     
-	SubSurface8::Save(image1, "assets/spritesheets/dog/dog.sprite");  
+	Image* image1 = Image::LoadFromFile("assets/images/dog_sprite.png");
+	SubSurface8::Save(image1, "assets/spritesheets/dog/dog.sprite");
 	//Image* image2 = Image::LoadFromFile("assets/images/outer_heaven_cpalette.png");
 	//ColorPalette8::Save(image2, "assets/color_palettes/outer_heaven.cpalette");
 #endif BAKE_MODE 
 
 	TilePalette::InitPalettes();
-	Soldier::InitSoldierTypes(); 
-	Enemy::target		= &player;
-	Projectile::player	= &player; 
+	Soldier::InitSoldierTypes();
+	Enemy::target = &player;
+	Projectile::player = &player;
 
-	world.scenes		= new Scene[17];
-	world.columns		= 4;
-	world.rows			= 5;
-	world.sceneCount	= 17;
+	world.scenes = new Scene[17];
+	world.columns = 4;
+	world.rows = 5;
+	world.sceneCount = 17;
 
-	world.scenes[0]		= Scene("assets/scenes/scene1/scene.scene");  
-	world.scenes[1]		= Scene("assets/scenes/scene2/scene.scene");  
-	world.scenes[2]		= Scene("assets/scenes/scene3/scene.scene");  
-	world.scenes[3]		= Scene("assets/scenes/scene4/scene.scene");  
-	world.scenes[4]		= Scene("assets/scenes/scene5/scene.scene");  
-	world.scenes[5]		= Scene("assets/scenes/scene6/scene.scene");  
-	world.scenes[6]		= Scene("assets/scenes/scene7/scene.scene");  
-	world.scenes[7]		= Scene("assets/scenes/scene8/scene.scene");  
-	world.scenes[8]		= Scene("assets/scenes/scene9/scene.scene");  
-	world.scenes[9]		= Scene("assets/scenes/scene10/scene.scene");  
-	world.scenes[10]	= Scene("assets/scenes/scene11/scene.scene");  
-	world.scenes[11]	= Scene("assets/scenes/scene12/scene.scene");  
-	world.scenes[12]	= Scene("assets/scenes/scene13/scene.scene");  
-	world.scenes[13]	= Scene("assets/scenes/scene14/scene.scene");  
-	world.scenes[14]	= Scene("assets/scenes/scene15/scene.scene");  
-	world.scenes[15]	= Scene("assets/scenes/scene16/scene.scene");  
-	world.scenes[16]	= Scene("assets/scenes/scene17/scene.scene");  
+	world.scenes[0] = Scene("assets/scenes/scene1/scene.scene");
+	world.scenes[1] = Scene("assets/scenes/scene2/scene.scene");
+	world.scenes[2] = Scene("assets/scenes/scene3/scene.scene");
+	world.scenes[3] = Scene("assets/scenes/scene4/scene.scene");
+	world.scenes[4] = Scene("assets/scenes/scene5/scene.scene");
+	world.scenes[5] = Scene("assets/scenes/scene6/scene.scene");
+	world.scenes[6] = Scene("assets/scenes/scene7/scene.scene");
+	world.scenes[7] = Scene("assets/scenes/scene8/scene.scene");
+	world.scenes[8] = Scene("assets/scenes/scene9/scene.scene");
+	world.scenes[9] = Scene("assets/scenes/scene10/scene.scene");
+	world.scenes[10] = Scene("assets/scenes/scene11/scene.scene");
+	world.scenes[11] = Scene("assets/scenes/scene12/scene.scene");
+	world.scenes[12] = Scene("assets/scenes/scene13/scene.scene");
+	world.scenes[13] = Scene("assets/scenes/scene14/scene.scene");
+	world.scenes[14] = Scene("assets/scenes/scene15/scene.scene");
+	world.scenes[15] = Scene("assets/scenes/scene16/scene.scene");
+	world.scenes[16] = Scene("assets/scenes/scene17/scene.scene");
 
 	world.InitWorld();
 
@@ -66,17 +68,52 @@ void Game::Init()
 	//world.scenes[0].items[0]	= new ItemObject(Inventory::HANDGUN);
 	//world.scenes[0].itemCount	= 1; 
 
-	sharedData.unlocked = true;
-	passage1.SetPosition(100);
-	passage2.SetPosition({ 200, 100 });
-	passage1.spawnPosition = { 100, 120 };
-	passage2.spawnPosition = { 200, 120 };
-	passage1.other = &passage2; 
-	passage2.other = &passage1;
-	passage1.sharedData = &sharedData; 
-	passage2.sharedData = &sharedData;
-	passage1.scene = &world.scenes[4];
-	passage2.scene = &world.scenes[5];
+	propsNorth.dataLocked.columns	= 4; 
+	propsNorth.dataLocked.rows		= 4;
+	propsNorth.dataUnlocked.columns = 4;
+	propsNorth.dataUnlocked.rows	= 4;
+	propsNorth.spawnPosition	 = { 16, 40 };
+	propsNorth.dataLocked.tile		= new uint8_t[4 * 4];
+	propsNorth.dataUnlocked.tile	= new uint8_t[4 * 4];
+	memset(propsNorth.dataLocked.tile, 182, 4 * 4 * sizeof(uint8_t)); 
+	memset(propsNorth.dataUnlocked.tile, 0, 4 * 4 * sizeof(uint8_t));
+
+	propsSouth.dataLocked.columns	= 4;
+	propsSouth.dataLocked.rows		= 1;
+	propsSouth.dataUnlocked.columns = 4;
+	propsSouth.dataUnlocked.rows	= 1;
+	propsSouth.spawnPosition	= { 16, 16 };
+	propsSouth.dataLocked.tile		= new uint8_t[4 * 1];
+	propsSouth.dataUnlocked.tile	= new uint8_t[4 * 1];
+	memset(propsSouth.dataLocked.tile, 182, 4 * 1 * sizeof(uint8_t));
+	memset(propsSouth.dataUnlocked.tile, 0, 4 * 1 * sizeof(uint8_t));
+
+	// -------------------------------------------------------------------------
+
+	passage1 = new Passage(propsNorth); 
+	passage2 = new Passage(propsSouth);  
+
+	sharedData.unlocked		= false;
+	passage1->other			= passage2;
+	passage2->other			= passage1;
+	passage1->sharedData	= &sharedData;
+	passage2->sharedData	= &sharedData;
+	passage1->scene			= &world.scenes[0];
+	passage2->scene			= &world.scenes[1];
+
+	passage1->SetPosition(TileToPixel({ 12, 12 })); 
+	passage2->SetPosition(TileToPixel({ 20, 12 })); 
+
+	if (!sharedData.unlocked)
+	{
+		world.scenes[0].tilemap->InsertMetaTile({ 12, 12 }, passage1->props.dataLocked);
+		world.scenes[0].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataLocked);
+	}
+	else
+	{
+		world.scenes[0].tilemap->InsertMetaTile({ 12, 12 }, passage1->props.dataUnlocked);
+		world.scenes[0].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataUnlocked);
+	}
 
 	Soldier::SetType(Soldier::types::RED);      
 
@@ -117,10 +154,10 @@ void Game::Tick(float dt)
 		}
 	}
 
-	passage1.bbox.Render(screen8);
-	passage2.bbox.Render(screen8);
-	passage1.TryEnter(); 
-	passage2.TryEnter(); 
+	passage1->Render(screen8);
+	passage2->Render(screen8);
+	passage1->TryEnter(); 
+	passage2->TryEnter(); 
 
 	HandlePlayerLeaveScreen();
 	PerformanceReport(dt);  
@@ -155,7 +192,7 @@ void Game::HandlePlayerLeaveScreen()
 		player.SetPosition({ NATIVE_SCREEN_WIDTH - 1, player.bbox.fPos.y });
 	}
 
-	if (player.bbox.fPos.y > NATIVE_SCREEN_HEIGHT - 1)
+	if (player.bbox.fPos.y > NATIVE_SCREEN_HEIGHT - 21)
 	{
 		world.SwitchScene(SOUTH);
 		player.SetPosition({ player.bbox.fPos.x, 0.0f });
@@ -163,7 +200,7 @@ void Game::HandlePlayerLeaveScreen()
 	else if (player.bbox.fPos.y < 0)
 	{ 
 		world.SwitchScene(NORTH);
-		player.SetPosition({ player.bbox.fPos.x, NATIVE_SCREEN_HEIGHT - 1 });
+		player.SetPosition({ player.bbox.fPos.x, NATIVE_SCREEN_HEIGHT - 21 });
 	}
 }
 

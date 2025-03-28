@@ -73,22 +73,34 @@ void AABB::Update(float2 const position)
 	fPos = position;
 	iPos = (int2)fPos; 
 	topLeft = int2(position + OFFSET);
- 	bottomRight = topLeft + SIZE;
+ 	bottomRight = topLeft + SIZE - 1;
 }
 
 void AABB::Render(Surface8* screen) const
 {
 #if DEBUG_MODE     
-	int2 pos = topLeft - OFFSET;    
+	//int2 pos = topLeft - OFFSET;    
+	//if (hit)
+	//{
+	//	screen->Box(topLeft.x + 1, topLeft.y - 1, bottomRight.x, bottomRight.y - 2, hitColor); 
+	//	screen->Plot(pos.x, pos.y, hitColor);   
+	//}
+	//else
+	//{
+	//	screen->Box(topLeft.x + 1, topLeft.y - 1 , bottomRight.x, bottomRight.y - 2, missColor);
+	//	screen->Plot(pos.x, pos.y, missColor);   
+	//}
+
+	int2 pos = topLeft - OFFSET;
 	if (hit)
 	{
-		screen->Box(topLeft.x + 1, topLeft.y - 1, bottomRight.x, bottomRight.y - 2, hitColor); 
-		screen->Plot(pos.x, pos.y, hitColor);   
+		screen->Box(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, hitColor);
+		screen->Plot(pos.x, pos.y, hitColor);
 	}
 	else
 	{
-		screen->Box(topLeft.x + 1, topLeft.y - 1 , bottomRight.x, bottomRight.y - 2, missColor);
-		screen->Plot(pos.x, pos.y, missColor);   
+		screen->Box(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, missColor);
+		screen->Plot(pos.x, pos.y, missColor);
 	}
 #endif
 }

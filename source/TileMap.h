@@ -19,6 +19,7 @@ public:
 	void Render(Surface8* screen) const;  
 	uint8_t GetTileState(uint idx) const; // indices to tileIdxs
 	uint8_t GetTileState(int2 idx) const; // indices to tileIdxs
+	void InsertMetaTile(int2 coord, MetaTile const& mt);  
 
 private:
 	bool LoadTileIndices(char const* path);   

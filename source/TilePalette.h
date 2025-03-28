@@ -28,3 +28,10 @@ struct TilePalette
 			TilePalette(char const* path); 
 	bool	LoadTileStates(char const* path);  
 };
+
+struct MetaTile
+{
+	uint8_t*	tile;
+	uint8_t		columns;
+	uint8_t		rows; 
+};

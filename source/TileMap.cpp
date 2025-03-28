@@ -43,6 +43,7 @@ void Tilemap::Render(Surface8* screen) const
 	for (int yy = 0; yy < ROWS; yy++) for (int xx = 0; xx < COLUMNS; xx++, idx++)
 	{
 		tilePalette->sheet.Render(screen, xx * TilePalette::Tile::SIZE, yy * TilePalette::Tile::SIZE, tileIdxs[idx]);
+#if DEBUG_MODE
 		if (GetTileState(idx) == TilePalette::Tile::SOLID)
 		{
 			screen->Box(xx * TilePalette::Tile::SIZE, yy * TilePalette::Tile::SIZE, xx * TilePalette::Tile::SIZE + 7, yy * TilePalette::Tile::SIZE + 7, 80);
@@ -55,6 +56,7 @@ void Tilemap::Render(Surface8* screen) const
 		{
 			screen->Box(xx * TilePalette::Tile::SIZE, yy * TilePalette::Tile::SIZE, xx * TilePalette::Tile::SIZE + 7, yy * TilePalette::Tile::SIZE + 7, 47);
 		}
+#endif
 	}
 }
 
@@ -72,6 +74,14 @@ uint8_t Tilemap::GetTileState(int2 coord) const
 		return tilePalette->tiles[tileIdxs[TileToID(coord)]].state;
 	}
 	return TilePalette::Tile::NONE;
+}
+
+void Tilemap::InsertMetaTile(int2 coord, MetaTile const& mt) 
+{
+	for (int x = 0; x < mt.columns; x++) for (int y = 0; y < mt.rows; y++)
+	{
+		tileIdxs[TileToID(int2(coord.x + x, coord.y + y))] = mt.tile[x + y * mt.columns]; 
+	}
 }
 
 bool Tilemap::LoadTileIndices(char const* path) 

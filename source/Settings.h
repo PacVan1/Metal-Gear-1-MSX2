@@ -13,10 +13,9 @@
 #define TRIGGER_PUNCH		VK_SPACE
 #define START_GAME			VK_ENTER        
 
-#define SOUND_ON			0
-
 // debugging modes:
-#define DEBUG_MODE			1
+#define DEBUG_MODE			0
 #define SPRITE_MODE			0
 #define BAKE_MODE			0
 #define EVERYTHING_UNLOCKED 1
+#define SOUND_ON			0
