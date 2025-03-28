@@ -10,13 +10,14 @@ Inventory::Inventory() :
 	selectedEquipment(nullptr)
 {
 	items[HANDGUN]		= new Gun();
-	items[BINOCULARS]	= new Binoculars();
 	items[LAND_MINE]	= new LandMine();
+	items[BINOCULARS]	= new Binoculars();
+	items[CARD1]		= new Card(CARD1);
 
 #if EVERYTHING_UNLOCKED
 	// default selected items: 
 	selectedWeapon		= items[HANDGUN]; 
-	selectedEquipment	= items[BINOCULARS];
+	selectedEquipment	= items[CARD1];
 #endif
 }
 

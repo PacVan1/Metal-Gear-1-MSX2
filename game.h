@@ -6,6 +6,7 @@
 
 #include "World.h"
 #include "Player.h" 
+#include "Passage.h" 
 
 namespace Tmpl8
 {
@@ -13,7 +14,11 @@ class Game : public TheApp
 {
 public:
 	inline static World		world; 
-	inline static Player	player; 
+	inline static Player	player;
+
+	inline static Passage*	passage1;
+	inline static Passage*	passage2;
+
 	int2		mousePos;
 
 	inline static Audio::Sound* currentTheme = nullptr; 

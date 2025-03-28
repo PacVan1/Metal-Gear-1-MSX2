@@ -22,8 +22,6 @@
 PassageProps		propsNorth;
 PassageProps		propsSouth;
 PassageSharedData	sharedData;
-Passage*			passage1;
-Passage*			passage2;
 
 void Game::Init()
 {
@@ -75,7 +73,7 @@ void Game::Init()
 	propsNorth.spawnPosition	 = { 16, 40 };
 	propsNorth.dataLocked.tile		= new uint8_t[4 * 4];
 	propsNorth.dataUnlocked.tile	= new uint8_t[4 * 4];
-	memset(propsNorth.dataLocked.tile, 182, 4 * 4 * sizeof(uint8_t)); 
+	memset(propsNorth.dataLocked.tile, 183, 4 * 4 * sizeof(uint8_t)); 
 	memset(propsNorth.dataUnlocked.tile, 0, 4 * 4 * sizeof(uint8_t));
 
 	propsSouth.dataLocked.columns	= 4;
@@ -85,7 +83,7 @@ void Game::Init()
 	propsSouth.spawnPosition	= { 16, 16 };
 	propsSouth.dataLocked.tile		= new uint8_t[4 * 1];
 	propsSouth.dataUnlocked.tile	= new uint8_t[4 * 1];
-	memset(propsSouth.dataLocked.tile, 182, 4 * 1 * sizeof(uint8_t));
+	memset(propsSouth.dataLocked.tile, 183, 4 * 1 * sizeof(uint8_t));
 	memset(propsSouth.dataUnlocked.tile, 0, 4 * 1 * sizeof(uint8_t));
 
 	// -------------------------------------------------------------------------

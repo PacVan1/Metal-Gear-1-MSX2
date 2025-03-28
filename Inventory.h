@@ -15,6 +15,7 @@ public:
 	enum : u8
 	{
 		BINOCULARS = WEAPON_COUNT,
+		CARD1,
 		//GASMASK, 
 		COUNT,
 		EQUIPMENT_COUNT = COUNT - WEAPON_COUNT,
