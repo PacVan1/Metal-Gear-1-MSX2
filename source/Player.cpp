@@ -40,13 +40,19 @@ void Player::Update(float const dt)
 	case IDLE:
 		{
 		// exit condition:
-		if		(GetAsyncKeyState(MOVE_EAST)) { SetState(RUN); facing = EAST; SetAnimation(); }
-		else if (GetAsyncKeyState(MOVE_NORTH)) { SetState(RUN); facing = NORTH; SetAnimation(); }
-		else if (GetAsyncKeyState(MOVE_WEST)) { SetState(RUN); facing = WEST; SetAnimation(); }
-		else if (GetAsyncKeyState(MOVE_SOUTH)) { SetState(RUN); facing = SOUTH; SetAnimation(); }
+		if		(GetAsyncKeyState(MOVE_EAST))	{ SetState(RUN); facing = EAST; SetAnimation(); }
+		else if (GetAsyncKeyState(MOVE_NORTH))	{ SetState(RUN); facing = NORTH; SetAnimation(); }
+		else if (GetAsyncKeyState(MOVE_WEST))	{ SetState(RUN); facing = WEST; SetAnimation(); }
+		else if (GetAsyncKeyState(MOVE_SOUTH))	{ SetState(RUN); facing = SOUTH; SetAnimation(); }
 
 		bool now = GetAsyncKeyState(USE_WEAPON);
-		if (!now && previ2) inventory.gun.Shoot(GetPosition(), CardinalToFloat2(facing));
+		if (!now && previ2)
+		{
+			if (inventory.selectedWeapon)
+			{
+				inventory.selectedWeapon->Use();
+			}
+		}
 		previ2 = now;
 
 		// punching
@@ -70,7 +76,10 @@ void Player::Update(float const dt)
 		if (!now && previ2)
 		{
 			previ2 = now;
-			inventory.gun.Shoot(GetPosition(), CardinalToFloat2(facing)); 
+			if (inventory.selectedWeapon)
+			{
+				inventory.selectedWeapon->Use();
+			}
 			return;
 		}
 		previ2 = now;

@@ -1,14 +1,16 @@
 #pragma once
 
-class Gun
+#include "Item.h"
+
+class Gun : public Item
 {
 public:
-	float	speed = 0.4f; 
-	uint	ammo = 99;
-	uint	damage = 100;
+	float	speed	= 0.4f; 
+	uint	ammo	= 99;
+	uint	damage	= 100;
 
 public:
-			Gun() = default; 
-	void	Shoot(float2 from, float2 to) const;  
+			Gun();
+	void	Use() override;
 };
 

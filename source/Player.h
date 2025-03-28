@@ -30,6 +30,6 @@ public:
 	void		Damage(int damage) override;
 	void		Destroy() override; 
 	void		Punch(); 
-	inline bool IsArmed() const { return true; }  
+	bool		IsArmed() const { return inventory.selectedWeapon; }  
 };
 

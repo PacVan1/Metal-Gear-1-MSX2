@@ -2,8 +2,17 @@
 #include "Gun.h"
 
 #include "Projectile.h"
+#include "Inventory.h"
+#include "Game.h" 
 
-void Gun::Shoot(float2 from, float2 to) const
+Gun::Gun()
 {
-	Projectile::Launch(from, to * speed, damage, AABB::ENEMY); 
+	frameIdx = 0; 
+	strcpy(name, "Handgun");
+}
+
+void Gun::Use()
+{
+	Projectile::Launch(Game::player.GetPosition(), CardinalToFloat2(Game::player.facing) * speed, damage, AABB::ENEMY);
+	ammo--; 
 }

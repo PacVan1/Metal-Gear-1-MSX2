@@ -16,7 +16,7 @@ public:
 	int2		mousePos;
 
 	// ACTORS /////////////////////////////////////////////////////////////////////////////
-	Player		player; 
+	inline static Player player; 
 
 	inline static Audio::Sound* currentTheme = nullptr; 
 	inline static Audio::Sound mainTheme{ "assets/audio/02. Theme of Tara.mp3" };

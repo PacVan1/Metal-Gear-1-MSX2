@@ -90,6 +90,7 @@
       <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -199,6 +200,7 @@
       <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="kernel">

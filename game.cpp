@@ -17,6 +17,7 @@
 #include "World.h"
 #include "Projectile.h"
 #include "Soldiers.h"
+#include "Item.h"
 
 void Game::Init()
 {
@@ -57,18 +58,32 @@ void Game::Init()
 
 	world.InitWorld();
 
+	world.scenes[0].items = new ItemObject*[1];
+	world.scenes[0].items[0] = new ItemObject(Inventory::HANDGUN);
+	world.scenes[0].itemCount = 1; 
+
 	Soldier::SetType(Soldier::types::RED);      
 
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);
-	currentTheme = &mainTheme;
-	currentTheme->play(); 
+	SetTheme(&mainTheme);  
 }
 
 void Game::Tick(float dt)  
 {
 	screen8->Clear(100);     
 	player.Update(dt);
+
+	if (GetAsyncKeyState(PICKUP_ITEM))
+	{
+		for (int i = 0; i < world.currentScene->itemCount; i++)
+		{
+			if (AABB::Detect(world.currentScene->items[i]->bbox, player.bbox))
+			{
+				player.inventory.PickUp(*world.currentScene->items[i]);
+			}
+		}
+	}
 
 	if (world.currentScene->tilemap) world.currentScene->tilemap->Render(screen8); 
 
@@ -78,6 +93,14 @@ void Game::Tick(float dt)
 	Projectile::UpdatePool(dt); 
 	Projectile::RenderPool(screen8);
 
+	for (int i = 0; i < world.currentScene->itemCount; i++)
+	{
+		if (!world.currentScene->items[i]->pickedUp)
+		{
+			world.currentScene->items[i]->Render(screen8);
+		}
+	}
+
 	HandlePlayerLeaveScreen();
 
 	// performance report:
@@ -86,9 +109,11 @@ void Game::Tick(float dt)
 
 void Game::SetTheme(Audio::Sound* sound)
 {
-	currentTheme->stop();
+#if SOUND_ON
+	if (currentTheme) currentTheme->stop();
 	currentTheme = sound;
-	currentTheme->replay();  
+	currentTheme->replay();
+#endif
 }
 
 void Game::HandlePlayerLeaveScreen()

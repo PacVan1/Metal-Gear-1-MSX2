@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="source\Actor.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Animation.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="cl\tools.cl" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="source\Actor.h" />
     <ClInclude Include="source\AnimatedSprite.h" />
     <ClInclude Include="source\Animation.h" />

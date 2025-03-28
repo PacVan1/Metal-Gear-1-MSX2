@@ -13,13 +13,21 @@ struct SoldierTypeData
 class Soldier : public Enemy 
 {
 public:
-	enum types
+	enum types : u8
 	{
-		GRAY, RED, TYPE_COUNT
+		GRAY,
+		RED,
+		TYPE_COUNT
 	};
-	enum states
+	enum states : u8
 	{
-		IDLE, PATROL, PERSUE, STUNNED, SHOOT, SPOTTED, STATE_COUNT 
+		IDLE,
+		PATROL,
+		PURSUE,
+		STUNNED,
+		SHOOT,
+		SPOTTED,
+		STATE_COUNT 
 	};
 
 public:

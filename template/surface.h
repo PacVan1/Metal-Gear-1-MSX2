@@ -143,7 +143,8 @@ public:
 		static SubSurface8* LoadFromFile(char const* path);
 
 	public:
-		SubSurface8() = default; 
+		SubSurface8() = default;
+		SubSurface8(int const width, int const height); 
 		SubSurface8(uint8_t* const buffer, int const width, int const height);  
 		SubSurface8(char const* path); 
 		~SubSurface8(); 

@@ -356,7 +356,8 @@ Surface8::Surface8(int const width, int const height) :
 	width(width), 
 	height(height)  
 {
-	pixels = (uint8_t*)MALLOC64(width * height * sizeof(uint8_t));  
+	pixels = (uint8_t*)MALLOC64(width * height * sizeof(uint8_t));
+	memset(pixels, 0, width * height * sizeof(uint8_t)); 
 }  
 
 Surface8::~Surface8()
@@ -573,6 +574,15 @@ SubSurface8* SubSurface8::LoadFromFile(char const* path)
 	Files::PrintSuccess(path);  
 	return surf;
 }
+
+Surface8::SubSurface8::SubSurface8(int const width, int const height) :
+	width(width),
+	height(height)
+{
+	pixels = (uint8_t*)MALLOC64(width * height * sizeof(uint8_t));
+	memset(pixels, 0, width * height * sizeof(uint8_t));
+}
+
 
 SubSurface8::SubSurface8(uint8_t* const buffer, int const width, int const height) :
 	pixels(buffer), 

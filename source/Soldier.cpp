@@ -38,7 +38,7 @@ void Soldier::Update(float const dt)
 	{
 	case IDLE:		IdleState();		break;
 	case PATROL:	PatrolState(dt);	break; 
-	case PERSUE:	PersueState(dt);	break;
+	case PURSUE:	PersueState(dt);	break;
 	case STUNNED:	StunnedState(dt);	break;
 	case SHOOT:		ShootState();		break;
 	case SPOTTED: break;
@@ -63,7 +63,7 @@ void Soldier::Damage(int damage)
 
 void Soldier::Alert()
 {
-	SetState(PERSUE); 
+	SetState(PURSUE); 
 	DecideCardinal();
 	SetAnimation();
 }
@@ -85,7 +85,7 @@ void Soldier::IdleState()
 {
 	if (TargetInLine())
 	{
-		SetState(PERSUE);
+		SetState(PURSUE);
 		SetAnimation();
 		Soldiers::SetAlertLevel(typeData[type].alertLevel); 
 		return;
@@ -114,7 +114,7 @@ void Soldier::PatrolState(float const dt)
 	if (TargetInLine())
 	{
 		shootTimer.reset(); 
-		SetState(PERSUE);
+		SetState(PURSUE);
 		SetAnimation();
 		Soldiers::SetAlertLevel(typeData[type].alertLevel); 
 		return;
@@ -155,7 +155,7 @@ void Soldier::ShootState()
 			shot = false;
 			shootTimer.reset();
 			DecideCardinal(); 
-			SetState(PERSUE);
+			SetState(PURSUE);
 			SetAnimation(); 
 		}
 	}
@@ -180,7 +180,7 @@ void Soldier::StunnedState(float const dt)
 		{
 			stunY = 0.0f;
 			descend = false;
-			SetState(PERSUE);
+			SetState(PURSUE);
 			SetAnimation(); 
 		}
 	}
