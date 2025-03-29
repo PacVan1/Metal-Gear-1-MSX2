@@ -53,7 +53,7 @@ uint Actor::GetAnimationIdx() const
 void Actor::SetState(uint state) 
 {
 	this->state = state;  
-	SetAnimationState(); 
+	SetAnimationState();  
 }
 
 void Actor::InitState()   

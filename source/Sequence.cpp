@@ -30,11 +30,12 @@ Sequence::Sequence(char const* path)
 		return;
 	}
 
-	flags = new int[flagCount]; 
+	flags = new SequenceFlag[flagCount]; 
 	fscanf(file, "Flags: "); // scan start of array 
 	for (int i = 0; i < flagCount; i++)
 	{
-		if (!fscanf(file, "%u", &flags[i]))
+		flags[i].animState = 1;
+		if (!fscanf(file, "%u", &flags[i].position)) 
 		{
 			Files::PrintFailure(path); 
 			return;
@@ -53,34 +54,36 @@ Sequencer::Sequencer(Actor& actor) :
 	Reset();
 }
 
-bool Sequencer::Play(float const dt)
+void Sequencer::Play(float const dt)
 {
-	if (!sequence) return false;
+	if (!sequence) return;
 
 	actor.SetPosition(actor.bbox.fPos + CardinalToFloat2(actor.facing) * sequence->speed * dt);
 	if (facing != GetCardinal())
 	{
-		actor.bbox.fPos[axis] = (float)sequence->flags[flagIdx]; 
+		actor.bbox.fPos[axis] = static_cast<float>(sequence->flags[flagIdx].position);   
 		NextFlag();
-		return true; 
+		reachedFlag = true;
+		return;
 	}
-	return false; 
+	reachedFlag = false;
+	reachedEnd	= false;
 }
 
-cardinals Sequencer::GetCardinal()
+int Sequencer::GetCardinal() const
 {
-	int flag = sequence->flags[flagIdx];
+	int flag = sequence->flags[flagIdx].position; 
 
-	if (axis == Sequence::HORIZONTAL)
+	if (axis == HORIZONTAL)
 	{
-		return (actor.bbox.iPos.x < flag) ? cardinals::EAST : cardinals::WEST;
+		return (actor.bbox.iPos.x < flag) ? EAST : WEST;
 	} 
-	return (actor.bbox.iPos.y < flag) ? cardinals::SOUTH : cardinals::NORTH; 
+	return (actor.bbox.iPos.y < flag) ? SOUTH : NORTH; 
 }
 
-int Sequencer::GetNextAxis() 
+int Sequencer::GetNextAxis() const 
 {
-	return (axis == Sequence::HORIZONTAL) ? Sequence::VERTICAL : Sequence::HORIZONTAL; 
+	return (axis == HORIZONTAL) ? VERTICAL : HORIZONTAL; 
 }
 
 void Sequencer::SetSequence(Sequence const* sequence)
@@ -89,27 +92,31 @@ void Sequencer::SetSequence(Sequence const* sequence)
 	Reset(); 
 }
 
-void Sequencer::Continue() 
+void Sequencer::Continue() const 
 {
 	actor.facing = facing;
+	actor.SetAnimationState(sequence->flags->animState);
 	actor.SetAnimation();
 }
 
 void Sequencer::NextFlag()
 {
 	flagIdx	= (++flagIdx) % sequence->flagCount;
+	reachedEnd = flagIdx == 0; 
 	axis	= GetNextAxis();
 	facing	= GetCardinal();
 }
 
 void Sequencer::Reset()
 {
-	flagIdx	= 0;
+	flagIdx		= 0;
+	reachedEnd	= false;
+	reachedFlag = false;
 
 	if (sequence)
 	{
 		actor.SetPosition( sequence->start); 
-		axis			= sequence->startAxis;
-		facing			= GetCardinal(); 
+		axis	= sequence->startAxis;
+		facing	= GetCardinal(); 
 	}
 }

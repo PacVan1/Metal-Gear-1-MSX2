@@ -45,7 +45,7 @@ void Soldier::Update(float const dt)
 	}
 }
 
-void Soldier::SetAnimationState()
+void Soldier::SetAnimationState() 
 {
 	animState = STATE_TO_ANIM_STATE[state]; 
 }
@@ -77,7 +77,7 @@ void Soldier::Reset()
 void Soldier::TurnRandomSide()
 {
 	facing = static_cast<cardinals>(RandomUInt() % cardinals::COUNT);
-	SetAnimationState();
+	SetAnimationState(); 
 	SetAnimation(); 
 }
 
@@ -120,8 +120,16 @@ void Soldier::PatrolState(float const dt)
 		return;
 	}
 
-	if (sequencer.Play(dt))
-	{ // if finished
+	sequencer.Play(dt);
+	if (sequencer.HasReachedEnd())
+	{
+		printf("Soldier has reached end of path\n"); 
+		SetState(IDLE);
+		SetAnimation();
+		return;
+	}
+	if (sequencer.HasReachedFlag()) 
+	{ 
 		SetState(IDLE);
 		SetAnimation();
 	}

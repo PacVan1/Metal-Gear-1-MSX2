@@ -5,22 +5,26 @@
 // forward declaring Actor
 class Actor; 
 
+enum axis : u8 
+{
+	HORIZONTAL,
+	VERTICAL
+};
+
+struct SequenceFlag
+{
+	int position;
+	int animState; 
+};
+
 struct Sequence
 {
-public:
-	enum axes
-	{
-		HORIZONTAL, VERTICAL
-	};
+	int2			start;
+	int				startAxis;
+	float			speed;
+	SequenceFlag*	flags;
+	int				flagCount;
 
-public:
-	int2	start;
-	int		startAxis;
-	float	speed;
-	int*	flags;
-	int		flagCount;
-
-public:
 	Sequence(char const* path);  
 };
 
@@ -30,16 +34,23 @@ public:
 	Actor&			actor;
 	Sequence const*	sequence;   
 	uint			flagIdx; 
-	cardinals		facing;
+	int				facing;
 	int				axis;
 
+private:
+	bool			reachedFlag;
+	bool			reachedEnd; 
+
 public:
-				Sequencer(Actor& actor); 
-	bool		Play(float const dt);
-	cardinals	GetCardinal();
-	int			GetNextAxis();
-	void		SetSequence(Sequence const* sequence);
-	void		Continue();
-	void		NextFlag(); 
-	void		Reset();
+			Sequencer(Actor& actor); 
+	void	Play(float const dt);
+	int		GetCardinal() const;
+	int		GetNextAxis() const;
+	void	SetSequence(Sequence const* sequence);
+	void	Continue() const;
+	void	NextFlag(); 
+	void	Reset();
+
+	bool	HasReachedFlag() const { return reachedFlag; }
+	bool	HasReachedEnd() const { return reachedEnd; }
 };

@@ -45,7 +45,7 @@ void Dog::Update(float const dt)
 	}
 }
 
-void Dog::SetAnimationState() 
+void Dog::SetAnimationState()
 { 
 	animState = STATE_TO_ANIM_STATE[state]; 
 }

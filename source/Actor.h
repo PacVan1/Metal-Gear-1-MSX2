@@ -26,6 +26,7 @@ public:
 	void			SetPosition(float2 const position);
 	void			SetAnimation(); 
 	void			SetState(uint state);
+	void			SetAnimationState(uint state) { animState = state; }
 
 protected: 
 	void			Move(float const dt);
