@@ -12,7 +12,7 @@ class InventoryUI
 {
 public:
 	Inventory*	inv;
-	int			state = INVENTORY_UI_STATE_WEAPONS;
+	int			state = INVENTORY_UI_STATE_EQUIPMENT;
 	int			selected; 
 
 public:

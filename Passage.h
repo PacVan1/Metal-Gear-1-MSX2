@@ -32,4 +32,5 @@ public:
 struct PassageSharedData
 {
 	bool		unlocked;
+	int			accessLevel; 
 };

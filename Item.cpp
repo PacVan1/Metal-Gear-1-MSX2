@@ -40,17 +40,23 @@ Card::Card(int level) :
 
 void Card::Use()
 {
-	if (!Game::passage1->sharedData->unlocked && AABB::Detect(Game::passage1->bbox, Game::player.bbox))
+	if (level >= Game::passage1->sharedData->accessLevel)
 	{
-		Game::passage1->sharedData->unlocked = true;
-		Game::passage1->scene->tilemap->InsertMetaTile({ 12, 12 }, Game::passage1->props.dataUnlocked);
-		Game::passage1->other->scene->tilemap->InsertMetaTile({ 20, 12 }, Game::passage1->other->props.dataUnlocked);
+		if (!Game::passage1->sharedData->unlocked && AABB::Detect(Game::passage1->bbox, Game::player.bbox))
+		{
+			Game::passage1->sharedData->unlocked = true;
+			Game::passage1->scene->tilemap->InsertMetaTile({ 12, 12 }, Game::passage1->props.dataUnlocked);
+			Game::passage1->other->scene->tilemap->InsertMetaTile({ 20, 12 }, Game::passage1->other->props.dataUnlocked);
+		}
 	}
 
-	if (!Game::passage2->sharedData->unlocked && AABB::Detect(Game::passage2->bbox, Game::player.bbox))
+	if (level >= Game::passage2->sharedData->accessLevel)
 	{
-		Game::passage2->sharedData->unlocked = true;
-		Game::passage2->scene->tilemap->InsertMetaTile({ 20, 12 }, Game::passage2->props.dataUnlocked);
-		Game::passage2->other->scene->tilemap->InsertMetaTile({ 12, 12 }, Game::passage2->other->props.dataUnlocked);
+		if (!Game::passage2->sharedData->unlocked && AABB::Detect(Game::passage2->bbox, Game::player.bbox))
+		{
+			Game::passage2->sharedData->unlocked = true;
+			Game::passage2->scene->tilemap->InsertMetaTile({ 20, 12 }, Game::passage2->props.dataUnlocked);
+			Game::passage2->other->scene->tilemap->InsertMetaTile({ 12, 12 }, Game::passage2->other->props.dataUnlocked);
+		}
 	}
 }

@@ -96,6 +96,7 @@ void Game::Init()
 	passage2 = new Passage(propsSouth);  
 
 	sharedData.unlocked		= false;
+	sharedData.accessLevel	= 5;
 	passage1->other			= passage2;
 	passage2->other			= passage1;
 	passage1->sharedData	= &sharedData;
