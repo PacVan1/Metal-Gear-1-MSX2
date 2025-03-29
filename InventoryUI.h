@@ -12,9 +12,11 @@ class InventoryUI
 {
 public:
 	Inventory*	inv;
-	int			state = INVENTORY_UI_STATE_WEAPONS; 
+	int			state = INVENTORY_UI_STATE_WEAPONS;
+	int			selected; 
 
 public:
+	void Update(float const dt);  
 	void Render(Surface8* screen) const;
 
 private:

@@ -18,12 +18,14 @@
 #include "Soldiers.h"
 #include "Passage.h" 
 #include "InventoryUI.h" 
+#include "PlayerUI.h"
 
 PassageProps		propsNorth;
 PassageProps		propsSouth;
 PassageSharedData	sharedData;
 
 InventoryUI inventoryUI;
+PlayerUI	playerUI; 
 
 void Game::Init()
 {
@@ -121,7 +123,8 @@ void Game::Init()
 	mainTheme.setLooping(true);
 	SetTheme(&mainTheme);
 
-	inventoryUI.inv = &player.inventory;  
+	inventoryUI.inv = &player.inventory;
+	playerUI.player = &player; 
 }
 
 void Game::Tick(float const dt)  
@@ -145,7 +148,11 @@ void Game::OpeningState(float const dt)
 
 void Game::PlayingState(float const dt)
 {
-	if (GetAsyncKeyState(TOGGLE_INVENTORY)) state = GAME_STATE_INVENTORY; 
+	if (GetAsyncKeyState(TOGGLE_INVENTORY))
+	{
+		state = GAME_STATE_INVENTORY;
+		inventoryUI.selected = 0; 
+	}
 
 	player.Update(dt);
 
@@ -182,13 +189,18 @@ void Game::PlayingState(float const dt)
 	passage2->TryEnter(); 
 	
 	HandlePlayerLeaveScreen();
+
+	playerUI.Render(screen8); 
 }
 
 void Game::InventoryState(float const dt)
 {
 	if (GetAsyncKeyState(TOGGLE_INVENTORY)) state = GAME_STATE_PLAYING;
 
-	inventoryUI.Render(screen8); 
+	inventoryUI.Update(dt);  
+
+	inventoryUI.Render(screen8);
+	playerUI.Render(screen8); 
 }
 
 void Game::GameOverState(float const dt)

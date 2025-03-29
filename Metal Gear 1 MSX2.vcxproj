@@ -128,6 +128,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LandMine.cpp" />
     <ClCompile Include="Passage.cpp" />
+    <ClCompile Include="PlayerUI.cpp" />
     <ClCompile Include="source\Actor.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Animation.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="LandMine.h" />
     <ClInclude Include="Passage.h" />
+    <ClInclude Include="PlayerUI.h" />
     <ClInclude Include="source\Actor.h" />
     <ClInclude Include="source\AnimatedSprite.h" />
     <ClInclude Include="source\Animation.h" />

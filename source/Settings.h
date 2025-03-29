@@ -9,9 +9,12 @@
 #define USE_WEAPON			'G'
 #define USE_EQUIPMENT		'E'
 #define EXIT				'E' 
-#define TOGGLE_INVENTORY	VK_TAB  
+#define TOGGLE_INVENTORY	VK_TAB
+#define INVENTORY_UP		VK_UP
+#define INVENTORY_DOWN		VK_DOWN
+#define INVENTORY_SELECT    VK_RETURN
 #define TRIGGER_PUNCH		VK_SPACE
-#define START_GAME			VK_ENTER        
+#define START_GAME			VK_RETURN        
 
 // debugging modes:
 #define DEBUG_MODE			0
