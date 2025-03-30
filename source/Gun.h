@@ -6,7 +6,6 @@ class Gun : public Item
 {
 public:
 	float	speed	= 0.4f; 
-	uint	ammo	= 99;
 	uint	damage	= 100;
 
 public:

@@ -17,7 +17,7 @@
 #define START_GAME			VK_RETURN        
 
 // debugging modes:
-#define DEBUG_MODE			0
+#define DEBUG_MODE			1
 #define SPRITE_MODE			0
 #define BAKE_MODE			0
 #define EVERYTHING_UNLOCKED 1

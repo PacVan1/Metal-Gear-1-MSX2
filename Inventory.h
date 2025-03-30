@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Item.h" 
+#include "TextPopup.h"
 
 class Inventory
 {
@@ -28,6 +29,9 @@ public:
 		EQUIPMENT_COUNT = COUNT - WEAPON_COUNT,
 		AMMO
 	};
+
+public:
+	inline static TextPopup textPopup; 
 
 public:
 	bool	unlocked[COUNT] = { false };

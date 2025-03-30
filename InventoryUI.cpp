@@ -47,6 +47,11 @@ void InventoryUI::RenderWeapons(Surface8* screen) const
 	{
 		screen->Box(10, 25 * i + 26, NATIVE_SCREEN_WIDTH / 2 - 5, 25 * i + 20 + 26, 181);
 		screen->Print(inv->unlockedWeapons[i]->name, 15, 25 * i + 31, 181);
+
+		if (inv->unlockedWeapons[i]->stackable)
+		{
+			screen->Print(inv->unlockedWeapons[i]->strCount, NATIVE_SCREEN_WIDTH / 2 - 20, 25 * i + 20 + 10, 181); 
+		}
 	}
 
 	screen->Box(0, 25 * selected + 26, 10, 25 * selected + 36, 181); // cursor test

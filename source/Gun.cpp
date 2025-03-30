@@ -7,13 +7,13 @@
 
 Gun::Gun()
 {
-	frameIdx = 0; 
-	stackable = true; 
+	frameIdx = 0;
+	stackable = true;
+	count = 90; 
 	strcpy(name, "Handgun");
 }
 
 void Gun::Use()
 {
 	Projectile::Launch(Game::player.GetPosition(), CardinalToFloat2(Game::player.facing) * speed, damage, AABB::ENEMY);
-	ammo--; 
 }

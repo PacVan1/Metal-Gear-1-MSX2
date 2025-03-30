@@ -1,6 +1,7 @@
 #include "precomp.h"
 #include "Inventory.h"
 
+#include "Game.h"
 #include "Gun.h" 
 #include "Binoculars.h"
 #include "LandMine.h"
@@ -23,7 +24,7 @@ Inventory::Inventory() :
 
 #if EVERYTHING_UNLOCKED
 	// default selected items: 
-	for (int i = 0; i < COUNT; i++) Unlock(i);
+	for (int i = 0; i < COUNT; i++) { Unlock(i); items[i]->Stack(1); }
 
 	selectedWeapon		= items[HANDGUN]; 
 	selectedEquipment	= items[CARD1];
@@ -55,7 +56,9 @@ void Inventory::PickUp(ItemObject& item)
 	{
 		items[item.type]->Stack(1);
 	}
-	item.pickedUp = true; 
+	item.pickedUp = true;
+
+	Game::SetTextPopup(item.GetPositionInt() + int2(10, -10), items[item.type]->name);
 }
 
 void Inventory::Unlock(int itemType)

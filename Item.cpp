@@ -4,16 +4,18 @@
 #include "Game.h" 
 
 Item::Item() :
-	name(new char[32])
+	count(0)
 {
-	strcpy(name, "No name");
+	strcpy(name, "-");
+	sprintf(strCount, "%d", 0);
 }
 
 Item::Item(Item const& item) :
-	name(new char[32]) // max name length
+	count(0)
 {
 	frameIdx = item.frameIdx;
-	strcpy(name, item.name);  
+	strcpy(name, item.name);
+	sprintf(strCount, "%d", 0);
 }
 
 ItemObject::ItemObject(int type) :

@@ -11,8 +11,9 @@ public:
 
 public:
 	uint	frameIdx;
-	uint	count; 
-	char*	name;
+	uint	count;
+	char	strCount[3];
+	char	name[32]; 
 	bool	stackable; 
 
 public:
@@ -20,7 +21,7 @@ public:
 	Item(Item const& item);
 	virtual void Equip() {}
 	virtual void Use() {}
-	void Stack(uint const amount) { if (stackable) count += amount; } 
+	void Stack(uint const amount) { if (stackable) { count += amount; sprintf(strCount, "%d", count); } }
 };
 
 class ItemObject : public GameObject

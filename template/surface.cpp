@@ -386,6 +386,25 @@ void Surface8::Print(char const* s, int const x1, int const y1, uint8_t const c)
 	}
 }
 
+void Surface8::Print(char s, int const x, int const y, uint8_t const c)
+{
+	if (!fontInitialized)
+	{
+		// we will initialize the font on first use
+		InitCharset();
+		fontInitialized = true;
+	}
+
+	uint8_t* t = pixels + x + y * width;
+
+	int pos = 0;
+	if ((s >= 'A') && (s <= 'Z')) pos = transl[(unsigned short)(s - ('A' - 'a'))];
+	else pos = transl[(unsigned short)s];
+	const char* u = (const char*)font[pos];
+	for (int v = 0; v < 5; v++, u++, t += width)
+		for (int h = 0; h < 5; h++) if (*u++ == 'o') *(t + h) = c, * (t + h + width) = 0;
+}
+
 void Surface8::Clear(uint8_t const c)
 {
 	memset(pixels, c, width * height * sizeof(uint8_t));   

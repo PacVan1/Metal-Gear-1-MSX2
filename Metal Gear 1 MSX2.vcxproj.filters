@@ -96,6 +96,7 @@
     <ClCompile Include="Passage.cpp" />
     <ClCompile Include="InventoryUI.cpp" />
     <ClCompile Include="PlayerUI.cpp" />
+    <ClCompile Include="TextPopup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Passage.h" />
     <ClInclude Include="InventoryUI.h" />
     <ClInclude Include="PlayerUI.h" />
+    <ClInclude Include="TextPopup.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="kernel">

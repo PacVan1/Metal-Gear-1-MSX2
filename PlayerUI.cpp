@@ -20,8 +20,8 @@ void PlayerUI::RenderHealthbar(Surface8* screen) const
 
 void PlayerUI::RenderItems(Surface8* screen) const
 {
-	screen->Print(player->inventory.selectedWeapon->name, 145, NATIVE_SCREEN_HEIGHT - 17, 181); 
+	if (player->inventory.selectedWeapon)		screen->Print(player->inventory.selectedWeapon->name, 145, NATIVE_SCREEN_HEIGHT - 17, 181);
 	screen->Box(140, NATIVE_SCREEN_HEIGHT - 17, 200, NATIVE_SCREEN_HEIGHT - 4, 181);
-	screen->Print(player->inventory.selectedEquipment->name, 215, NATIVE_SCREEN_HEIGHT - 17, 181);
+	if (player->inventory.selectedEquipment)	screen->Print(player->inventory.selectedEquipment->name, 215, NATIVE_SCREEN_HEIGHT - 17, 181);
 	screen->Box(210, NATIVE_SCREEN_HEIGHT - 17, 246, NATIVE_SCREEN_HEIGHT - 4, 181);
 }

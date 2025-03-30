@@ -11,6 +11,7 @@
 enum gameStates : u8
 {
 	GAME_STATE_OPENING,
+	GAME_STATE_TEXT_POPUP,
 	GAME_STATE_PLAYING,
 	GAME_STATE_INVENTORY,
 	GAME_STATE_GAME_OVER
@@ -29,6 +30,9 @@ public:
 
 	inline static int		state = GAME_STATE_OPENING; 
 
+	inline static Timer textPopupTimer;
+	inline static float textPopupTime = 0.5f; 
+
 	int2		mousePos;
 
 	inline static Audio::Sound* currentTheme = nullptr; 
@@ -36,7 +40,8 @@ public:
 	inline static Audio::Sound alertTheme{ "assets/audio/03. Red Alert.mp3" };
 
 public:
-	static void SetTheme(Audio::Sound* sound); 
+	static void SetTheme(Audio::Sound* sound);
+	static void SetTextPopup(int2 const position, char const* str); 
 
 public:
 	// game flow methods
@@ -46,6 +51,7 @@ public:
 
 	void OpeningState(float const dt); 
 	void PlayingState(float const dt);
+	void TextPopupState(float const dt);  
 	void InventoryState(float const dt); 
 	void GameOverState(float const dt); 
 

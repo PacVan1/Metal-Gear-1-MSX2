@@ -98,6 +98,8 @@ public:
 
 #include "Image.h" 
 
+#define FONT_SIZE 6
+
 // 8-bit (paletized) surface container
 class Surface8
 {
@@ -177,6 +179,7 @@ public:
 	Surface8(char const* path); // a .txt format with indexes to colors inside the palette 
 	~Surface8();  
 	void Print(char const* s, int const x1, int const y1, uint8_t const c);
+	void Print(char s, int const x, int const y, uint8_t const c);
 	void Clear(uint8_t const c);
 	void Line(float x1, float y1, float x2, float y2, uint8_t const c); 
 	void Plot(int const x, int const y, uint8_t const c); 

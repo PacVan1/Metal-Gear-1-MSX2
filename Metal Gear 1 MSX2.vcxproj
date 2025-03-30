@@ -163,6 +163,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">precomp.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="template\tmpl8math.cpp" />
+    <ClCompile Include="TextPopup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Binoculars.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="template\precomp.h" />
     <ClInclude Include="template\surface.h" />
     <ClInclude Include="template\tmpl8math.h" />
+    <ClInclude Include="TextPopup.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cl\kernels.cl" />

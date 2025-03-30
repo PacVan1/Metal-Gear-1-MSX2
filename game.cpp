@@ -19,6 +19,7 @@
 #include "Passage.h" 
 #include "InventoryUI.h" 
 #include "PlayerUI.h"
+#include "TextPopup.h"
 
 PassageProps		propsNorth;
 PassageProps		propsSouth;
@@ -26,6 +27,8 @@ PassageSharedData	sharedData;
 
 InventoryUI inventoryUI;
 PlayerUI	playerUI; 
+
+TextPopup textPopup; 
 
 void Game::Init()
 {
@@ -66,9 +69,9 @@ void Game::Init()
 
 	world.InitWorld();
 
-	//world.scenes[0].items		= new ItemObject*[1];
-	//world.scenes[0].items[0]	= new ItemObject(Inventory::HANDGUN);
-	//world.scenes[0].itemCount	= 1; 
+	world.scenes[0].items		= new ItemObject*[1];
+	world.scenes[0].items[0]	= new ItemObject(Inventory::HANDGUN);
+	world.scenes[0].itemCount	= 1; 
 
 	propsNorth.dataLocked.columns	= 4; 
 	propsNorth.dataLocked.rows		= 4;
@@ -125,7 +128,7 @@ void Game::Init()
 	SetTheme(&mainTheme);
 
 	inventoryUI.inv = &player.inventory;
-	playerUI.player = &player; 
+	playerUI.player = &player;
 }
 
 void Game::Tick(float const dt)  
@@ -133,13 +136,14 @@ void Game::Tick(float const dt)
 	switch (state)
 	{
 	case GAME_STATE_OPENING:	OpeningState(dt);	break;
-	case GAME_STATE_PLAYING:	PlayingState(dt);	break; 
+	case GAME_STATE_PLAYING:	PlayingState(dt);	break;
+	case GAME_STATE_TEXT_POPUP: TextPopupState(dt); break;
 	case GAME_STATE_INVENTORY:	InventoryState(dt); break; 
 	case GAME_STATE_GAME_OVER:	GameOverState(dt);	break;
 	default: break; 
 	}
 
-	PerformanceReport(dt);  
+	PerformanceReport(dt);
 }
 
 void Game::OpeningState(float const dt)
@@ -176,6 +180,11 @@ void Game::PlayingState(float const dt)
 	Projectile::UpdatePool(dt); 
 	Projectile::RenderPool(screen8);
 	
+	passage1->Render(screen8);
+	passage2->Render(screen8);
+	passage1->TryEnter(); 
+	passage2->TryEnter(); 
+
 	for (int i = 0; i < world.currentScene->itemCount; i++)
 	{
 		if (!world.currentScene->items[i]->pickedUp)
@@ -184,14 +193,22 @@ void Game::PlayingState(float const dt)
 		}
 	}
 	
-	passage1->Render(screen8);
-	passage2->Render(screen8);
-	passage1->TryEnter(); 
-	passage2->TryEnter(); 
-	
 	HandlePlayerLeaveScreen();
 
-	playerUI.Render(screen8); 
+	playerUI.Render(screen8);
+}
+
+void Game::TextPopupState(float const dt)
+{
+	if (player.inventory.textPopup.IsWriting())
+	{
+		player.inventory.textPopup.Update(dt);
+		player.inventory.textPopup.Render(screen8);
+	}
+	else if (textPopupTimer.elapsed() >= textPopupTime) 
+	{
+		state = GAME_STATE_PLAYING; 
+	}
 }
 
 void Game::InventoryState(float const dt)
@@ -222,6 +239,13 @@ void Game::SetTheme(Audio::Sound* sound)
 	currentTheme = sound;
 	currentTheme->replay();
 #endif
+}
+
+void Game::SetTextPopup(int2 const position, char const* str)
+{
+	state = GAME_STATE_TEXT_POPUP;
+	player.inventory.textPopup.SetPosition(position); 
+	player.inventory.textPopup.SetString(str);  
 }
 
 void Game::HandlePlayerLeaveScreen()
