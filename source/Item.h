@@ -35,13 +35,5 @@ public:
 	void Render(Surface8* screen) const;
 };
 
-class Card : public Item
-{
-public:
-	int level;
 
-public:
-	Card(int level);
-	void Use() override; 
-};
 

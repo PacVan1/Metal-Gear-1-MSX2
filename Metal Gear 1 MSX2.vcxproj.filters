@@ -71,9 +71,6 @@
     <ClCompile Include="source\World.cpp">
       <Filter>metal gear 1 msx2\universe</Filter>
     </ClCompile>
-    <ClCompile Include="source\Gun.cpp">
-      <Filter>metal gear 1 msx2\items</Filter>
-    </ClCompile>
     <ClCompile Include="source\Projectile.cpp">
       <Filter>metal gear 1 msx2\items</Filter>
     </ClCompile>
@@ -89,14 +86,24 @@
     <ClCompile Include="source\Dog.cpp">
       <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Inventory.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="LandMine.cpp" />
-    <ClCompile Include="Binoculars.cpp" />
-    <ClCompile Include="Passage.cpp" />
-    <ClCompile Include="InventoryUI.cpp" />
-    <ClCompile Include="PlayerUI.cpp" />
-    <ClCompile Include="TextPopup.cpp" />
+    <ClCompile Include="source\Item.cpp">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Inventory.cpp">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Passage.cpp">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\InventoryUI.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerUI.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TextPopup.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -190,9 +197,6 @@
     <ClInclude Include="source\Projectile.h">
       <Filter>metal gear 1 msx2\items</Filter>
     </ClInclude>
-    <ClInclude Include="source\Gun.h">
-      <Filter>metal gear 1 msx2\items</Filter>
-    </ClInclude>
     <ClInclude Include="source\Enemy.h">
       <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClInclude>
@@ -205,14 +209,24 @@
     <ClInclude Include="source\Dog.h">
       <Filter>metal gear 1 msx2\actors\enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Inventory.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="LandMine.h" />
-    <ClInclude Include="Binoculars.h" />
-    <ClInclude Include="Passage.h" />
-    <ClInclude Include="InventoryUI.h" />
-    <ClInclude Include="PlayerUI.h" />
-    <ClInclude Include="TextPopup.h" />
+    <ClInclude Include="source\Item.h">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Inventory.h">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Passage.h">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\InventoryUI.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerUI.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TextPopup.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="kernel">
@@ -247,6 +261,9 @@
     </Filter>
     <Filter Include="metal gear 1 msx2\actors\enemies">
       <UniqueIdentifier>{affccc38-334e-40eb-82ad-741c3c4abd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\ui">
+      <UniqueIdentifier>{dec94bf2-c111-4be9-b164-d6fa872a602d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

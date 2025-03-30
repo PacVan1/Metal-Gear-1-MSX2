@@ -16,6 +16,7 @@ public:
 	enum : u8
 	{
 		BINOCULARS = WEAPON_COUNT,
+		GASMASK, 
 		CARD1,
 		CARD2,
 		CARD3,
@@ -24,7 +25,6 @@ public:
 		CARD6,
 		CARD7,
 		CARD8,
-		//GASMASK, 
 		COUNT,
 		EQUIPMENT_COUNT = COUNT - WEAPON_COUNT,
 		AMMO
@@ -48,5 +48,46 @@ public:
 	~Inventory(); 
 	void PickUp(ItemObject& item);
 	void Unlock(int itemType);  
+};
+
+class Handgun : public Item
+{
+public:
+	float	speed = 0.4f;
+	uint	damage = 100;
+
+public:
+			Handgun();
+	void	Use() override;
+};
+
+class Landmine : public Item
+{
+public:
+	Landmine();
+};
+
+class Binoculars : public Item
+{
+public:
+			Binoculars();
+	void	Use() override;
+};
+
+class GasMask : public Item
+{
+// this item doesn't do anything
+public:
+	GasMask();
+};
+
+class Card : public Item
+{
+public:
+	int level;
+
+public:
+			Card(int level);
+	void	Use() override;
 };
 
