@@ -70,7 +70,7 @@ void Enemy::DecideCardinal()
 	}
 }
 
-void Enemy::Persue(float const dt)
+void Enemy::Pursue(float const dt)
 {
 	// is the guard not facing the most optimal direction
 	if (!oppositeFacing && facing != optimalFacing)

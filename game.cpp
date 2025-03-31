@@ -121,7 +121,7 @@ void Game::Init()
 		world.scenes[1].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataUnlocked);
 	}
 
-	Soldier::SetType(Soldier::types::RED);      
+	Soldier::SetType(SOLDIER_TYPES_RED);       
 
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);

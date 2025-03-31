@@ -16,7 +16,7 @@ void World::InitWorld()
 		{
 			Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 			soldier.sequencer.SetSequence(currentScene->paths[i]);
-			soldier.SetState(Soldier::IDLE);
+			soldier.SetState(SOLDIER_STATES_IDLE);
 			soldier.ResetHealth();
 		}
 	}
@@ -50,7 +50,7 @@ void World::SwitchScene(int cardinal)
 				{
 					Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 					soldier.sequencer.SetSequence(currentScene->paths[i]);
-					soldier.SetState(Soldier::IDLE);
+					soldier.SetState(SOLDIER_STATES_IDLE);
 					soldier.ResetHealth(); 
 				}
 			}
@@ -77,7 +77,7 @@ void World::SwitchScene(Scene* scene)
 		{
 			Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 			soldier.sequencer.SetSequence(currentScene->paths[i]);
-			soldier.SetState(Soldier::IDLE);
+			soldier.SetState(SOLDIER_STATES_IDLE);
 			soldier.ResetHealth();
 		}
 	}

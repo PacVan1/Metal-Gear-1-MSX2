@@ -8,16 +8,16 @@
 
 void Soldier::InitSoldierTypes()
 {
-	typeData[GRAY].palette		= ColorPalette8("assets/color_palettes/gray_soldier.cpalette");
-	typeData[GRAY].alertLevel	= Soldiers::alertLevels::LOW;
-	typeData[RED ].palette		= ColorPalette8("assets/color_palettes/damaged.cpalette"); 
-	typeData[RED ].alertLevel	= Soldiers::alertLevels::HIGH; 
+	typeData[SOLDIER_TYPES_GRAY].palette	= ColorPalette8("assets/color_palettes/gray_soldier.cpalette");
+	typeData[SOLDIER_TYPES_GRAY].alertLevel	= Soldiers::alertLevels::LOW;
+	typeData[SOLDIER_TYPES_RED ].palette	= ColorPalette8("assets/color_palettes/damaged.cpalette");
+	typeData[SOLDIER_TYPES_RED ].alertLevel	= Soldiers::alertLevels::HIGH;
 }
 
-void Soldier::SetType(int type)
+void Soldier::SetType(int const t)
 {
-	Soldier::type = type; 
-	spriteSheet.sprite.palette	= &typeData[type].palette; 
+	type = t; 
+	spriteSheet.sprite.palette = &typeData[t].palette; 
 }
 
 Soldier::Soldier() :
@@ -36,13 +36,14 @@ void Soldier::Update(float const dt)
 
 	switch (state)
 	{
-	case IDLE:			IdleState();		break;
-	case PATROL:		PatrolState(dt);	break; 
-	case PURSUE:		PersueState(dt);	break;
-	case STUNNED:		StunnedState(dt);	break;
-	case SHOOT:			ShootState();		break;
-	case REALIZATION:	RealizationState(); break;
-	case SPOTTED:		SpottedState();		break;
+	case SOLDIER_STATES_IDLE:			IdleState();		break;
+	case SOLDIER_STATES_PATROL:			PatrolState(dt);	break;
+	case SOLDIER_STATES_PURSUE:			PursueState(dt);	break;
+	case SOLDIER_STATES_STUNNED:		StunnedState(dt);	break;
+	case SOLDIER_STATES_SHOOT:			ShootState();		break;
+	case SOLDIER_STATES_REALIZATION:	RealizationState(); break;
+	case SOLDIER_STATES_SPOTTED:		SpottedState();		break;
+	default: break; 
 	}
 }
 
@@ -51,20 +52,20 @@ void Soldier::SetAnimationState()
 	animState = STATE_TO_ANIM_STATE[state]; 
 }
 
-void Soldier::Damage(int damage)
+void Soldier::Damage(int const damage)
 {
 	health -= damage;
 	if (health <= 0)
 	{
 		Destroy(); 
 	}
-	SetState(STUNNED);
+	SetState(SOLDIER_STATES_STUNNED); 
 	SetAnimation(); 
 }
 
 void Soldier::Alert()
 {
-	SetState(PURSUE); 
+	SetState(SOLDIER_STATES_PURSUE);
 	DecideCardinal();
 	SetAnimation();
 }
@@ -86,18 +87,18 @@ void Soldier::IdleState()
 {
 	if (TargetInLine())
 	{
-		SetState(REALIZATION); 
+		SetState(SOLDIER_STATES_REALIZATION);
 		return;
 	}
 
-	if (turnTimer.elapsed() > TURN_TIME) 
+	if (turnTimer.Elapsed()) 
 	{
 		turns++;
-		turnTimer.reset();
+		turnTimer.Reset();
 		if (turns >= TURNS) 
 		{
 			turns = 0;
-			SetState(PATROL);
+			SetState(SOLDIER_STATES_PATROL); 
 			SetAnimation();
 			sequencer.Continue();
 		}
@@ -112,42 +113,41 @@ void Soldier::PatrolState(float const dt)
 {
 	if (TargetInLine())
 	{
-		shootTimer.reset(); 
-		SetState(REALIZATION); 
+		shootTimer.Reset();
+		SetState(SOLDIER_STATES_REALIZATION);
 		return;
 	}
 
 	sequencer.Play(dt);
 	if (sequencer.HasReachedEnd())
 	{
-		printf("Soldier has reached end of path\n"); 
-		SetState(IDLE);
+		SetState(SOLDIER_STATES_IDLE);
 		SetAnimation();
 		return;
 	}
 	if (sequencer.HasReachedFlag()) 
 	{ 
-		SetState(IDLE);
+		SetState(SOLDIER_STATES_IDLE);
 		SetAnimation();
 	}
 }
 
-void Soldier::PersueState(float const dt)
+void Soldier::PursueState(float const dt)
 {
-	Persue(dt);
+	Pursue(dt);
 
-	if (shootTimer.elapsed() >= SHOOT_TIME) 
+	if (shootTimer.Elapsed())
 	{
-		standStillTimer.reset();
+		standStillTimer.Reset();
 		DecideCardinal(); 
-		SetState(SHOOT);
+		SetState(SOLDIER_STATES_SHOOT);
 		SetAnimation();
 	}
 }
 
 void Soldier::ShootState()
 {
-	if (standStillTimer.elapsed() >= STAND_STILL_TIME)
+	if (standStillTimer.Elapsed())
 	{
 		if (!shot) // !shot
 		{
@@ -158,7 +158,7 @@ void Soldier::ShootState()
 		else
 		{
 			shot = false;
-			shootTimer.reset();
+			shootTimer.Reset();
 			Alert(); 
 		}
 	}
@@ -180,7 +180,7 @@ void Soldier::RealizationState()
 	}
 	else 
 	{
-		SetState(SPOTTED); 
+		SetState(SOLDIER_STATES_SPOTTED); 
 		SetAnimation();
 		spotAlarm.Reset();
 		Soldiers::SetAlertLevel(Soldiers::alertLevels::SPOTTED); 
@@ -206,7 +206,7 @@ void Soldier::StunnedState(float const dt)
 		{
 			stunY = 0.0f;
 			descend = false;
-			SetState(REALIZATION); 
+			SetState(SOLDIER_STATES_REALIZATION);
 		}
 	}
 }

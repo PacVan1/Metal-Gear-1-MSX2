@@ -18,6 +18,6 @@ public:
 
 protected: 
 			Enemy(AnimationSpriteSheet& sheet, uint dirAnimCount);
-	void	Persue(float const dt);  
+	void	Pursue(float const dt);
 };
 
