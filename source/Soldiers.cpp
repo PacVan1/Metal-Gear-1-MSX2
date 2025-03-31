@@ -49,7 +49,8 @@ void Soldiers::SetAlertLevel(int level)
 	alertLevel = level; 
 	switch (alertLevel)
 	{
-	case OFF:	Game::SetTheme(&Game::mainTheme); break; 
+	case OFF:	Game::SetTheme(&Game::mainTheme); break;
+	case SPOTTED: break; 
 	case LOW:
 	{
 		Game::SetTheme(&Game::alertTheme);

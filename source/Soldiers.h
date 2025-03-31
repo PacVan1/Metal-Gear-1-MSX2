@@ -8,7 +8,7 @@ class Soldiers
 public:
 	enum alertLevels
 	{
-		OFF, LOW, HIGH
+		OFF, SPOTTED, LOW, HIGH
 	};
 
 public:

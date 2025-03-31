@@ -161,6 +161,19 @@ struct Timer
 	chrono::high_resolution_clock::time_point start;
 };
 
+// Ayser's alarm
+class Alarm
+{
+public:
+	Timer timer;
+	float time;
+
+public:
+			Alarm(float const time) : time(time) {}
+	bool	Elapsed() const { return timer.elapsed() >= time; }
+	void	Reset() { timer.reset(); }
+};
+
 // Nils's jobmanager
 class Job
 {

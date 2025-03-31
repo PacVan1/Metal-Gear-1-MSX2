@@ -36,12 +36,13 @@ void Soldier::Update(float const dt)
 
 	switch (state)
 	{
-	case IDLE:		IdleState();		break;
-	case PATROL:	PatrolState(dt);	break; 
-	case PURSUE:	PersueState(dt);	break;
-	case STUNNED:	StunnedState(dt);	break;
-	case SHOOT:		ShootState();		break;
-	case SPOTTED: break;
+	case IDLE:			IdleState();		break;
+	case PATROL:		PatrolState(dt);	break; 
+	case PURSUE:		PersueState(dt);	break;
+	case STUNNED:		StunnedState(dt);	break;
+	case SHOOT:			ShootState();		break;
+	case REALIZATION:	RealizationState(); break;
+	case SPOTTED:		SpottedState();		break;
 	}
 }
 
@@ -85,9 +86,7 @@ void Soldier::IdleState()
 {
 	if (TargetInLine())
 	{
-		SetState(PURSUE);
-		SetAnimation();
-		Soldiers::SetAlertLevel(typeData[type].alertLevel); 
+		SetState(REALIZATION); 
 		return;
 	}
 
@@ -114,9 +113,7 @@ void Soldier::PatrolState(float const dt)
 	if (TargetInLine())
 	{
 		shootTimer.reset(); 
-		SetState(PURSUE);
-		SetAnimation();
-		Soldiers::SetAlertLevel(typeData[type].alertLevel); 
+		SetState(REALIZATION); 
 		return;
 	}
 
@@ -162,10 +159,31 @@ void Soldier::ShootState()
 		{
 			shot = false;
 			shootTimer.reset();
-			DecideCardinal(); 
-			SetState(PURSUE);
-			SetAnimation(); 
+			Alert(); 
 		}
+	}
+}
+
+void Soldier::SpottedState()
+{
+	if (spotAlarm.Elapsed())
+	{
+		Soldiers::SetAlertLevel(typeData[type].alertLevel);
+	}
+}
+
+void Soldier::RealizationState()
+{
+	if (Soldiers::alertLevel >= Soldiers::alertLevels::SPOTTED) 
+	{
+		Alert();
+	}
+	else 
+	{
+		SetState(SPOTTED); 
+		SetAnimation();
+		spotAlarm.Reset();
+		Soldiers::SetAlertLevel(Soldiers::alertLevels::SPOTTED); 
 	}
 }
 
@@ -188,8 +206,7 @@ void Soldier::StunnedState(float const dt)
 		{
 			stunY = 0.0f;
 			descend = false;
-			SetState(PURSUE);
-			SetAnimation(); 
+			SetState(REALIZATION); 
 		}
 	}
 }
