@@ -21,5 +21,5 @@ public:
 	AnimationSet animSet; 
 
 public:
-	AnimationSpriteSheet(char const* path); 
+	AnimationSpriteSheet(char const* path);
 };

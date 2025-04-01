@@ -9,7 +9,9 @@ class Actor : public GameObject, public IDamageable
 {
 public:
 	AnimatedSprite	display;
-	Sequencer		sequencer; 
+	Sequencer		sequencer;
+	//AABB			bboxHead;
+	//AABB			bboxBody; 
 	AABB			bboxTile; 
 	int				facing;
 	uint			state;  
@@ -28,6 +30,10 @@ public:
 	void			SetAnimation(); 
 	void			SetState(uint state);
 	void			SetAnimationState(uint state) { animState = state; }
+	bool			DetectCollision(Actor const& other) const;  
+
+	// pixel perfect collision:
+	bool			DetectPixel(Actor const& other) const;  
 
 protected: 
 	void			Move(float const dt);

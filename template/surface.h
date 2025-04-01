@@ -126,7 +126,7 @@ public:
 			Palette8(char const* path); 
 			Palette8(uint8_t indices[COLOR_COUNT]); 
 			uint8_t FindClosestIndex(uint32_t r, uint32_t g, uint32_t b) const;  
-			void Cycle();  
+			void Cycle();
 		}; 
 
 #if BAKE_MODE
@@ -150,7 +150,7 @@ public:
 		SubSurface8(uint8_t* const buffer, int const width, int const height);  
 		SubSurface8(char const* path); 
 		~SubSurface8(); 
-		void Render(Surface8* const screen, int const x, int const y) const; 
+		void Render(Surface8* const screen, int const x, int const y) const;
 	};
 
 public:

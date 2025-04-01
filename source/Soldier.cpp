@@ -25,7 +25,7 @@ Soldier::Soldier() :
 {
 	InitState();
 	bbox.group = AABB::ENEMY; 
-	speed = 0.08f;
+	speed = 0.01f;
 	maxHealth = 10;
 	ResetHealth();
 }
@@ -68,6 +68,7 @@ void Soldier::Alert()
 	SetState(SOLDIER_STATES_PURSUE);
 	DecideCardinal();
 	SetAnimation();
+	shootTimer.Reset(); 
 }
 
 void Soldier::Reset() 
@@ -85,11 +86,11 @@ void Soldier::TurnRandomSide()
 
 void Soldier::IdleState()
 {
-	if (TargetInLine())
-	{
-		SetState(SOLDIER_STATES_REALIZATION);
-		return;
-	}
+	//if (TargetInLine())
+	//{
+	//	SetState(SOLDIER_STATES_REALIZATION);
+	//	return;
+	//}
 
 	if (turnTimer.Elapsed()) 
 	{
@@ -111,12 +112,11 @@ void Soldier::IdleState()
 
 void Soldier::PatrolState(float const dt)
 {
-	if (TargetInLine())
-	{
-		shootTimer.Reset();
-		SetState(SOLDIER_STATES_REALIZATION);
-		return;
-	}
+	//if (TargetInLine())
+	//{
+	//	SetState(SOLDIER_STATES_REALIZATION);
+	//	return;
+	//}
 
 	sequencer.Play(dt);
 	if (sequencer.HasReachedEnd())

@@ -2,6 +2,7 @@
 #include "Soldiers.h"
 
 #include "Tilemap.h" 
+#include "Game.h" 
 
 void Soldiers::Update(float const dt)
 {
@@ -13,6 +14,11 @@ void Soldiers::Update(float const dt)
 		if (pool.IsActive(i) && !pool[i].destroyed)
 		{
 			pool[i].Update(dt);
+
+			if (pool[i].DetectPixel(Game::player))
+			{
+				printf("Pixel perfect detection!!!\n"); 
+			}
 		}
 	}
 

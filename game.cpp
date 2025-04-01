@@ -201,7 +201,7 @@ void Game::PlayingState(float const dt)
 			world.currentScene->items[i]->Render(screen8);
 		}
 	}
-	
+
 	HandlePlayerLeaveScreen();
 
 	playerUI.Render(screen8);

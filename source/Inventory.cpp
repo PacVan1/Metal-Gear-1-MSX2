@@ -26,7 +26,7 @@ Inventory::Inventory() :
 	for (int i = 0; i < COUNT; i++) { Unlock(i); items[i]->Stack(1); }
 
 	selectedWeapon		= items[HANDGUN]; 
-	selectedEquipment	= items[CARD1];
+	selectedEquipment	= items[BINOCULARS];
 #endif
 }
 
