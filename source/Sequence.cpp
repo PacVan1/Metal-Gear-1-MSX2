@@ -58,16 +58,18 @@ void Sequencer::Play(float const dt)
 {
 	if (!sequence) return;
 
-	actor.SetPosition(actor.bbox.fPos + CardinalToFloat2(actor.facing) * sequence->speed * dt);
+	actor.SetPosition(actor.GetPosition() + CardinalToFloat2(actor.facing) * sequence->speed * dt);
 	if (facing != GetCardinal())
 	{
 		actor.bbox.fPos[axis] = static_cast<float>(sequence->flags[flagIdx].position);   
-		NextFlag();
 		reachedFlag = true;
-		return;
+		NextFlag();
 	}
-	reachedFlag = false;
-	reachedEnd	= false;
+	else
+	{
+		reachedFlag = false;
+		reachedEnd	= false;
+	}
 }
 
 int Sequencer::GetCardinal() const

@@ -9,8 +9,8 @@ public:
 	inline static Player const* target = nullptr;
 
 public:
-	int optimalFacing;
-	int oppositeFacing;
+	int		optimalFacing;
+	bool	oppositeFacing;
 
 public:
 	void	DecideCardinal();

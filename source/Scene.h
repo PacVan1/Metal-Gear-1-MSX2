@@ -6,7 +6,7 @@
 
 struct Scene
 {
-	Tilemap*	tilemap;
+	Tilemap*		tilemap;
 	Sequence**		paths;
 	ItemObject**	items;
 	uint			itemCount = 0; 

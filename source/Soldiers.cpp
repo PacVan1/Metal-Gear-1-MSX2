@@ -5,12 +5,12 @@
 
 void Soldiers::Update(float const dt)
 {
-	if (pool.activeCount == 0) return; 
+	if (pool.GetActiveCount() == 0) return;
 
 	// update soldiers: 
 	for (int i = 0; i < pool.SIZE; i++)
 	{
-		if (pool.active[i] && !pool[i].destroyed)
+		if (pool.IsActive(i) && !pool[i].destroyed)
 		{
 			pool[i].Update(dt);
 		}
@@ -29,11 +29,11 @@ void Soldiers::Update(float const dt)
 
 void Soldiers::Render(Surface8* screen)
 {
-	if (pool.activeCount == 0) return;
+	if (pool.GetActiveCount() == 0) return;
 
 	for (int i = 0; i < pool.SIZE; i++)
 	{
-		if (pool.active[i] && !pool[i].destroyed)
+		if (pool.IsActive(i) && !pool[i].destroyed)
 		{
 			pool[i].Render(screen);
 		}
@@ -57,7 +57,7 @@ void Soldiers::SetAlertLevel(int level)
 
 		for (int i = 0; i < pool.SIZE; i++)
 		{
-			if (pool.active[i] && !pool[i].destroyed)
+			if (pool.IsActive(i) && !pool[i].destroyed)
 			{
 				pool[i].Alert(); 
 			}
@@ -72,7 +72,7 @@ void Soldiers::SetAlertLevel(int level)
 
 		for (int i = 0; i < pool.SIZE; i++)
 		{
-			if (pool.active[i] && !pool[i].destroyed)
+			if (pool.IsActive(i) && !pool[i].destroyed)
 			{
 				pool[i].Alert();
 			}
@@ -85,17 +85,17 @@ void Soldiers::SetAlertLevel(int level)
 
 void Soldiers::Damage(int idx, int damage)
 {
-	if (pool.activeCount == 0) return;
+	if (pool.GetActiveCount() == 0) return;
 
 	// damage:
 	pool[idx].Damage(damage);
 
-	if (pool.activeCount == 0) return;
+	if (pool.GetActiveCount() == 0) return;
 
 	// check if everybody is dead:
 	for (int i = 0; i < SOLDIER_COUNT; i++)
 	{
-		if (pool.active[i] && !pool[i].destroyed)
+		if (pool.IsActive(i) && !pool[i].destroyed)
 		{
 			return; 
 		}
@@ -116,7 +116,7 @@ int2 Soldiers::FindSpawnTile()
 
 void Soldiers::SpawnReinforcement()
 {
-	if (pool.activeCount >= SOLDIER_COUNT) return;
+	if (pool.GetActiveCount() >= SOLDIER_COUNT) return;
 
 	int2 coord = FindSpawnTile();
 	if (coord == int2(-1, -1)) return; 
@@ -146,7 +146,7 @@ int2 Soldiers::FindSpawnTileOnSide(int cardinal)
 
 void Soldiers::SpawnReinforcementOnSide(int cardinal)
 {
-	if (pool.activeCount >= SOLDIER_COUNT) return;
+	if (pool.GetActiveCount() >= SOLDIER_COUNT) return;
 
 	int2 coord = FindSpawnTileOnSide(cardinal);
 	if (coord == int2(-1, -1)) return;

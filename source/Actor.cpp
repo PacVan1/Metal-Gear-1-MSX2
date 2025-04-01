@@ -14,15 +14,15 @@ Actor::Actor(AnimationSpriteSheet& sheet, uint dirAnimCount) :
 
 void Actor::Render(Surface8* screen) const
 {
-	display.Render(screen, bbox.iPos.x + bbox.OFFSET.x, bbox.iPos.y + bbox.OFFSET.y);    
-	bbox.Render(screen);
+	display.Render(screen, GetPositionInt().x + bbox.OFFSET.x, GetPositionInt().y + bbox.OFFSET.y);
+	//bbox.Render(screen);
 	bboxTile.Render(screen); 
 } 
 
 void Actor::Move(float const dt) 
 {   
 	bboxTile.Move(facing, speed * dt);
-	bbox.Update(bboxTile.fPos); 
+	bbox.Update(bboxTile.GetCenter());  
 }
 void Actor::SetPosition(float2 const position)
 {

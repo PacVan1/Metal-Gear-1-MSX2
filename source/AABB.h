@@ -25,10 +25,11 @@ public:
 	float2 const	HALF_SIZE;       
 	int2 const		OFFSET;  
 
-public:
+public: 
+	int		group;
+//private:
 	float2	fPos;
 	int2	iPos;
-	int		group; 
 
 private:
 	int2	topLeft; 
@@ -59,8 +60,9 @@ public:
 	bool Detect(float2 point) const;
 	bool DetectTilemap() const; 
 	bool DetectTilemap(int cardinal, f32 distance) const;
-	inline float2 GetCenter() const; 
-	inline float2 GetTopLeft() const; 
-	inline float2 GetBottomRight() const; 
+	inline float2	GetCenter() const;
+	int2			GetCenterInt() const { return iPos; }
+	inline float2	GetTopLeft() const; 
+	inline float2	GetBottomRight() const;
 };
 

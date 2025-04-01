@@ -79,29 +79,29 @@ void AABB::Update(float2 const position)
 void AABB::Render(Surface8* screen) const
 {
 #if DEBUG_MODE     
-	//int2 pos = topLeft - OFFSET;    
-	//if (hit)
-	//{
-	//	screen->Box(topLeft.x + 1, topLeft.y - 1, bottomRight.x, bottomRight.y - 2, hitColor); 
-	//	screen->Plot(pos.x, pos.y, hitColor);   
-	//}
-	//else
-	//{
-	//	screen->Box(topLeft.x + 1, topLeft.y - 1 , bottomRight.x, bottomRight.y - 2, missColor);
-	//	screen->Plot(pos.x, pos.y, missColor);   
-	//}
-
-	int2 pos = topLeft - OFFSET;
+	int2 pos = topLeft - OFFSET;    
 	if (hit)
 	{
-		screen->Box(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, hitColor);
-		screen->Plot(pos.x, pos.y, hitColor);
+		screen->Box(topLeft.x + 1, topLeft.y - 1, bottomRight.x, bottomRight.y - 2, hitColor); 
+		screen->Plot(pos.x, pos.y, hitColor);   
 	}
 	else
 	{
-		screen->Box(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, missColor);
-		screen->Plot(pos.x, pos.y, missColor);
+		screen->Box(topLeft.x + 1, topLeft.y - 1 , bottomRight.x, bottomRight.y - 2, missColor);
+		screen->Plot(pos.x, pos.y, missColor);   
 	}
+
+	//int2 pos = topLeft - OFFSET;
+	//if (hit)
+	//{
+	//	screen->Box(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, hitColor);
+	//	screen->Plot(pos.x, pos.y, hitColor);
+	//}
+	//else
+	//{
+	//	screen->Box(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, missColor);
+	//	screen->Plot(pos.x, pos.y, missColor);
+	//}
 #endif
 }
 
@@ -141,7 +141,7 @@ bool AABB::DetectTilemap() const
 	return DetectTilemap(area);  
 }
 
-bool AABB::DetectTilemap(int card, f32 dist) const
+bool AABB::DetectTilemap(int const card, const f32 dist) const
 {
 	int2 const dir = CardinalToInt2(card);
 	float2 const dirf = CardinalToFloat2(card);

@@ -174,7 +174,7 @@ void Player::Punch()
 	bboxPunch.Update(GetPosition());
 	for (int i = 0; i < Soldiers::pool.SIZE; i++) 
 	{
-		if (!Soldiers::pool.active[i] || Soldiers::pool[i].destroyed) continue;
+		if (!Soldiers::pool.IsActive(i) || Soldiers::pool[i].destroyed) continue;
 		if (AABB::Detect(bboxPunch, Soldiers::pool[i].bbox))
 		{
 			Soldiers::Damage(i, 2);

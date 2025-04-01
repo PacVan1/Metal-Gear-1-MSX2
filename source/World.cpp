@@ -12,7 +12,7 @@ void World::InitWorld()
 
 	for (int i = 0; i < currentScene->soldierCount; i++)
 	{
-		if (Soldiers::pool.activeCount < Soldiers::SOLDIER_COUNT) 
+		if (Soldiers::pool.GetActiveCount() < Soldiers::SOLDIER_COUNT) 
 		{
 			Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 			soldier.sequencer.SetSequence(currentScene->paths[i]);
@@ -46,7 +46,7 @@ void World::SwitchScene(int cardinal)
 
 			for (int i = 0; i < currentScene->soldierCount; i++)
 			{
-				if (Soldiers::pool.activeCount < Soldiers::SOLDIER_COUNT)
+				if (Soldiers::pool.GetActiveCount() < Soldiers::SOLDIER_COUNT)
 				{
 					Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 					soldier.sequencer.SetSequence(currentScene->paths[i]);
@@ -73,7 +73,7 @@ void World::SwitchScene(Scene* scene)
 
 	for (int i = 0; i < currentScene->soldierCount; i++)
 	{
-		if (Soldiers::pool.activeCount < Soldiers::SOLDIER_COUNT)
+		if (Soldiers::pool.GetActiveCount() < Soldiers::SOLDIER_COUNT)
 		{
 			Soldier& soldier = Soldiers::pool[Soldiers::pool.WakeObject()];
 			soldier.sequencer.SetSequence(currentScene->paths[i]);

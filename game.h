@@ -19,7 +19,7 @@ enum gameStates : u8
 
 namespace Tmpl8
 {
-class Game : public TheApp
+class Game final : public TheApp
 {
 public:
 	inline static World		world; 
@@ -47,7 +47,7 @@ public:
 	// game flow methods
 	void Init();
 	void Tick(float const dt);
-	void Shutdown() {}
+	void Shutdown();
 
 	void OpeningState(float const dt); 
 	void PlayingState(float const dt);
@@ -66,4 +66,11 @@ public:
 	void KeyUp( int ) {}
 	void KeyDown( int ) {} 
 };
+
+inline void Game::Shutdown()
+{
+	delete screen;
+	delete screen8;
+}
+
 } // namespace Tmpl8

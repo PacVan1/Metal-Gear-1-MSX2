@@ -3,6 +3,7 @@
 // IGAD/NHTV/BUAS/UU - Jacco Bikker - 2006-2024
 
 #include "precomp.h"
+
 #include "game.h"
 
 #include <iostream> 
@@ -48,6 +49,14 @@ void Game::Init()
 	world.columns = 4;
 	world.rows = 5;
 	world.sceneCount = 17;
+
+	int test;
+	int* ptrTest = &test;
+	int& refTest = test;
+
+	*ptrTest += 1;
+	refTest += 1;
+
 
 	world.scenes[0] = Scene("assets/scenes/scene1/scene.scene");
 	world.scenes[1] = Scene("assets/scenes/scene2/scene.scene");
@@ -121,7 +130,7 @@ void Game::Init()
 		world.scenes[1].tilemap->InsertMetaTile({ 20, 12 }, passage2->props.dataUnlocked);
 	}
 
-	Soldier::SetType(SOLDIER_TYPES_RED);       
+	Soldier::SetType(SOLDIER_TYPES_GRAY);       
 
 	alertTheme.setLooping(true); 
 	mainTheme.setLooping(true);
@@ -250,26 +259,26 @@ void Game::SetTextPopup(int2 const position, char const* str)
 
 void Game::HandlePlayerLeaveScreen()
 {
-	if (player.bbox.iPos.x > NATIVE_SCREEN_WIDTH - 1)  
+	if (player.GetPositionInt().x > NATIVE_SCREEN_WIDTH - 1)  
 	{ 
 		world.SwitchScene(EAST); 
-		player.SetPosition({ 0.0f, player.bbox.fPos.y }); 
+		player.SetPosition({ 0.0f, player.GetPosition().y });  
 	}
-	else if (player.bbox.iPos.x < 0)
+	else if (player.GetPositionInt().x < 0)
 	{ 
 		world.SwitchScene(WEST);
-		player.SetPosition({ NATIVE_SCREEN_WIDTH - 1, player.bbox.fPos.y });
+		player.SetPosition({ NATIVE_SCREEN_WIDTH - 1, player.GetPosition().y });
 	}
 
-	if (player.bbox.fPos.y > NATIVE_SCREEN_HEIGHT - 21)
+	if (player.GetPositionInt().y > NATIVE_SCREEN_HEIGHT - 21)
 	{
 		world.SwitchScene(SOUTH);
-		player.SetPosition({ player.bbox.fPos.x, 0.0f });
+		player.SetPosition({ player.GetPosition().x, 0.0f });
 	}
-	else if (player.bbox.fPos.y < 0)
+	else if (player.GetPositionInt().y < 0)
 	{ 
 		world.SwitchScene(NORTH);
-		player.SetPosition({ player.bbox.fPos.x, NATIVE_SCREEN_HEIGHT - 21 });
+		player.SetPosition({ player.GetPosition().x, NATIVE_SCREEN_HEIGHT - 21 });
 	}
 }
 

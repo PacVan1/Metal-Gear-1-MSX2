@@ -11,8 +11,8 @@ Enemy::Enemy(AnimationSpriteSheet& sheet, uint dirAnimCount) :
 bool Enemy::TargetInLine() const
 {
 	int2 dir = CardinalToInt2(facing);
-	int2 targetCoord = PixelToTile(target->bboxTile.iPos);
-	int2 soldierCoord = PixelToTile(bboxTile.iPos);
+	int2 targetCoord = PixelToTile(target->bboxTile.GetCenterInt());
+	int2 soldierCoord = PixelToTile(bboxTile.GetCenterInt()); 
 	if (int2(targetCoord.x * dir.y, targetCoord.y * dir.x) != int2(soldierCoord.x * dir.y, soldierCoord.y * dir.x))
 	{
 		return false;

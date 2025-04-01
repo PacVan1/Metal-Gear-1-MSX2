@@ -3,10 +3,10 @@
 #include "Actor.h"
 #include "Inventory.h"
 
-class Player : public Actor 
+class Player final : public Actor 
 {
 public:
-	enum states
+	enum states : u8
 	{
 		IDLE, RUN, SWIM, PUNCH, CLIMB, DEAD, DIVE, COUNT  
 	};
@@ -24,7 +24,7 @@ public:
 	AABB		bboxPunch; 
 
 public:
-				Player(); 
+				Player();
 	void		Update(float const dt) override; 
 	void		SetAnimationState() override;
 	void		Damage(int damage) override;

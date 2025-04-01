@@ -20,10 +20,11 @@ protected:
 	uint			animState; 
 
 public:
+	virtual			~Actor() = default; 
 					Actor(AnimationSpriteSheet& sheet, uint dirAnimCount);
 	void			Render(Surface8* screen) const; 
 	virtual void	Update(float const dt) = 0;    
-	void			SetPosition(float2 const position);
+	void			SetPosition(float2 const position) override; 
 	void			SetAnimation(); 
 	void			SetState(uint state);
 	void			SetAnimationState(uint state) { animState = state; }

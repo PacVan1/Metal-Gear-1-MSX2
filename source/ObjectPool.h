@@ -6,13 +6,13 @@ class ObjectPool
 public:
 	uint const	SIZE;
 
-public:
+private:
 	T*			objects;
 	bool*		active;
 	uint		activeCount;
 
 public:
-	ObjectPool(size_t size = 10) :
+	ObjectPool(size_t const size = 10) :
 		SIZE(size),
 		activeCount(0) 
 	{
@@ -39,7 +39,7 @@ public:
 		return -1;
 	}
 
-	void ReturnObject(int idx)
+	void ReturnObject(int const idx)
 	{
 		active[idx] = false;
 		activeCount--; 
@@ -53,6 +53,9 @@ public:
 		}
 		activeCount = 0; 
 	}
+
+	bool IsActive(int const idx) const { return active[idx]; }
+	int GetActiveCount() const { return activeCount; }
 
 	T& operator[](uint index)
 	{

@@ -176,14 +176,12 @@ public:
 	Surface8() = default;  
 	Surface8(uint8_t* const buffer, int const width, int const height);
 	Surface8(int const width, int const height);
-	Surface8(char const* path); // a .txt format with indexes to colors inside the palette 
 	~Surface8();  
 	void Print(char const* s, int const x1, int const y1, uint8_t const c);
 	void Print(char s, int const x, int const y, uint8_t const c);
 	void Clear(uint8_t const c);
 	void Line(float x1, float y1, float x2, float y2, uint8_t const c); 
 	void Plot(int const x, int const y, uint8_t const c); 
-	//void LoadFromFile(const char* file);
 	void CopyTo(Surface* dst); 
 	void Box(int const x1, int const y1, int const x2, int const y2, uint8_t const c); 
 	void Bar(int x1, int y1, int x2, int y2, uint8_t c);   
