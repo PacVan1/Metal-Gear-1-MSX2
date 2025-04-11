@@ -32,9 +32,6 @@
     <ClCompile Include="source\AABB.cpp">
       <Filter>metal gear 1 msx2\interactivity</Filter>
     </ClCompile>
-    <ClCompile Include="source\GameObject.cpp">
-      <Filter>metal gear 1 msx2\interactivity</Filter>
-    </ClCompile>
     <ClCompile Include="source\AssetManager.cpp">
       <Filter>metal gear 1 msx2\util</Filter>
     </ClCompile>
@@ -104,6 +101,10 @@
     <ClCompile Include="source\TextPopup.cpp">
       <Filter>metal gear 1 msx2\ui</Filter>
     </ClCompile>
+    <ClCompile Include="SoldierTypes.cpp" />
+    <ClCompile Include="AlertPopup.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LandmineObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -141,9 +142,6 @@
       <Filter>metal gear 1 msx2\animation</Filter>
     </ClInclude>
     <ClInclude Include="source\AABB.h">
-      <Filter>metal gear 1 msx2\interactivity</Filter>
-    </ClInclude>
-    <ClInclude Include="source\GameObject.h">
       <Filter>metal gear 1 msx2\interactivity</Filter>
     </ClInclude>
     <ClInclude Include="source\IDamageable.h">
@@ -227,6 +225,10 @@
     <ClInclude Include="source\TextPopup.h">
       <Filter>metal gear 1 msx2\ui</Filter>
     </ClInclude>
+    <ClInclude Include="SoldierTypes.h" />
+    <ClInclude Include="AlertPopup.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="LandmineObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="kernel">

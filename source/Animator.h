@@ -7,18 +7,23 @@ class AnimatedSprite;
 class Animator
 {
 public:
-	uint				rate = 200;
-	AnimatedSprite&		sprite; 
-	Animation const*	anim; // for readability and efficiency
-	uint				animIdx; 
-	float				time;
-	bool				finished;  
+	int					mRate = 200;
+
+private: 
+	AnimatedSprite*		mDisplay;  
+	Animation const*	mAnim; // for readability and efficiency
+	float				mTime;
+	int					mAnimIdx; 
+	bool				mFinished;
 
 public:
-				Animator(AnimatedSprite& sprite); 
+				Animator() = default;  
+				Animator(AnimatedSprite* display);
 	void		Play(float const dt);
-	void		SetAnimation(uint const idx); 
-	void		Reset(); 
-	inline bool IsFinished() const { return finished; }
+	void		SetAnimation(int const idx); 
+	void		Reset();
+
+	inline int	GetAnimIdx() const { return mAnimIdx; }
+	inline bool IsFinished() const { return mFinished; }
 };
 

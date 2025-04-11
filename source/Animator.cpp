@@ -3,43 +3,43 @@
 
 #include "AnimatedSprite.h" 
 
-Animator::Animator(AnimatedSprite& sprite) :
-	sprite(sprite)
+Animator::Animator(AnimatedSprite* display) :
+	mDisplay(display)
 {
 	SetAnimation(0);
 } 
 
 void Animator::Play(float const dt)
 {
-	if (!anim->hasDuration) 
+	if (!mAnim->hasDuration) 
 	{
 		return;
 	}
 
-	finished = false;
-	time += dt; 
-	if (static_cast<uint>(time) >= rate)   
+	mFinished = false;
+	mTime += dt; 
+	if (static_cast<int>(mTime) >= mRate)     
 	{
-		time -= (float)rate;  
-		sprite.frame++; 
-		if (sprite.frame > anim->finalFrame) 
+		mTime -= static_cast<float>(mRate); 
+		mDisplay->mFrame++; 
+		if (mDisplay->mFrame > mAnim->finalFrame) 
 		{
-			sprite.frame = anim->startFrame; 
-			finished = true;
+			mDisplay->mFrame = mAnim->startFrame; 
+			mFinished = true; 
 		}
 	}
 }
 
-void Animator::SetAnimation(uint const idx)
+void Animator::SetAnimation(int const idx)
 {
-	animIdx = idx;   
-	anim = &sprite.sheet.animSet.anims[idx]; 
+	mAnimIdx = idx;   
+	mAnim = mDisplay->GetAnimation(idx);   
 	Reset();
 }
 
 void Animator::Reset()
 {
-	finished = false;
-	time = 0.0f; 
-	sprite.frame = anim->startFrame; 
+	mFinished = false;
+	mTime = 0.0f; 
+	mDisplay->mFrame = mAnim->startFrame; 
 }

@@ -1,41 +1,69 @@
 #include "precomp.h"
 #include "InventoryUI.h"
 
-bool prevup = false;
-bool prevdown = false;
-bool prevaccept = false; 
+#include "Game.h" 
+
+InventoryUI::InventoryUI(Inventory* inventory) :
+	mInventory(inventory),
+	mState(INVENTORY_UI_STATES_WEAPONS),
+	mSelected(0)
+{}
+
 void InventoryUI::Update(float const dt)
 {
-	bool now = GetAsyncKeyState(INVENTORY_UP);  
-	if (!now && prevup)
+	switch (mState) 
 	{
-		selected = (selected - 1 >= 0) ? selected - 1 : selected; 
+	case INVENTORY_UI_STATES_WEAPONS:
+		{
+		if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_UP))
+		{
+			mSelected = (mSelected - 1 >= 0) ? mSelected - 1 : mSelected;
+		}
+		if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_DOWN))
+		{
+			mSelected = (mSelected + 1 <= mInventory->mUnlockedWeaponsCount - 1) ? mSelected + 1 : mSelected;
+		}
+		if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_SELECT))
+		{
+			mInventory->mSelectedWeapon = mInventory->mUnlockedWeapons[mSelected]; 
+		}
+		break;
+		}
+	case INVENTORY_UI_STATES_EQUIPMENT:
+		{
+		if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_UP))
+		{
+			mSelected = (mSelected - 1 >= 0) ? mSelected - 1 : mSelected;
+		}
+		if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_DOWN))
+		{
+			mSelected = (mSelected + 1 <= mInventory->mUnlockedEquipmentCount - 1) ? mSelected + 1 : mSelected;
+		}
+		if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_SELECT))
+		{
+			mInventory->mSelectedEquipment = mInventory->mUnlockedEquipment[mSelected];
+		}
+		break;
+		}
+	default: break;
 	}
-	prevup = now;
 
-	now = GetAsyncKeyState(INVENTORY_DOWN);
-	if (!now && prevdown)
+	if (Game::sInput->IsKeyReleased(CONTROLS_INVENTORY_SWITCH))
 	{
-		selected = (selected + 1 <= Inventory::EQUIPMENT_COUNT - 1) ? selected + 1 : selected;
+		mState = (mState == 0) ? mState = 1 : mState = 0;
+		mSelected = 0; 
 	}
-	prevdown = now;
-
-	now = GetAsyncKeyState(INVENTORY_SELECT); 
-	if (!now && prevaccept)
-	{
-		inv->selectedEquipment = inv->unlockedEquipment[selected]; 
-	}
-	prevaccept = now;
 }
 
 void InventoryUI::Render(Surface8* screen) const
 {
-	screen->Clear(0); // black
+	screen->Clear(0); // blacks
 
-	switch (state)
+	switch (mState) 
 	{
-	case INVENTORY_UI_STATE_WEAPONS:	RenderWeapons(screen);		break;
-	case INVENTORY_UI_STATE_EQUIPMENT:	RenderEquipment(screen);	break;
+	case INVENTORY_UI_STATES_WEAPONS:	RenderWeapons(screen);		break;
+	case INVENTORY_UI_STATES_EQUIPMENT:	RenderEquipment(screen);	break;
+	default: break; 
 	}
 }
 
@@ -43,29 +71,44 @@ void InventoryUI::RenderWeapons(Surface8* screen) const
 {
 	screen->Print("Weapon Select", NATIVE_SCREEN_WIDTH / 2 - 39, 10, 181);
 
-	for (int i = 0; i < inv->unlockedWeaponsCount; i++)
+	// render equipment:
+	for (int i = 0; i < mInventory->mUnlockedWeaponsCount; i++)
 	{
-		screen->Box(10, 25 * i + 26, NATIVE_SCREEN_WIDTH / 2 - 5, 25 * i + 20 + 26, 181);
-		screen->Print(inv->unlockedWeapons[i]->name, 15, 25 * i + 31, 181);
+		mInventory->mUnlockedWeapons[i]->Render(screen, HORIZONTAL_ITEM_SPACING, VERTICAL_SPACING + ITEM_HEIGHT * i);
+		screen->Print(mInventory->mUnlockedWeapons[i]->name, HORIZONTAL_ITEM_SPACING + WEAPON_WIDTH, VERTICAL_SPACING + i * ITEM_HEIGHT, 181);
 
-		if (inv->unlockedWeapons[i]->stackable)
+		if (mInventory->mUnlockedWeapons[i]->stackable)
 		{
-			screen->Print(inv->unlockedWeapons[i]->strCount, NATIVE_SCREEN_WIDTH / 2 - 20, 25 * i + 20 + 10, 181); 
+			screen->Print(mInventory->mUnlockedWeapons[i]->strCount, HORIZONTAL_ITEM_SPACING + HORIZONTAL_STACK_SPACING + 12, VERTICAL_SPACING + i * ITEM_HEIGHT + FONT_SIZE + 2, 181);
 		}
 	}
 
-	screen->Box(0, 25 * selected + 26, 10, 25 * selected + 36, 181); // cursor test
+	// render cursor:
+	if (mInventory->mUnlockedWeaponsCount > 0)
+	{
+		Item::spriteSheet.RenderFrame(screen, HORIZONTAL_ITEM_SPACING - CURSOR_SIZE, VERTICAL_SPACING + mSelected * ITEM_HEIGHT, 0);
+	}
 }
 
 void InventoryUI::RenderEquipment(Surface8* screen) const
 {
 	screen->Print("Equipment Select", NATIVE_SCREEN_WIDTH / 2 - 48, 10, 181);
 
-	for (int i = 0; i < inv->unlockedEquipmentCount; i++)
+	// render equipment:
+	for (int i = 0; i < mInventory->mUnlockedEquipmentCount; i++)
 	{
-		screen->Box(10, 25 * i + 26, NATIVE_SCREEN_WIDTH / 2 - 5, 25 * i + 20 + 26, 181);
-		screen->Print(inv->unlockedEquipment[i]->name, 15, 25 * i + 31, 181);
+		mInventory->mUnlockedEquipment[i]->Render(screen, HORIZONTAL_ITEM_SPACING, VERTICAL_SPACING + ITEM_HEIGHT * i);
+		screen->Print(mInventory->mUnlockedEquipment[i]->name, HORIZONTAL_ITEM_SPACING + EQUIPMENT_WIDTH, VERTICAL_SPACING + i * ITEM_HEIGHT, 181);
+
+		if (mInventory->mUnlockedEquipment[i]->stackable)
+		{
+			screen->Print(mInventory->mUnlockedEquipment[i]->strCount, HORIZONTAL_ITEM_SPACING + HORIZONTAL_STACK_SPACING, VERTICAL_SPACING + i * ITEM_HEIGHT + FONT_SIZE + 2, 181);
+		}
 	}
 
-	screen->Box(0, 25 * selected + 26, 10, 25 * selected + 36, 181); // cursor test
+	// render cursor:
+	if (mInventory->mUnlockedEquipmentCount > 0)
+	{
+		Item::spriteSheet.RenderFrame(screen, HORIZONTAL_ITEM_SPACING - CURSOR_SIZE, VERTICAL_SPACING + mSelected * ITEM_HEIGHT, 0);
+	}
 }

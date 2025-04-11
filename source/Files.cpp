@@ -41,7 +41,7 @@ char* Files::GetLine(FILE* file, uint const maxLength)
 
 void Files::GetLine(FILE* file, char* line, uint const maxLength)  
 {
-	fgets(line, maxLength, file);   
+	fgets(line, maxLength, file);
 }
 
 FILE* Files::StartLoading(char const* path)

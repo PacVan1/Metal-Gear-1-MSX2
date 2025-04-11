@@ -31,8 +31,6 @@ static GLTexture* renderTarget = 0;
 static int scrwidth = 0, scrheight = 0;
 static TheApp* app = 0;
 
-uint keystate[256] = { 0 };
-
 // static member data for instruction set support class
 static const CPUCaps cpucaps;
 
@@ -41,9 +39,6 @@ GLTexture* GetRenderTarget() { return renderTarget; }
 
 // provide access to window focus state
 bool WindowHasFocus() { return hasFocus; }
-
-// provide access to key state array
-bool IsKeyDown( const uint key ) { return keystate[key & 255] == 1; }
 
 // GLFW callbacks
 void InitRenderTarget( int w, int h )
@@ -59,8 +54,8 @@ void ReshapeWindowCallback( GLFWwindow*, int w, int h )
 void KeyEventCallback( GLFWwindow*, int key, int, int action, int )
 {
 	if (key == GLFW_KEY_ESCAPE) running = false;
-	if (action == GLFW_PRESS) { if (app) if (key >= 0) app->KeyDown( key ); keystate[key & 255] = 1; }
-	else if (action == GLFW_RELEASE) { if (app) if (key >= 0) app->KeyUp( key ); keystate[key & 255] = 0; }
+	if (action == GLFW_PRESS) { if (app) if (key >= 0) app->KeyDown( key ); app->mInput.mKeyStates[key & 255] = true; }
+	else if (action == GLFW_RELEASE) { if (app) if (key >= 0) app->KeyUp( key ); app->mInput.mKeyStates[key & 255] = false; } 
 }
 void CharEventCallback( GLFWwindow*, uint ) { /* nothing here yet */ }
 void WindowFocusCallback( GLFWwindow*, int focused ) { hasFocus = (focused == GL_TRUE); }
@@ -83,7 +78,7 @@ void ErrorCallback( int, const char* description )
 }
 
 // Application entry point
-void main()
+int main()
 {
 	// open a window
 	if (!glfwInit()) FatalError( "glfwInit failed." );
@@ -144,7 +139,7 @@ void main()
 	app->screen = screen;
 	app->Init();
 	// done, enter main loop
-#if 0
+#if 1
 	// crt shader, https://github.com/libretro/slang-shaders/tree/master/crt/shaders/hyllian
 	char fs[] =
 		"#version 330											\n"

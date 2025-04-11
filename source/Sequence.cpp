@@ -1,7 +1,7 @@
 #include "precomp.h"
 #include "Sequence.h"
 
-#include "Files.h"
+#include "Cardinals.h" 
 #include "Actor.h"
 
 Sequence::Sequence(char const* path) 
@@ -9,33 +9,33 @@ Sequence::Sequence(char const* path)
 	Files::PrintLoading(path); 
 	FILE* file = Files::ReadFile(path); 
 
-	if (!fscanf(file, "Start: %d %d\n", &start.x, &start.y))
+	if (!fscanf(file, "Start: %d %d\n", &mStart.x, &mStart.y))
 	{
 		Files::PrintFailure(path);
 		return;
 	}
-	if (!fscanf(file, "StartAxis: %d\n", &startAxis))
+	if (!fscanf(file, "StartAxis: %d\n", &mStartAxis))
 	{
 		Files::PrintFailure(path);
 		return;
 	}
-	if (!fscanf(file, "Speed: %f\n", &speed))
+	if (!fscanf(file, "Speed: %f\n", &mSpeed))
 	{
 		Files::PrintFailure(path);
 		return;
 	}
-	if (!fscanf(file, "FlagCount: %d\n", &flagCount))
+	if (!fscanf(file, "FlagCount: %d\n", &mFlagCount))
  	{
 		Files::PrintFailure(path);
 		return;
 	}
 
-	flags = new SequenceFlag[flagCount]; 
+	mFlags = new SequenceFlag[mFlagCount]; 
 	fscanf(file, "Flags: "); // scan start of array 
-	for (int i = 0; i < flagCount; i++)
+	for (int i = 0; i < mFlagCount; i++)
 	{
-		flags[i].animState = 1;
-		if (!fscanf(file, "%u", &flags[i].position)) 
+		mFlags[i].mAnimState = 1; 
+		if (!fscanf(file, "%u", &mFlags[i].mPos)) 
 		{
 			Files::PrintFailure(path); 
 			return;
@@ -47,78 +47,76 @@ Sequence::Sequence(char const* path)
 	Files::PrintSuccess(path);
 }
 
-Sequencer::Sequencer(Actor& actor) :
-	actor(actor),
-	sequence(nullptr)
+Sequencer::Sequencer(Actor* actor) :
+	mActor(actor),
+	mSequence(nullptr)
 {
 	Reset();
 }
 
 void Sequencer::Play(float const dt)
 {
-	if (!sequence) return;
+	if (!mSequence) return;
 
-	actor.SetPosition(actor.GetPosition() + CardinalToFloat2(actor.facing) * /*sequence->speed*/ 0.005f * dt);
-	if (facing != GetCardinal())
+	mActor->SetPosition(mActor->GetPosition() + cardinalToFloat2(mFacing) * mSequence->mSpeed * dt);
+	if (mFacing != GetCardinal())
 	{
-		actor.bbox.fPos[axis] = static_cast<float>(sequence->flags[flagIdx].position);   
-		reachedFlag = true;
+		mReachedFlag = true;
 		NextFlag();
 	}
 	else
 	{
-		reachedFlag = false;
-		reachedEnd	= false;
+		mReachedEnd	= false;
+		mReachedFlag = false;
 	}
 }
 
 int Sequencer::GetCardinal() const
 {
-	int flag = sequence->flags[flagIdx].position; 
+	int const flag = mSequence->mFlags[mFlagIdx].mPos; 
 
-	if (axis == HORIZONTAL)
+	if (mAxis == HORIZONTAL)
 	{
-		return (actor.bbox.iPos.x < flag) ? EAST : WEST;
+		return (mActor->GetPositionInt().x < flag) ? EAST : WEST;
 	} 
-	return (actor.bbox.iPos.y < flag) ? SOUTH : NORTH; 
+	return (mActor->GetPositionInt().y < flag) ? SOUTH : NORTH; 
 }
 
 int Sequencer::GetNextAxis() const 
 {
-	return (axis == HORIZONTAL) ? VERTICAL : HORIZONTAL; 
+	return (mAxis == HORIZONTAL) ? VERTICAL : HORIZONTAL; 
 }
 
 void Sequencer::SetSequence(Sequence const* sequence)
 {
-	this->sequence = sequence;
+	mSequence = sequence; 
 	Reset(); 
 }
 
 void Sequencer::Continue() const 
-{
-	actor.facing = facing;
-	actor.SetAnimationState(sequence->flags->animState);
-	actor.SetAnimation();
+{ 
+	mActor->SetAnimationState(mSequence->mFlags[mFlagIdx].mAnimState);
+	mActor->SetFacing(mFacing); 
 }
 
 void Sequencer::NextFlag()
 {
-	flagIdx	= (++flagIdx) % sequence->flagCount;
-	reachedEnd = flagIdx == 0; 
-	axis	= GetNextAxis();
-	facing	= GetCardinal();
+	mFlagIdx	= (++mFlagIdx) % mSequence->mFlagCount;
+	mReachedEnd = mFlagIdx == 0; 
+	mAxis	= GetNextAxis();
+	mFacing	= GetCardinal();
 }
 
 void Sequencer::Reset()
 {
-	flagIdx		= 0;
-	reachedEnd	= false;
-	reachedFlag = false;
+	mFlagIdx		= 0;
+	mReachedEnd		= false;
+	mReachedFlag	= false;
 
-	if (sequence)
+	if (mSequence)
 	{
-		actor.SetPosition( sequence->start); 
-		axis	= sequence->startAxis;
-		facing	= GetCardinal(); 
+		mActor->SetPosition(mSequence->mStart); 
+		mAxis	= mSequence->mStartAxis;
+		mFacing	= GetCardinal(); 
 	}
 }

@@ -29,9 +29,7 @@ Tilemap::Tilemap(char const* path)
 		Files::PrintFailure(path); 
 		return; 
 	}
-	tilePalette = &TilePalette::palettes[tilePaletteIdx]; 
-
-	tilePalette->sheet.sprite.palette = &colorPalette;  
+	tilePalette = &TilePalette::palettes[tilePaletteIdx];  
 
 	fclose(file); 
 	Files::PrintSuccess(path); 
@@ -42,7 +40,7 @@ void Tilemap::Render(Surface8* screen) const
 	int idx = 0; 
 	for (int yy = 0; yy < ROWS; yy++) for (int xx = 0; xx < COLUMNS; xx++, idx++)
 	{
-		tilePalette->sheet.Render(screen, xx * TilePalette::Tile::SIZE, yy * TilePalette::Tile::SIZE, tileIdxs[idx]);
+		tilePalette->sheet.RenderFrame(screen, xx * TilePalette::Tile::SIZE, yy * TilePalette::Tile::SIZE, tileIdxs[idx]);
 #if DEBUG_MODE
 		if (GetTileState(idx) == TilePalette::Tile::SOLID)
 		{

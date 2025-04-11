@@ -9,9 +9,10 @@ public:
 	static constexpr uint8_t ROWS		= 24;
 	static constexpr uint	 SIZE		= COLUMNS * ROWS; 
 
-private:
-	ColorPalette8	colorPalette = ColorPalette8("assets/color_palettes/outer_heaven.cpalette"); 
+public:
 	TilePalette*	tilePalette; 
+
+private:
 	uint8_t			tileIdxs[COLUMNS * ROWS]; // indices to tilepalette
 
 public:
@@ -31,7 +32,7 @@ static inline int2 PixelToTile(int2 coord)
 }
 static inline int2 SubPixelToTile(float2 pos)
 {
-	return int2(int(pos.x / TilePalette::Tile::SIZE), int(pos.y / TilePalette::Tile::SIZE));
+	return int2(floor(pos.x / TilePalette::Tile::SIZE), floor(pos.y / TilePalette::Tile::SIZE));
 }
 static inline int2 TileToPixel(int2 coord)
 {

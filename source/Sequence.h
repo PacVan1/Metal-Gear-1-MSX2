@@ -1,56 +1,45 @@
 #pragma once
 
-#include "Cardinals.h" 
-
-// forward declaring Actor
 class Actor; 
-
-enum axis : u8 
-{
-	HORIZONTAL,
-	VERTICAL
-};
 
 struct SequenceFlag
 {
-	int position;
-	int animState; 
+	int mPos;
+	int mAnimState; 
 };
 
 struct Sequence
 {
-	int2			start;
-	int				startAxis;
-	float			speed;
-	SequenceFlag*	flags;
-	int				flagCount;
+	SequenceFlag*	mFlags;
+	int2			mStart;
+	float			mSpeed;
+	int				mStartAxis;
+	int				mFlagCount;
 
 	Sequence(char const* path);  
 };
 
 class Sequencer
 {
-public:
-	Actor&			actor;
-	Sequence const*	sequence;   
-	uint			flagIdx; 
-	int				facing;
-	int				axis;
-
 private:
-	bool			reachedFlag;
-	bool			reachedEnd; 
+	Actor*			mActor;
+	Sequence const*	mSequence;   
+	int				mFlagIdx; 
+	int				mFacing;
+	int				mAxis;
+	bool			mReachedFlag;
+	bool			mReachedEnd; 
 
 public:
-			Sequencer(Actor& actor); 
-	void	Play(float const dt);
-	int		GetCardinal() const;
-	int		GetNextAxis() const;
-	void	SetSequence(Sequence const* sequence);
-	void	Continue() const;
-	void	NextFlag(); 
-	void	Reset();
+				Sequencer(Actor* actor); 
+	void		Play(float const dt);
+	int			GetCardinal() const;
+	int			GetNextAxis() const;
+	void		SetSequence(Sequence const* sequence);
+	void		Continue() const;
+	void		NextFlag(); 
+	void		Reset();
 
-	bool	HasReachedFlag() const { return reachedFlag; }
-	bool	HasReachedEnd() const { return reachedEnd; }
+	inline bool	HasReachedFlag() const	{ return mReachedFlag; }
+	inline bool	HasReachedEnd() const	{ return mReachedEnd; }
 };

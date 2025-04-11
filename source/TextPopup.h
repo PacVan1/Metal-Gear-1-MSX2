@@ -3,7 +3,7 @@
 class TextPopup
 {
 private:
-	int2	position; 
+	int2	mPosition; 
 	char	str[16];
 	int		strLen;
 	int		curLen;
@@ -13,10 +13,10 @@ private:
 
 public:
 			TextPopup(); 
-	void	Update(float const dt);
+	void	Update();
 	void	Render(Surface8* screen) const;
 	void	SetString(char const* str);
-	void	SetPosition(int2 position) { this->position = position; }
+	void	SetPosition(int2 const position) { this->mPosition = position; }
 	bool	IsWriting() const { return writing; }
 };
 

@@ -5,7 +5,7 @@ TilePalette TilePalette::palettes[1];
 
 void TilePalette::InitPalettes()
 {
-	palettes[0] = TilePalette("assets/tile_palettes/outer_heaven/outer_heaven.tpalette");
+	palettes[0] = TilePalette("assets/tile_palettes/outer_heaven2/outer_heaven.tpalette");
 }
 
 TilePalette::TilePalette(char const* path)
@@ -24,7 +24,7 @@ TilePalette::TilePalette(char const* path)
 	}
 	strcpy(subPath, dir); strcat(subPath, relPath); 
 	sheet = SpriteSheet(subPath); 
-	tileCount = sheet.frameCount;  
+	tileCount = static_cast<uint8_t>(sheet.mFrameCount);    
 
 	// reading tile states:
 	if (!fscanf(file, "TileStates: %s\n", relPath))
@@ -37,7 +37,8 @@ TilePalette::TilePalette(char const* path)
 	{
 		Files::PrintFailure(path); 
 		return; 
-	} 
+	}
+	Files::PrintSuccess(subPath);  
 
 	fclose(file);
 	Files::PrintSuccess(path);
@@ -49,10 +50,12 @@ bool TilePalette::LoadTileStates(char const* path)
 
 	for (int i = 0; i < tileCount; i++) 
 	{
-		if (!fscanf(file, "%u", &tiles[i].state))
+		uint state; 
+		if (!fscanf(file, "%u", &state))
 		{ 
 			return false;
 		}
+		tiles[i].state = static_cast<uint8_t>(state); 
 	}
 
 	fclose(file); 

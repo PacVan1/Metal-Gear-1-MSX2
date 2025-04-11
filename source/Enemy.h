@@ -5,19 +5,16 @@
 
 class Enemy : public Actor
 {
-public:
-	inline static Player const* target = nullptr;
+protected:   
+	int		mOptimalFacing;
+	bool	mOptimalFacingOpp; 
 
 public:
-	int		optimalFacing;
-	bool	oppositeFacing;
-
-public:
-	void	DecideCardinal();
+	int		DecideFacing(); 
 	bool	TargetInLine() const;
 
 protected: 
-			Enemy(AnimationSpriteSheet& sheet, uint dirAnimCount);
+			Enemy(AnimationSpriteSheet& spriteSheet, int const dirAnimCount);
 	void	Pursue(float const dt);
 };
 

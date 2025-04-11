@@ -6,19 +6,32 @@
 
 class AnimatedSprite
 {
-public:
-	AnimationSpriteSheet&	sheet;
-	Animator				animator;
-	uint					frame; 
+private:
+	AnimationSpriteSheet const*	mSpriteSheet;
 
 public:
-	AnimatedSprite(AnimationSpriteSheet& sheet);   
-	void Render(Surface8* screen, int x, int y) const;
+	Animator					mAnimator;
+	uint						mFrame;  
+
+public:
+	AnimatedSprite() = default; 
+	AnimatedSprite(AnimationSpriteSheet const* spriteSheet);    
+	void Render(Surface8* screen, int const x, int const y) const;
+
+	void SetSpriteSheet(AnimationSpriteSheet const* spriteSheet)
+	{
+		mSpriteSheet = spriteSheet;
+		mAnimator = Animator(this);  
+	}
+
+	inline Animation const* GetAnimation(int const idx) const { return &mSpriteSheet->mAnimSet.anims[idx]; }  
+	inline AnimationSpriteSheet const* GetSpriteSheet() const { return mSpriteSheet; }
+
 	uint8_t GetPixel(int2 coord) const
 	{
-		if (AABB::Detect(coord, sheet.frameWidth - 1, 0, 0, sheet.sprite.height - 1))
+		if (AABB::Detect(coord, mSpriteSheet->mFrameWidth - 1, 0, 0, mSpriteSheet->height - 1))
 		{
-			return sheet.sprite.palette->indices[sheet.sprite.pixels[frame * sheet.frameWidth + coord.x + coord.y * sheet.sprite.width]]; 
+			return mSpriteSheet->palette->indices[mSpriteSheet->pixels[mFrame * mSpriteSheet->mFrameWidth + coord.x + coord.y * mSpriteSheet->width]];
 		}
 	}
 };

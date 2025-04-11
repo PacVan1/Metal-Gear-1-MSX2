@@ -169,8 +169,10 @@ public:
 	float time;
 
 public:
+			Alarm() : time(0.0f) {}
 			Alarm(float const time) : time(time) {}
 	bool	Elapsed() const { return timer.elapsed() >= time; }
+	void	SetDuration(float const duration) { time = duration; }
 	void	Reset() { timer.reset(); }
 };
 
@@ -408,6 +410,8 @@ void MarkAsDirty() { __dirty++; } \
 void MarkAsNotDirty() { Changed(); } \
 private: uint64_t __crc64 = CLEARCRC64; uint __dirty = 0; public:
 
+#include "InputManager.h" 
+
 // application base class
 class TheApp 
 {
@@ -421,11 +425,15 @@ public:
 	virtual void MouseWheel( float y ) = 0;
 	virtual void KeyUp( int key ) = 0;
 	virtual void KeyDown( int key ) = 0;
+	InputManager mInput; 
 	Surface8* screen8 = 0; // for palettization
-	Surface* screen	= 0;  
+	Surface* screen	= 0;
 };
 
 #include "Files.h"
+#include "Settings.h"
+#include "Cardinals.h" 
+#if SOUND_ON
 #include <Audio/Sound.hpp>
-
+#endif
 // EOF

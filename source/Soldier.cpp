@@ -1,107 +1,112 @@
 #include "precomp.h"
 #include "Soldier.h"
 
-#include "Tilemap.h" 
-#include "Projectile.h"
 #include "Game.h"
+#include "Projectile.h"
+#include "SoldierTypes.h" 
 #include "Soldiers.h"
 
-void Soldier::InitSoldierTypes()
-{
-	typeData[SOLDIER_TYPES_GRAY].palette	= ColorPalette8("assets/color_palettes/gray_soldier.cpalette");
-	typeData[SOLDIER_TYPES_GRAY].alertLevel	= Soldiers::alertLevels::LOW;
-	typeData[SOLDIER_TYPES_RED ].palette	= ColorPalette8("assets/color_palettes/damaged.cpalette");
-	typeData[SOLDIER_TYPES_RED ].alertLevel	= Soldiers::alertLevels::HIGH;
-}
-
-void Soldier::SetType(int const t)
-{
-	type = t; 
-	spriteSheet.sprite.palette = &typeData[t].palette; 
-}
-
 Soldier::Soldier() :
-	Enemy(spriteSheet, 2) 
+	Enemy(Game::sSoldierTypes.mSpriteSheet, 2),
+	mTurnAlarm(TURN_TIME),
+	mShootAlarm(SHOOT_TIME),
+	mStandStillAlarm(STAND_STILL_TIME),
+	mSpotAlarm(SPOT_TIME),
+	mStunY(0.0f),
+	mTurns(0),
+	mShot(false),
+	mDescend(false)
 {
+	// TODO make this soldier type dependent:
+	mSpeed		= 0.05f;
+	mMaxHealth	= 10;  
+
+	mBbox.mGroup		= COLLISION_GROUPS_ENEMY;
+	mBboxTile.mGroup	= COLLISION_GROUPS_ENEMY;
 	InitState();
-	bbox.group = AABB::ENEMY; 
-	speed = 0.01f;
-	maxHealth = 10;
-	ResetHealth();
+	ResetHealth(); 
 }
 
 void Soldier::Update(float const dt) 
 {
-	display.animator.Play(dt); 
+	mDisplay.mAnimator.Play(dt); 
 
-	switch (state)
+	switch (mBehavior)
 	{
-	case SOLDIER_STATES_IDLE:			IdleState();		break;
-	case SOLDIER_STATES_PATROL:			PatrolState(dt);	break;
-	case SOLDIER_STATES_PURSUE:			PursueState(dt);	break;
-	case SOLDIER_STATES_STUNNED:		StunnedState(dt);	break;
-	case SOLDIER_STATES_SHOOT:			ShootState();		break;
-	case SOLDIER_STATES_REALIZATION:	RealizationState(); break;
-	case SOLDIER_STATES_SPOTTED:		SpottedState();		break;
+	case SOLDIER_BEHAVIOR_IDLE:			IdleState();		break;
+	case SOLDIER_BEHAVIOR_PATROL:		PatrolState(dt);	break;
+	case SOLDIER_BEHAVIOR_PURSUE:		PursueState(dt);	break;
+	case SOLDIER_BEHAVIOR_STUNNED:		StunnedState(dt);	break;
+	case SOLDIER_BEHAVIOR_SHOOT:		ShootState();		break;
+	case SOLDIER_BEHAVIOR_REALIZATION:	RealizationState(); break;
+	case SOLDIER_BEHAVIOR_SPOTTED:		SpottedState();		break;
 	default: break; 
 	}
 }
 
 void Soldier::SetAnimationState() 
 {
-	animState = STATE_TO_ANIM_STATE[state]; 
+	mAnimState = Game::sSoldierTypes.mBehaviorToAnimState[mBehavior];  
 }
 
 void Soldier::Damage(int const damage)
 {
-	health -= damage;
-	if (health <= 0)
+	mHealth -= damage;
+	if (mHealth <= 0) 
 	{
-		Destroy(); 
+		Destroy();
 	}
-	SetState(SOLDIER_STATES_STUNNED); 
-	SetAnimation(); 
+	else
+	{
+		if (mBehavior != SOLDIER_BEHAVIOR_SPOTTED) SetBehavior(SOLDIER_BEHAVIOR_STUNNED);
+	}
 }
 
 void Soldier::Alert()
 {
-	SetState(SOLDIER_STATES_PURSUE);
-	DecideCardinal();
-	SetAnimation();
-	shootTimer.Reset(); 
+	SetState(SOLDIER_BEHAVIOR_PURSUE, DecideFacing());
+	mShootAlarm.Reset(); 
+}
+
+void Soldier::Destroy()
+{
+	mDestroyed = true; 
+	if (Game::sSoldiers.AreDead())  
+	{
+		Game::sSoldiers.SetAlertLevel(ALERT_LEVELS_OFF); 
+	}
 }
 
 void Soldier::Reset() 
 {
-	InitState();
-	ResetHealth();  
+	SetState(SOLDIER_BEHAVIOR_IDLE, EAST);  
+	ResetHealth();
+	mTurns = 0;
+	mTurnAlarm.Reset();
 }
 
 void Soldier::TurnRandomSide()
 {
-	facing = static_cast<cardinals>(RandomUInt() % cardinals::COUNT);
-	SetAnimationState(); 
-	SetAnimation(); 
+	SetFacing(randomCardinal()); 
 }
 
 void Soldier::IdleState()
 {
-	//if (TargetInLine())
-	//{
-	//	SetState(SOLDIER_STATES_REALIZATION);
-	//	return;
-	//}
-
-	if (turnTimer.Elapsed()) 
+	if (TargetInLine())
 	{
-		turns++;
-		turnTimer.Reset();
-		if (turns >= TURNS) 
+		SetBehavior(SOLDIER_BEHAVIOR_REALIZATION);
+		return;
+	}
+
+	if (mTurnAlarm.Elapsed()) 
+	{
+		mTurns++;
+		mTurnAlarm.Reset();
+		if (mTurns >= TURNS)
 		{
-			turns = 0;
-			SetState(SOLDIER_STATES_PATROL); 
-			SetAnimation();
-			sequencer.Continue();
+			mTurns = 0;
+			SetBehavior(SOLDIER_BEHAVIOR_PATROL);
+			mSequencer.Continue();
 		}
 		else
 		{
@@ -112,23 +117,17 @@ void Soldier::IdleState()
 
 void Soldier::PatrolState(float const dt)
 {
-	//if (TargetInLine())
-	//{
-	//	SetState(SOLDIER_STATES_REALIZATION);
-	//	return;
-	//}
-
-	sequencer.Play(dt);
-	if (sequencer.HasReachedEnd())
+	if (TargetInLine())
 	{
-		SetState(SOLDIER_STATES_IDLE);
-		SetAnimation();
-		return;
+		SetBehavior(SOLDIER_BEHAVIOR_REALIZATION);
 	}
-	if (sequencer.HasReachedFlag()) 
-	{ 
-		SetState(SOLDIER_STATES_IDLE);
-		SetAnimation();
+	else
+	{
+		mSequencer.Play(dt);
+		if (mSequencer.HasReachedFlag()) 
+		{ 
+			SetBehavior(SOLDIER_BEHAVIOR_IDLE);
+		}
 	}
 }
 
@@ -136,29 +135,28 @@ void Soldier::PursueState(float const dt)
 {
 	Pursue(dt);
 
-	if (shootTimer.Elapsed())
+	if (mShootAlarm.Elapsed())
 	{
-		standStillTimer.Reset();
-		DecideCardinal(); 
-		SetState(SOLDIER_STATES_SHOOT);
-		SetAnimation();
+		mStandStillAlarm.Reset();
+		SetState(SOLDIER_BEHAVIOR_SHOOT, DecideFacing()); 
 	}
 }
 
 void Soldier::ShootState()
 {
-	if (standStillTimer.Elapsed())
+	if (mStandStillAlarm.Elapsed())
 	{
-		if (!shot) // !shot
+		if (!mShot)
 		{
-			float2 dir = normalize(target->GetPosition() - GetPosition());
-			Projectile::Launch(GetPosition(), normalize(dir) * 0.1f, 1, AABB::PLAYER);  
-			shot = true;
+			float2 const from = GUN_POSITION + GetPosition() + cardinalToFloat2(mFacing) * GUN_OFFSET;
+			float2 const dir = normalize(Game::sPlayer.GetPosition() - from); 
+			Game::sProjectiles.Launch(from, normalize(dir) * 0.3f, 1, COLLISION_GROUPS_PLAYER);
+			mShot = true;
 		}
 		else
 		{
-			shot = false;
-			shootTimer.Reset();
+			mShot = false;
+			mShootAlarm.Reset();
 			Alert(); 
 		}
 	}
@@ -166,47 +164,48 @@ void Soldier::ShootState()
 
 void Soldier::SpottedState()
 {
-	if (spotAlarm.Elapsed())
+	if (mSpotAlarm.Elapsed()) 
 	{
-		Soldiers::SetAlertLevel(typeData[type].alertLevel);
+		Game::sSoldiers.SetAlertLevel(); 
 	}
 }
 
 void Soldier::RealizationState()
 {
-	if (Soldiers::alertLevel >= Soldiers::alertLevels::SPOTTED) 
+	if (Game::sSoldiers.GetAlertLevel() >= ALERT_LEVELS_SPOTTED)
 	{
 		Alert();
 	}
 	else 
 	{
-		SetState(SOLDIER_STATES_SPOTTED); 
-		SetAnimation();
-		spotAlarm.Reset();
-		Soldiers::SetAlertLevel(Soldiers::alertLevels::SPOTTED); 
+		SetBehavior(SOLDIER_BEHAVIOR_SPOTTED);
+		Game::sSoldiers.SetAlertLevel(ALERT_LEVELS_SPOTTED);
+
+		mSpotAlarm.Reset();
+		Game::sSoldiers.mAlertPopup.SetPosition(GetPositionInt() + ALERT_POPUP_OFFSET); 
 	}
 }
 
 void Soldier::StunnedState(float const dt)
 {
-	if (!descend)
+	if (!mDescend) 
 	{
-		stunY -= 0.055f * dt;
-		SetPosition(GetPosition() - float2(0.0f, 0.055f * dt));
-		if (stunY <= -10.0f)
+		mStunY -= STUN_SPEED * dt;
+		SetPosition(GetPosition() - float2(0.0f, STUN_SPEED * dt));
+		if (mStunY <= -STUN_HEIGHT) 
 		{
-			descend = true;
+			mDescend = true;
 		}
 	}
 	else
 	{
-		stunY += 0.055f * dt; 
-		SetPosition(GetPosition() + float2(0.0f, 0.055f * dt)); 
-		if (stunY >= 0.0f)
+		mStunY += STUN_SPEED * dt;
+		SetPosition(GetPosition() + float2(0.0f, STUN_SPEED * dt));
+		if (mStunY >= 0.0f)
 		{
-			stunY = 0.0f;
-			descend = false;
-			SetState(SOLDIER_STATES_REALIZATION);
+			mStunY = 0.0f;
+			mDescend = false; 
+			SetBehavior(SOLDIER_BEHAVIOR_REALIZATION);
 		}
 	}
 }

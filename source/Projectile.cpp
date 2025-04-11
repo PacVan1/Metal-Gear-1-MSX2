@@ -1,48 +1,107 @@
 #include "precomp.h"
 #include "Projectile.h"
 
+#include "Game.h"
 #include "Player.h"
 #include "Soldiers.h"
 #include "TileMap.h"
 
-ObjectPool<Projectile> Projectile::projectiles = ObjectPool<Projectile>(100);  
-Player* Projectile::player = nullptr; 
+Projectile::Projectile() :
+	mBbox(&mPosF, 3, -1.0f), 
+	mSpeed(0.0f)
+{}
 
-void Projectile::UpdatePool(float const dt)
+void Projectile::Update(float const dt)
 {
-	for (int i = 0; i < projectiles.SIZE; i++)
+	mPosF += mSpeed * dt; 
+	mBbox.Update(); 
+}
+
+void Projectile::Render(Surface8* screen)
+{
+	int2 const pos = static_cast<int2>(mPosF);  
+	screen->Bar(pos.x - 1, pos.y - 1, pos.x + 1, pos.y + 1, 181);
+	mBbox.Render(screen); 
+}
+
+void Projectile::SetPosition(float2 const position)
+{
+	mPosF = position;
+	mBbox.Update(); 
+}
+
+void Projectile::Launch(float2 const position, float2 const speed, int const damage, int const collisionGroup)
+{
+	SetPosition(position); 
+	mSpeed			= speed;
+	mDamage			= damage;
+	mBbox.mGroup	= collisionGroup;
+}
+
+Projectiles::Projectiles() :
+	mPool(PROJECTILE_COUNT)
+{}
+
+void Projectiles::Update(float const dt)
+{
+	for (int i = 0; i < mPool.SIZE; i++)
 	{
-		if (projectiles.IsActive(i))
+		if (mPool.IsActive(i))
 		{
-			projectiles[i].Update(dt);
+			mPool[i].Update(dt);
+		}
+	}
 
-			if (!AABB::Detect(projectiles[i].bbox, NATIVE_SCREEN_WIDTH - 2.0f, 0.0f, 0.0f, NATIVE_SCREEN_HEIGHT - 22.0f))
+	for (int i = 0; i < mPool.SIZE; i++)
+	{
+		if (mPool.IsActive(i))
+		{
+			Projectile& projectile = mPool[i];
+			int tileState = Game::GetTilemap().GetTileState(PixelToTile(static_cast<int2>(projectile.GetPosition())));
+			if (tileState == TilePalette::Tile::SOLID ||
+				!AABB::Detect(projectile.GetBbox(), NATIVE_SCREEN_WIDTH - 2.0f, 0.0f, 0.0f, NATIVE_SCREEN_HEIGHT - 22.0f))
 			{
-				projectiles.ReturnObject(i); 
-				continue; // I am sorry Abhishek
+				mPool.ReturnObject(i);
 			}
-			// longest ugliest line ever, I know:
-			int tileState = AABB::currentTilemap->GetTileState(PixelToTile(projectiles[i].GetPositionInt()));
-			if (tileState == TilePalette::Tile::SOLID)
-			{
-				projectiles.ReturnObject(i);
-				return; 
-			}
+		}
+	}
 
-			if (AABB::DetectGroup(player->bbox, projectiles[i].bbox))
+	for (int i = 0; i < mPool.SIZE; i++)
+	{
+		if (mPool.IsActive(i))
+		{
+			Projectile& projectile = mPool[i];
+			//if (AABB::DetectGroup(Game::sPlayer.GetBbox(), projectile.GetBbox()))
+			//{
+			//	mPool.ReturnObject(i);
+			//	Game::sPlayer.Damage(projectile.GetDamage());
+			//}
+			if (Game::sPlayer.DetectGrouped(projectile.GetBbox()))
 			{
-				projectiles.ReturnObject(i);
-				player->Damage(projectiles[i].damage); 
+				mPool.ReturnObject(i);
+				Game::sPlayer.Damage(projectile.GetDamage());
 			}
-
-			for (int i = 0; i < Soldiers::pool.SIZE; i++)
+		}
+	}
+	
+	for (int i = 0; i < mPool.SIZE; i++)
+	{
+		if (mPool.IsActive(i))
+		{
+			Projectile& projectile = mPool[i];
+			for (int j = 0; j < Game::sSoldiers.mPool.SIZE; j++)
 			{
-				if (Soldiers::pool.IsActive(i) && !Soldiers::pool[i].destroyed)
+				if (Game::sSoldiers.mPool.IsActive(j) && !Game::sSoldiers.mPool[j].mDestroyed)
 				{
-					if (AABB::DetectGroup(Soldiers::pool[i].bbox, projectiles[i].bbox)) 
+					//if (AABB::DetectGroup(Game::sSoldiers.mPool[j].GetBbox(), projectile.GetBbox()))
+					//{
+					//	mPool.ReturnObject(i);
+					//	Game::sSoldiers.mPool[j].Damage(projectile.GetDamage());
+					//}
+					if (Game::sSoldiers.mPool[j].DetectGrouped(projectile.GetBbox()))
 					{
-						projectiles.ReturnObject(i);
-						Soldiers::pool[i].Damage(projectiles[i].damage);
+						mPool.ReturnObject(i);
+						Game::sSoldiers.mPool[j].Damage(projectile.GetDamage());
 					}
 				}
 			}
@@ -50,38 +109,19 @@ void Projectile::UpdatePool(float const dt)
 	}
 }
 
-void Projectile::RenderPool(Surface8* screen)
+void Projectiles::Render(Surface8* screen) 
 {
-	for (int i = 0; i < projectiles.SIZE; i++)
+	for (int i = 0; i < mPool.SIZE; i++)
 	{
-		if (projectiles.IsActive(i))
+		if (mPool.IsActive(i))
 		{
-			projectiles[i].Render(screen); 
+			mPool[i].Render(screen);
 		}
 	}
 }
 
-void Projectile::Launch(float2 pos, float2 speed, uint damage, int group)
+void Projectiles::Launch(float2 const position, float2 const speed, int const damage, int const collisionGroup)
 {
-	uint idx = projectiles.WakeObject();
-	projectiles[idx].SetPosition(pos);
-	projectiles[idx].speed = speed;
-	projectiles[idx].damage = damage;
-	projectiles[idx].bbox.group = group; 
-}
-
-Projectile::Projectile() :
-	GameObject(3, 1),
-	speed(0.0f)
-{}
-
-void Projectile::Update(float const dt)
-{
-	SetPosition(GetPosition() + speed * dt);
-}
-
-void Projectile::Render(Surface8* screen)
-{
-	screen->Bar(GetPositionInt().x - 1, GetPositionInt().y - 1, GetPositionInt().x + 1, GetPositionInt().y + 1, 40);
-	bbox.Render(screen);  
+	// TODO check if there are projectiles in the pool before waking one:
+	mPool[mPool.WakeObject()].Launch(position, speed, damage, collisionGroup); 
 }

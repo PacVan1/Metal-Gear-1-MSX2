@@ -31,7 +31,7 @@ struct TilePalette
 
 struct MetaTile
 {
-	uint8_t*	tile;
-	uint8_t		columns;
-	uint8_t		rows; 
+	uint8_t*	tile = nullptr;
+	uint8_t		columns = 0;
+	uint8_t		rows = 0; 
 };

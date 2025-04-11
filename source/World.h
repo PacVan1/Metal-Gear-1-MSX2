@@ -2,24 +2,24 @@
 
 #include "Cardinals.h"
 #include "Scene.h"
+#include "Passage.h" 
 
 class World
 {
 public:
-	inline static Scene const*	currentScene = nullptr;
-	inline static int2			currentSceneCoord = { 0 };
-	inline static int			currentSceneIdx = 0;
+	Scene*				mScenes;	
+	PassageSharedData*	mSharedData;
+	int					mPassageCount;
+	int					mSceneCount;
+	int					mAdjSceneCount; 
+	int					mColumns;
+	int					mRows;
 
 public: 
-	Scene*	scenes;	
-	//Scene*	extraScenes; // rooms, jeeps, etc
-	uint	columns;
-	uint	rows;
-	uint	sceneCount;
-
-public:
-	void InitWorld(); 
-	void SwitchScene(int cardinal);
-	void SwitchScene(Scene* scene); 
+				World();
+	inline int2 GetSceneCoordinate(int const idx) const		{ return { idx % mColumns, idx / mColumns }; }
+	inline int	GetSceneIdx(int2 const coordinate) const	{ return coordinate.x + coordinate.y * mColumns; }
+	inline int	GetSceneCount() const						{ return mSceneCount; }
+	inline int	GetAdjSceneCount() const					{ return mAdjSceneCount; }
 };
 

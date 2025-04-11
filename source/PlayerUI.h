@@ -1,17 +1,20 @@
 #pragma once
 
-#include "Player.h" 
+#include "Player.h"
+#include "Inventory.h" 
 
 class PlayerUI
 {
 public:
-	Player const* player; 
+	Player const*		mPlayer;
+	Inventory const*	mInventory; 
 
 public:
-	void Render(Surface8* screen) const;
+			PlayerUI(Player const* player, Inventory const* inventory);   
+	void	Render(Surface8* screen) const;
 
 private:
-	void RenderHealthbar(Surface8* screen) const;
-	void RenderItems(Surface8* screen) const; 
+	void	RenderHealthbar(Surface8* screen) const;
+	void	RenderItems(Surface8* screen) const; 
 };
 

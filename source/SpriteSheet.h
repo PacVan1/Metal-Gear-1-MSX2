@@ -2,24 +2,24 @@
 
 #include "Animation.h"
 
-class SpriteSheet
+class SpriteSheet : public Sprite
 {
 public:
-	int frameCount; 
-	int frameWidth; 
-	Sprite sprite; 
+	int mFrameCount; 
+	int mFrameWidth; 
 
 public: 
-	SpriteSheet() = default; 
-	SpriteSheet(char const* path);  
-	void Render(Surface8* screen, int x, int y, uint frame) const;  
+			SpriteSheet() = default;
+			SpriteSheet(char const* path);  
+	void	RenderFrame(Surface8* screen, int x, int y, uint frame) const;  
 };
 
 class AnimationSpriteSheet : public SpriteSheet 
 {
 public:
-	AnimationSet animSet; 
+	AnimationSet mAnimSet; 
 
 public:
+	AnimationSpriteSheet() = default; 
 	AnimationSpriteSheet(char const* path);
 };

@@ -135,10 +135,10 @@ public:
 #endif
 
 	public:
-		uint8_t*	pixels;
-		int			width;
-		int			height;
-		Palette8*	palette;  
+		uint8_t*		pixels;
+		int				width;
+		int				height;
+		Palette8 const*	palette;  
 
 	public:
 		static void Save(Image const* image, char const* path);
@@ -155,7 +155,7 @@ public:
 
 public:
 	// application has a total of 256 colors to chose from:
-	static inline uint32_t PAL[256]; 
+	inline static uint32_t PAL[256]; 
 	// static data for the hardcoded font:
 	static inline char font[51][5][6]; 
 	static inline int transl[256];  

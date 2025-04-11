@@ -3,6 +3,11 @@
 
 #include "Game.h" 
 
+PlayerUI::PlayerUI(Player const* player, Inventory const* inventory) :
+	mPlayer(player),
+	mInventory(inventory) 
+{}
+
 void PlayerUI::Render(Surface8* screen) const
 {
 	screen->Bar(0, NATIVE_SCREEN_HEIGHT - 20, NATIVE_SCREEN_WIDTH - 1, NATIVE_SCREEN_HEIGHT - 1, 0);
@@ -14,14 +19,33 @@ void PlayerUI::Render(Surface8* screen) const
 void PlayerUI::RenderHealthbar(Surface8* screen) const
 {
 	screen->Print("Life", 10, NATIVE_SCREEN_HEIGHT - 17, 181); 
-	screen->Box(40, NATIVE_SCREEN_HEIGHT - 17, 40 + 80 + 2, NATIVE_SCREEN_HEIGHT - 4, 181);
-	screen->Bar(41, NATIVE_SCREEN_HEIGHT - 16, 41 + 80 * (player->health / player->maxHealth), NATIVE_SCREEN_HEIGHT - 5, 40);
+	screen->Box(40, NATIVE_SCREEN_HEIGHT - 19, 40 + 80 + 2, NATIVE_SCREEN_HEIGHT - 10, 181);
+	screen->Bar(41, NATIVE_SCREEN_HEIGHT - 18, 41 + 80 * (mPlayer->mHealth / static_cast<float>(mPlayer->mMaxHealth)), NATIVE_SCREEN_HEIGHT - 11, 40);
 }
 
 void PlayerUI::RenderItems(Surface8* screen) const
 {
-	if (player->inventory.selectedWeapon)		screen->Print(player->inventory.selectedWeapon->name, 145, NATIVE_SCREEN_HEIGHT - 17, 181);
-	screen->Box(140, NATIVE_SCREEN_HEIGHT - 17, 200, NATIVE_SCREEN_HEIGHT - 4, 181);
-	if (player->inventory.selectedEquipment)	screen->Print(player->inventory.selectedEquipment->name, 215, NATIVE_SCREEN_HEIGHT - 17, 181);
-	screen->Box(210, NATIVE_SCREEN_HEIGHT - 17, 246, NATIVE_SCREEN_HEIGHT - 4, 181);
+	// weapons:
+	screen->Box(140, NATIVE_SCREEN_HEIGHT - 19, 186, NATIVE_SCREEN_HEIGHT - 2, 181);
+	if (mInventory->mSelectedWeapon)
+	{
+		mInventory->mSelectedWeapon->Render(screen, 141, NATIVE_SCREEN_HEIGHT - 18);
+
+		if (mInventory->mSelectedWeapon->stackable)
+		{
+			screen->Print(mInventory->mSelectedWeapon->strCount, 141 + 32, NATIVE_SCREEN_HEIGHT - 18 + 8, 181);
+		}
+	}
+
+	// equipment:
+	screen->Box(210, NATIVE_SCREEN_HEIGHT - 19, 233, NATIVE_SCREEN_HEIGHT - 2, 181);
+	if (mInventory->mSelectedEquipment)
+	{
+		mInventory->mSelectedEquipment->Render(screen, 211, NATIVE_SCREEN_HEIGHT - 18);
+
+		if (mInventory->mSelectedEquipment->stackable)
+		{
+			screen->Print(mInventory->mSelectedEquipment->strCount, 211 + 16, NATIVE_SCREEN_HEIGHT - 18 + 8, 181);
+		}
+	}
 }

@@ -1,120 +1,108 @@
 #include "precomp.h"
 #include "Soldiers.h"
 
+#include "SoldierTypes.h" 
 #include "Tilemap.h" 
 #include "Game.h" 
 
+Soldiers::Soldiers() :
+	mPool(SOLDIER_COUNT),
+	mAlertLevel(ALERT_LEVELS_OFF),
+	mSpawnAlarm(SOLDIER_SPAWN_TIME)
+{}
+
 void Soldiers::Update(float const dt)
 {
-	if (pool.GetActiveCount() == 0) return;
-
-	// update soldiers: 
-	for (int i = 0; i < pool.SIZE; i++)
+	for (int i = 0; i < mPool.GetActiveCount(); i++) 
 	{
-		if (pool.IsActive(i) && !pool[i].destroyed)
-		{
-			pool[i].Update(dt);
-
-			if (pool[i].DetectPixel(Game::player))
-			{
-				printf("Pixel perfect detection!!!\n"); 
-			}
-		}
+		Soldier& soldier = mPool.GetActive(i);
+		if (!soldier.mDestroyed) soldier.Update(dt);  
 	}
 
-	// call new reinforcements:
-	if (alertLevel == HIGH)
+	if (mAlertLevel == ALERT_LEVELS_HIGH) 
 	{
-		if (spawnTimer.elapsed() > SPAWN_TIME) 
+		if (mSpawnAlarm.Elapsed()) 
 		{
-			spawnTimer.reset();
+			mSpawnAlarm.Reset(); 
 			SpawnReinforcement();
 		}
 	}
 }
 
-void Soldiers::Render(Surface8* screen)
+void Soldiers::Render(Surface8* screen) const
 {
-	if (pool.GetActiveCount() == 0) return;
+	if (mPool.GetActiveCount() == 0) return; 
 
-	for (int i = 0; i < pool.SIZE; i++)
+	for (int i = 0; i < mPool.GetActiveCount(); i++)
 	{
-		if (pool.IsActive(i) && !pool[i].destroyed)
-		{
-			pool[i].Render(screen);
-		}
+		Soldier const& soldier = mPool.GetActive(i);
+		if (!soldier.mDestroyed) soldier.Render(screen);  
+	}
+
+	if (mAlertLevel == ALERT_LEVELS_SPOTTED)
+	{
+		mAlertPopup.Render(screen); 
 	}
 }
 
-#include "Game.h"
-
-void Soldiers::SetAlertLevel(int level)
+void Soldiers::SetType(int const typeIdx)
 {
-	if (alertLevel == level) return; 
+	mType = &Game::sSoldierTypes.mTypeData[typeIdx];
+	Game::sSoldierTypes.mSpriteSheet.palette = &mType->mPalette;
+}
 
-	alertLevel = level; 
-	switch (alertLevel)
+bool Soldiers::AreDead() const
+{
+	for (int i = 0; i < mPool.GetActiveCount(); i++)
 	{
-	case OFF:	Game::SetTheme(&Game::mainTheme); break;
-	case SPOTTED: break; 
-	case LOW:
-	{
-		Game::SetTheme(&Game::alertTheme);
+		Soldier const& soldier = mPool.GetActive(i);
+		if (!soldier.mDestroyed) return false; 
+	}
+	return true;
+}
 
-		for (int i = 0; i < pool.SIZE; i++)
+void Soldiers::SetAlertLevel(int const alertLevel) 
+{
+	if (mAlertLevel == alertLevel) return;
+
+	mAlertLevel = alertLevel;
+	switch (mAlertLevel)
+	{
+	case ALERT_LEVELS_OFF:		Game::SetMusic(MUSIC_MAIN);		break;
+	case ALERT_LEVELS_SPOTTED:	Game::SetMusic(MUSIC_ALERT);		break;
+	case ALERT_LEVELS_LOW:
+	{
+		for (int i = 0; i < mPool.SIZE; i++) if (mPool.IsActive(i) && !mPool[i].mDestroyed)
 		{
-			if (pool.IsActive(i) && !pool[i].destroyed)
-			{
-				pool[i].Alert(); 
-			}
+			mPool[i].Alert(); 
 		}
-
 		break;
 	}
-	case HIGH:
+	case ALERT_LEVELS_HIGH: 
 	{
-		Game::SetTheme(&Game::alertTheme);
-		spawnTimer.reset();
+		mSpawnAlarm.Reset(); 
 
-		for (int i = 0; i < pool.SIZE; i++)
+		for (int i = 0; i < mPool.SIZE; i++) if (mPool.IsActive(i) && !mPool[i].mDestroyed)
 		{
-			if (pool.IsActive(i) && !pool[i].destroyed)
-			{
-				pool[i].Alert();
-			}
+			mPool[i].Alert();
 		}
-
 		break;
 	}
+	default: break; 
 	}
 }
 
-void Soldiers::Damage(int idx, int damage)
+void Soldiers::SetAlertLevel()
 {
-	if (pool.GetActiveCount() == 0) return;
-
-	// damage:
-	pool[idx].Damage(damage);
-
-	if (pool.GetActiveCount() == 0) return;
-
-	// check if everybody is dead:
-	for (int i = 0; i < SOLDIER_COUNT; i++)
-	{
-		if (pool.IsActive(i) && !pool[i].destroyed)
-		{
-			return; 
-		}
-	}
-
-	SetAlertLevel(OFF);
+	SetAlertLevel(mType->mAlertLevel);  
 }
 
-int2 Soldiers::FindSpawnTile()
+int2 Soldiers::FindSpawnTile() const
 {
-	for (int i = 0; i < cardinals::COUNT; i++)
+	int const random = randomCardinal(); 
+	for (int i = 0; i < CARDINALS_COUNT; i++)
 	{
-		int2 coord = FindSpawnTileOnSide(i);
+		int2 coord = FindSpawnTileOnSide((random + i) % CARDINALS_COUNT); 
 		if (coord != int2(-1, -1)) return coord; 
 	}
 	return int2(-1, -1); 
@@ -122,42 +110,46 @@ int2 Soldiers::FindSpawnTile()
 
 void Soldiers::SpawnReinforcement()
 {
-	if (pool.GetActiveCount() >= SOLDIER_COUNT) return;
+	if (mPool.GetActiveCount() >= SOLDIER_COUNT) return;
 
-	int2 coord = FindSpawnTile();
+	int2 coord = FindSpawnTile(); 
 	if (coord == int2(-1, -1)) return; 
 
-	Soldier& soldier = pool[pool.WakeObject()]; 
+	Soldier& soldier = mPool[mPool.WakeObject()];
 	soldier.SetPosition(TileToPixel(coord));  
 	soldier.Alert(); 
 	soldier.ResetHealth(); 
 }
 
-int2 Soldiers::FindSpawnTileOnSide(int cardinal)
+int2 Soldiers::FindSpawnTileOnSide(int const cardinal) const
 {
 	// TODO devise a more sophisticated approach: 
 	// give it ten chances:
-	int2 side = CardinalToInt2(cardinal);  
+	int2 side = cardinalToInt2(cardinal);
+	int2 const axes = axesToInt2(cardinalToAxes(cardinal));
+	side += axes;  
+	side = int2(side / int2(2));  
 	for (int i = 0; i < 10; i++) 
 	{
-		int2 coord = int2(	side.x * (RandomUInt() % Tilemap::COLUMNS),
-							side.y * (RandomUInt() % Tilemap::ROWS));
+		int2 const coord = int2(side.x * (Tilemap::COLUMNS - 1) + axes.y * (RandomUInt() % Tilemap::COLUMNS),
+								side.y * (Tilemap::ROWS - 1) + axes.x * (RandomUInt() % Tilemap::ROWS));
 		float2 pos = TileToPixel(coord);
-		TileArea area = SubPixelToTileArea(pos - pool[0].bboxTile.HALF_SIZE, pos + pool[0].bboxTile.HALF_SIZE);
-		if (AABB::DetectTilemap(area)) return coord; 
+		float2 halfSize = mPool[0].GetBboxTile().GetHalfSize(); 
+		TileArea area = SubPixelToTileArea(pos - halfSize, pos + halfSize); 
+		if (!AABB::DetectTilemap(area)) return coord; 
 	}
 
 	return int2(-1, -1); 
 }
 
-void Soldiers::SpawnReinforcementOnSide(int cardinal)
+void Soldiers::SpawnReinforcementOnSide(int const cardinal)
 {
-	if (pool.GetActiveCount() >= SOLDIER_COUNT) return;
+	if (mPool.GetActiveCount() >= SOLDIER_COUNT) return;
 
 	int2 coord = FindSpawnTileOnSide(cardinal);
 	if (coord == int2(-1, -1)) return;
 
-	Soldier& soldier = pool[pool.WakeObject()];
+	Soldier& soldier = mPool[mPool.WakeObject()];
 	soldier.SetPosition(TileToPixel(coord));
 	soldier.Alert();
 	soldier.ResetHealth();

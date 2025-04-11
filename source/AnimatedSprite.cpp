@@ -1,13 +1,13 @@
 #include "precomp.h"
 #include "AnimatedSprite.h"
 
-AnimatedSprite::AnimatedSprite(AnimationSpriteSheet& sheet) : 
-	sheet(sheet), 
-	animator(*this), 
-	frame(0)
+AnimatedSprite::AnimatedSprite(AnimationSpriteSheet const* spriteSheet) : 
+	mSpriteSheet(spriteSheet),
+	mAnimator(this), 
+	mFrame(0)
 {}
 
-void AnimatedSprite::Render(Surface8* screen, int x, int y) const
+void AnimatedSprite::Render(Surface8* screen, int const x, int const y) const
 {
-	sheet.Render(screen, x, y, frame);  
+	mSpriteSheet->RenderFrame(screen, x, y, mFrame);  
 }

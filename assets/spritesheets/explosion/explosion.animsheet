@@ -1,0 +1,3 @@
+Sprite: explosion.sprite
+AnimSet: explosion.animset
+FrameCount: 4

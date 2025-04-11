@@ -2,33 +2,46 @@
 
 #include "ObjectPool.h"
 #include "Soldier.h" 
+#include "AlertPopup.h" 
+
+int constexpr	SOLDIER_COUNT		= 6;
+float constexpr SOLDIER_SPAWN_TIME	= 3.0f;
+
+enum alertLevels : uint8_t
+{
+	ALERT_LEVELS_OFF,
+	ALERT_LEVELS_SPOTTED,
+	ALERT_LEVELS_LOW,
+	ALERT_LEVELS_HIGH
+};
 
 class Soldiers
 {
 public:
-	enum alertLevels
-	{
-		OFF, SPOTTED, LOW, HIGH
-	};
+	AlertPopup				mAlertPopup; 
+	ObjectPool<Soldier>		mPool;
+
+private:
+	SoldierTypeData const*	mType; 
+	int						mAlertLevel; 
+	Alarm					mSpawnAlarm;   
 
 public:
-	static uint constexpr SOLDIER_COUNT = 6;  
-	static float constexpr SPAWN_TIME	= 3.0f; 
+				Soldiers(); 
+	void		Update(float const dt);
+	void		Render(Surface8* screen) const;  
+	bool		AreDead() const;
 
-public:
-	inline static ObjectPool<Soldier>	pool = ObjectPool<Soldier>(SOLDIER_COUNT);
-	inline static int					alertLevel = OFF;
-	inline static Timer					spawnTimer; 
+	void		SetType(int const typeIdx);  
+	void		SetAlertLevel(int const alertLevel);
+	void		SetAlertLevel(); 
 
-public:
-	static void Update(float const dt);
-	static void Render(Surface8* screen);
+	inline int	GetAlertLevel() const { return mAlertLevel; }
+	inline auto GetSoldierType() const { return mType; }
 
-	static void SetAlertLevel(int alertLevel);  
-	static void Damage(int idx, int damage);  
-	static int2 FindSpawnTile();
-	static void SpawnReinforcement();
-	static int2 FindSpawnTileOnSide(int cardinal);
-	static void SpawnReinforcementOnSide(int cardinal);
+	int2		FindSpawnTile() const;
+	void		SpawnReinforcement();
+	int2		FindSpawnTileOnSide(int const cardinal) const;
+	void		SpawnReinforcementOnSide(int const cardinal);
 };
 

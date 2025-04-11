@@ -1,18 +1,19 @@
 #include "precomp.h"
 #include "Enemy.h"
 
-#include "TileMap.h" 
+#include "Game.h" 
 
-Enemy::Enemy(AnimationSpriteSheet& sheet, uint dirAnimCount) :
-	Actor(sheet, dirAnimCount),
-	optimalFacing(EAST) 
+Enemy::Enemy(AnimationSpriteSheet& spriteSheet, int const dirAnimCount) :
+	Actor(spriteSheet, dirAnimCount), 
+	mOptimalFacing(EAST),
+	mOptimalFacingOpp(false) 
 {}
 
 bool Enemy::TargetInLine() const
 {
-	int2 dir = CardinalToInt2(facing);
-	int2 targetCoord = PixelToTile(target->bboxTile.GetCenterInt());
-	int2 soldierCoord = PixelToTile(bboxTile.GetCenterInt()); 
+	int2 dir = cardinalToInt2(mFacing); 
+	int2 targetCoord = PixelToTile(Game::sPlayer.GetPositionInt()); 
+	int2 soldierCoord = PixelToTile(GetPositionInt());  
 	if (int2(targetCoord.x * dir.y, targetCoord.y * dir.x) != int2(soldierCoord.x * dir.y, soldierCoord.y * dir.x))
 	{
 		return false;
@@ -22,73 +23,76 @@ bool Enemy::TargetInLine() const
 	for (int i = 0; i < Tilemap::COLUMNS; i++)
 	{
 		int2 coord = soldierCoord + dir * i;
-		uint8_t tileState = AABB::currentTilemap->GetTileState(coord);
-		if (tileState == TilePalette::Tile::NONE) break;
+		uint8_t tileState = Game::GetTilemap().GetTileState(coord); 
 		if (tileState == TilePalette::Tile::SOLID) return false;
 		if (coord == targetCoord) return true;
 	}
 
-	return true;
+	return false; 
 }
 
-void Enemy::DecideCardinal()
+int Enemy::DecideFacing()
 {
-	float2 dir = target->GetPosition() - GetPosition();
-	float2 absDir = fabs(dir);
+	float2 const dir	= Game::sPlayer.GetPosition() - GetPosition();
+	float2 const absDir = fabs(dir);
 
-	int2 longestComp = (absDir.x > absDir.y) ? int2(dir.x / absDir.x, 0) : int2(0, dir.y / absDir.y);
-	int2 shortestComp = (absDir.x < absDir.y) ? int2(dir.x / absDir.x, 0) : int2(0, dir.y / absDir.y);
+	int2 const longestComp	= (absDir.x > absDir.y) ? 
+		int2(static_cast<int>(dir.x / absDir.x), 0) :
+		int2(0, static_cast<int>(dir.y / absDir.y));
 
-	optimalFacing		= Int2ToCardinal(longestComp);
-	int shortestFacing	= Int2ToCardinal(shortestComp);
-	int longOppFacing	= Int2ToCardinal(-longestComp);
-	int shortOppFacing	= Int2ToCardinal(-shortestComp);
+	int2 const shortestComp = (absDir.x < absDir.y) ? 
+		int2(static_cast<int>(dir.x / absDir.x), 0) :
+		int2(0, static_cast<int>(dir.y / absDir.y));
 
-	if (!bboxTile.DetectTilemap(optimalFacing, speed))
+	mOptimalFacing				= int2ToCardinal( longestComp); 
+	int const shortestFacing	= int2ToCardinal( shortestComp);
+	int const longOppFacing		= int2ToCardinal(-longestComp);
+	int const shortOppFacing	= int2ToCardinal(-shortestComp);
+
+	if (!mBboxTile.DetectTilemap(mOptimalFacing, mSpeed))
 	{
-		oppositeFacing = false;
-		facing = optimalFacing;
+		mOptimalFacingOpp = false;
+		return mOptimalFacing;
 	}
-	else if (!bboxTile.DetectTilemap(facing, speed))
+	else if (!mBboxTile.DetectTilemap(mFacing, mSpeed)) 
 	{
-		oppositeFacing = false;
+		mOptimalFacingOpp = false;
 	}
-	else if (!bboxTile.DetectTilemap(shortestFacing, speed))
+	else if (!mBboxTile.DetectTilemap(shortestFacing, mSpeed)) 
 	{
-		oppositeFacing = false;
-		facing = shortestFacing;
+		mOptimalFacingOpp = false;
+		return shortestFacing; 
 	}
-	else if (!bboxTile.DetectTilemap(shortOppFacing, speed))
+	else if (!mBboxTile.DetectTilemap(shortOppFacing, mSpeed))
 	{
-		oppositeFacing = true;
-		facing = shortOppFacing;
+		mOptimalFacingOpp = true;
+		return shortOppFacing;
 	}
-	else if (!bboxTile.DetectTilemap(longOppFacing, speed))
+	else if (!mBboxTile.DetectTilemap(longOppFacing, mSpeed))
 	{
-		oppositeFacing = true;
-		facing = longOppFacing;
+		mOptimalFacingOpp = true;
+		return longOppFacing; 
 	}
+	return mFacing; 
 }
 
 void Enemy::Pursue(float const dt)
 {
 	// is the guard not facing the most optimal direction
-	if (!oppositeFacing && facing != optimalFacing)
+	if (!mOptimalFacingOpp && mFacing != mOptimalFacing)
 	{
 		// try to go in the most optimal direction
-		if (!bboxTile.DetectTilemap(optimalFacing, speed * dt))
+		if (!mBboxTile.DetectTilemap(mOptimalFacing, mSpeed * dt)) 
 		{
-			facing = optimalFacing;
-			SetAnimation();
+			SetFacing(mOptimalFacing);  
 		}
 	}
 
 	// is the guard hitting a wall OR reaching the target
-	if (bboxTile.DetectTilemap(facing, speed * dt) ||
-		CardinalToInt2(facing) * GetPositionInt() == CardinalToInt2(facing) * target->GetPositionInt())
+	if (mBboxTile.DetectTilemap(mFacing, mSpeed * dt) || 
+		cardinalToInt2(mFacing) * GetPositionInt() == cardinalToInt2(mFacing) * Game::sPlayer.GetPositionInt())
 	{
-		DecideCardinal();
-		SetAnimation();
+		SetFacing(DecideFacing());  
 	}
 
 	Move(dt);
