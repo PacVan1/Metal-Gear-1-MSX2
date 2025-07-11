@@ -1,6 +1,17 @@
 <h1>Metal Gear 1 MSX2 Outer Heaven Remake</h1>
 <h2>Description</h2>
 Metal Gear 1 MSX2 remake of the first floor of Outer Heaven. It is written in C++ with, except for a template and an audio library, no external dependencies. Not even STL.
+<br><br>
+<table>
+  <tr>
+    <th><img src="examples/opening.png" alt="Opening screen"></th>
+    <th><img src="examples/landmine.png" alt="Opening screen"></th>
+  </tr>
+  <tr>
+    <th><img src="examples/scope.png" alt="Opening screen"></th>
+    <th><img src="examples/gameover.png" alt="Opening screen"></th>
+  </tr>
+</table>
 <h2>Installation and Setup</h2>
 Coming soon...
 <h2>Usage Constructions</h2>
