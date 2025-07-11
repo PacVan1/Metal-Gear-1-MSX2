@@ -1,0 +1,5 @@
+Tilemap: tilemap.tmap
+SoldierCount: 2
+Paths: 2
+../path2.seq
+../path1.seq

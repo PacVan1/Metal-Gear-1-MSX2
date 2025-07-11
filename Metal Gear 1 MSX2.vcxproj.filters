@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="template\opencl.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\opengl.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\surface.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\template.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\tmpl8math.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AnimatedSprite.cpp">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Animation.cpp">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Animator.cpp">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpriteSheet.cpp">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AABB.cpp">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AssetManager.cpp">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Cardinals.cpp">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Files.cpp">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Image.cpp">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Actor.cpp">
+      <Filter>metal gear 1 msx2\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>metal gear 1 msx2\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tile.cpp">
+      <Filter>metal gear 1 msx2\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TileMap.cpp">
+      <Filter>metal gear 1 msx2\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TilePalette.cpp">
+      <Filter>metal gear 1 msx2\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sequence.cpp">
+      <Filter>metal gear 1 msx2\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene.cpp">
+      <Filter>metal gear 1 msx2\universe</Filter>
+    </ClCompile>
+    <ClCompile Include="source\World.cpp">
+      <Filter>metal gear 1 msx2\universe</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Projectile.cpp">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Soldier.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Soldiers.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Dog.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Item.cpp">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Inventory.cpp">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Passage.cpp">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\InventoryUI.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PlayerUI.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TextPopup.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="SoldierTypes.cpp" />
+    <ClCompile Include="AlertPopup.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LandmineObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="cl\tools.cl">
+      <Filter>kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="template\tmpl8math.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\opencl.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\opengl.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\precomp.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\surface.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\common.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AnimatedSprite.h">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animation.h">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animator.h">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SpriteSheet.h">
+      <Filter>metal gear 1 msx2\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AABB.h">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\IDamageable.h">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AssetManager.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Cardinals.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Files.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Image.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ObjectPool.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Types.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Actor.h">
+      <Filter>metal gear 1 msx2\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>metal gear 1 msx2\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tile.h">
+      <Filter>metal gear 1 msx2\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TileMap.h">
+      <Filter>metal gear 1 msx2\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TilePalette.h">
+      <Filter>metal gear 1 msx2\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sequence.h">
+      <Filter>metal gear 1 msx2\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Settings.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene.h">
+      <Filter>metal gear 1 msx2\universe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\World.h">
+      <Filter>metal gear 1 msx2\universe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Projectile.h">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldier.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldiers.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Dog.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Item.h">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Inventory.h">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Passage.h">
+      <Filter>metal gear 1 msx2\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\InventoryUI.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PlayerUI.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TextPopup.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="SoldierTypes.h" />
+    <ClInclude Include="AlertPopup.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="LandmineObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="kernel">
+      <UniqueIdentifier>{97453d96-ea27-4a91-9c6c-f1e0f2af6b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2">
+      <UniqueIdentifier>{53a165e1-3947-4920-8aa9-25f3c4f329a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template">
+      <UniqueIdentifier>{c46778e2-d798-45cf-b9d4-28b09d0ae221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\animation">
+      <UniqueIdentifier>{394f53eb-b835-4dca-a1ab-99ea93739a14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\interactivity">
+      <UniqueIdentifier>{35427854-4faf-4040-bab6-5e7b8241bfcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\util">
+      <UniqueIdentifier>{e44c6982-391c-4a3f-8059-f72701a62560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\actors">
+      <UniqueIdentifier>{d50fc978-b887-49a6-95c8-2e8e7805fe19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\tiles">
+      <UniqueIdentifier>{ac6e9209-c8f4-4fc1-8bfd-643a48a4dd7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\universe">
+      <UniqueIdentifier>{28d2f171-af6e-4ef8-a1ad-f492b8573b9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\items">
+      <UniqueIdentifier>{f5ec312f-c34c-43c5-a4f5-b22453596c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\actors\enemies">
+      <UniqueIdentifier>{affccc38-334e-40eb-82ad-741c3c4abd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1 msx2\ui">
+      <UniqueIdentifier>{dec94bf2-c111-4be9-b164-d6fa872a602d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cl\kernels.cl">
+      <Filter>kernel</Filter>
+    </None>
+  </ItemGroup>
+</Project>

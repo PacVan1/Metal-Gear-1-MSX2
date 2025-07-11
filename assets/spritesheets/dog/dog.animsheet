@@ -1,0 +1,3 @@
+Sprite: dog.sprite
+AnimSet: dog.animset
+FrameCount: 10

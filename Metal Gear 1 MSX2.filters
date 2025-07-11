@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="template\opencl.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\opengl.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\surface.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\template.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="template\tmpl8math.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Cardinals.cpp">
+      <Filter>metal gear 1\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Files.cpp">
+      <Filter>metal gear 1\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TileMap.cpp">
+      <Filter>metal gear 1\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Tile.cpp">
+      <Filter>metal gear 1\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TilePalette.cpp">
+      <Filter>metal gear 1\tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AssetManager.cpp">
+      <Filter>metal gear 1\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AABB.cpp">
+      <Filter>metal gear 1\interactivity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AnimatedSprite.cpp">
+      <Filter>metal gear 1\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Animation.cpp">
+      <Filter>metal gear 1\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Animator.cpp">
+      <Filter>metal gear 1\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SpriteSheet.cpp">
+      <Filter>metal gear 1\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Image.cpp">
+      <Filter>metal gear 1\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>metal gear 1\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Enemy.cpp">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameObject.cpp">
+      <Filter>metal gear 1\interactivity</Filter>
+    </ClCompile>
+    <ClCompile Include="source\World.cpp">
+      <Filter>metal gear 1\universe</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene.cpp">
+      <Filter>metal gear 1\universe</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sequence.cpp">
+      <Filter>metal gear 1\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Actor.cpp">
+      <Filter>metal gear 1\actors</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Soldier.cpp">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Dog.cpp">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Soldiers.cpp">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Gun.cpp">
+      <Filter>metal gear 1\items</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Projectile.cpp">
+      <Filter>metal gear 1\items</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="template\common.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\opencl.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\opengl.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\precomp.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\surface.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="template\tmpl8math.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="cl\tools.cl">
+      <Filter>kernels</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Cardinals.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Files.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TileMap.h">
+      <Filter>metal gear 1\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Tile.h">
+      <Filter>metal gear 1\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TilePalette.h">
+      <Filter>metal gear 1\tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Settings.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Types.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AssetManager.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AABB.h">
+      <Filter>metal gear 1\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AnimatedSprite.h">
+      <Filter>metal gear 1\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animation.h">
+      <Filter>metal gear 1\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animator.h">
+      <Filter>metal gear 1\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SpriteSheet.h">
+      <Filter>metal gear 1\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Image.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
+      <Filter>metal gear 1\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Enemy.h">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameObject.h">
+      <Filter>metal gear 1\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\World.h">
+      <Filter>metal gear 1\universe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Scene.h">
+      <Filter>metal gear 1\universe</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sequence.h">
+      <Filter>metal gear 1\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Actor.h">
+      <Filter>metal gear 1\actors</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldier.h">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Dog.h">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ObjectPool.h">
+      <Filter>metal gear 1\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\IDamageable.h">
+      <Filter>metal gear 1\interactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Soldiers.h">
+      <Filter>metal gear 1\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Projectile.h">
+      <Filter>metal gear 1\items</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Gun.h">
+      <Filter>metal gear 1\items</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cl\kernels.cl">
+      <Filter>kernels</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="template">
+      <UniqueIdentifier>{c65d8edd-a382-4ee7-9af9-5d04810e2884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernels">
+      <UniqueIdentifier>{96ad1716-f468-46c6-8f16-5accbc19d76c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1">
+      <UniqueIdentifier>{45657b8d-c929-4fdf-8a76-438838723c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\utility">
+      <UniqueIdentifier>{9fefd0cb-3f18-4158-8084-3a9dcaefd701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\tiles">
+      <UniqueIdentifier>{ebc04f66-f35b-4632-9054-ac2d3347383c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\interactivity">
+      <UniqueIdentifier>{06f8b16f-4f28-411b-9c32-316931dd6dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\animation">
+      <UniqueIdentifier>{72910711-9154-4cdf-ad08-f495c59db95c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\actors">
+      <UniqueIdentifier>{bb8601f8-45bd-40b9-abae-67cd97b08207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\actors\enemies">
+      <UniqueIdentifier>{3763974d-bc5b-4408-9775-0d381bc6e6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\universe">
+      <UniqueIdentifier>{faf77d9b-3346-4219-a488-96dcd470c420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="metal gear 1\items">
+      <UniqueIdentifier>{ff2a2e5f-c0b1-4a4f-a6ca-16636786ad47}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
