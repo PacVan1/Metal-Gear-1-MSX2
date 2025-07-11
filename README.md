@@ -89,7 +89,7 @@ Coming soon...
   <tr>
     <td>Punch</td>
     <td>Space</td>
-    <td>The player punches and hits enemies in its punch proximity</td>
+    <td>The player punches and hits enemies within its punch proximity</td>
   </tr>
   <tr>
     <td>Game Start</td>
@@ -106,8 +106,8 @@ Coming soon...
 This project depends on a template and one external library:
 <ul>
   <li>The <a href="https://github.com/jbikker/tmpl8">template</a> (Tmpl8) written by Jacco Bikker for BUas;</li>
-  <li>A <a href="https://github.com/jpvanoosten/Audio">minimalistic audio library</a> written by Jeremiah van Oosten;</li>
+  <li>A <a href="https://github.com/jpvanoosten/Audio">minimalistic audio library</a> written by Jeremiah van Oosten.</li>
 </ul>
-<h2>License</h2>
-This project was created for BUas' assignment.
+<h2>Cause</h2>
+This project was created for BUas' CMGT Year 1 Block 1 assignment.
 
