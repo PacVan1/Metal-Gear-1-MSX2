@@ -101,10 +101,18 @@
     <ClCompile Include="source\TextPopup.cpp">
       <Filter>metal gear 1 msx2\ui</Filter>
     </ClCompile>
-    <ClCompile Include="SoldierTypes.cpp" />
-    <ClCompile Include="AlertPopup.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="LandmineObject.cpp" />
+    <ClCompile Include="source\AlertPopup.cpp">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\InputManager.cpp">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SoldierTypes.cpp">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LandmineObject.cpp">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -225,10 +233,18 @@
     <ClInclude Include="source\TextPopup.h">
       <Filter>metal gear 1 msx2\ui</Filter>
     </ClInclude>
-    <ClInclude Include="SoldierTypes.h" />
-    <ClInclude Include="AlertPopup.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="LandmineObject.h" />
+    <ClInclude Include="source\AlertPopup.h">
+      <Filter>metal gear 1 msx2\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\InputManager.h">
+      <Filter>metal gear 1 msx2\util</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SoldierTypes.h">
+      <Filter>metal gear 1 msx2\actors\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LandmineObject.h">
+      <Filter>metal gear 1 msx2\items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="kernel">

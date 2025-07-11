@@ -125,12 +125,9 @@
   </ItemDefinitionGroup>
   <!-- END Custom section -->
   <ItemGroup>
-    <ClCompile Include="AlertPopup.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="LandmineObject.cpp" />
-    <ClCompile Include="SoldierTypes.cpp" />
     <ClCompile Include="source\Actor.cpp" />
+    <ClCompile Include="source\AlertPopup.cpp" />
     <ClCompile Include="source\AnimatedSprite.cpp" />
     <ClCompile Include="source\Animation.cpp" />
     <ClCompile Include="source\Animator.cpp" />
@@ -141,9 +138,11 @@
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\Files.cpp" />
     <ClCompile Include="source\Image.cpp" />
+    <ClCompile Include="source\InputManager.cpp" />
     <ClCompile Include="source\Inventory.cpp" />
     <ClCompile Include="source\InventoryUI.cpp" />
     <ClCompile Include="source\Item.cpp" />
+    <ClCompile Include="source\LandmineObject.cpp" />
     <ClCompile Include="source\Passage.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\PlayerUI.cpp" />
@@ -152,6 +151,7 @@
     <ClCompile Include="source\Sequence.cpp" />
     <ClCompile Include="source\Soldier.cpp" />
     <ClCompile Include="source\Soldiers.cpp" />
+    <ClCompile Include="source\SoldierTypes.cpp" />
     <ClCompile Include="source\SpriteSheet.cpp" />
     <ClCompile Include="source\TextPopup.cpp" />
     <ClCompile Include="source\Tile.cpp" />
@@ -170,13 +170,10 @@
     <ClCompile Include="template\tmpl8math.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AlertPopup.h" />
     <ClInclude Include="cl\tools.cl" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="LandmineObject.h" />
-    <ClInclude Include="SoldierTypes.h" />
     <ClInclude Include="source\Actor.h" />
+    <ClInclude Include="source\AlertPopup.h" />
     <ClInclude Include="source\AnimatedSprite.h" />
     <ClInclude Include="source\Animation.h" />
     <ClInclude Include="source\Animator.h" />
@@ -188,9 +185,11 @@
     <ClInclude Include="source\Files.h" />
     <ClInclude Include="source\IDamageable.h" />
     <ClInclude Include="source\Image.h" />
+    <ClInclude Include="source\InputManager.h" />
     <ClInclude Include="source\Inventory.h" />
     <ClInclude Include="source\InventoryUI.h" />
     <ClInclude Include="source\Item.h" />
+    <ClInclude Include="source\LandmineObject.h" />
     <ClInclude Include="source\ObjectPool.h" />
     <ClInclude Include="source\Passage.h" />
     <ClInclude Include="source\Player.h" />
@@ -201,6 +200,7 @@
     <ClInclude Include="source\Settings.h" />
     <ClInclude Include="source\Soldier.h" />
     <ClInclude Include="source\Soldiers.h" />
+    <ClInclude Include="source\SoldierTypes.h" />
     <ClInclude Include="source\SpriteSheet.h" />
     <ClInclude Include="source\TextPopup.h" />
     <ClInclude Include="source\Tile.h" />
