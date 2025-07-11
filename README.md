@@ -109,5 +109,5 @@ This project depends on a template and one external library:
   <li>A <a href="https://github.com/jpvanoosten/Audio">minimalistic audio library</a> written by Jeremiah van Oosten.</li>
 </ul>
 <h2>Cause</h2>
-This project was created for BUas' CMGT Year 1 Block 1 assignment.
+This project was created for BUas' CMGT Year 1 Block A assignment.
 
