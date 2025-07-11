@@ -91,6 +91,12 @@ Coming soon...
     <td>Restarts the game when in the game over screen</td>
   </tr>
 </table>
+<h2>Dependencies</h2>
+This project depends on a template and one external library:
+<ul>
+  <li>The <a href="https://github.com/jbikker/tmpl8">template</a> (Tmpl8) written by Jacco Bikker for BUas;</li>
+  <li>A <a href="https://github.com/jpvanoosten/Audio">minimalistic audio library</a> written by Jeremiah van Oosten;</li>
+</ul>
 <h2>License</h2>
 This project was created for BUas' assignment.
 
