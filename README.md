@@ -13,7 +13,7 @@ Clone the repository, open the MSVS2022 solution, and press `F5`.
 > Currently works on most Windows systems. Future updates may include a CMake setup to support more platforms.
 
 ## Usage
-The [usage](USAGE.md) has been moved to a seperate file.
+The [usage](docs/USAGE.md) has been moved to a seperate file.
 
 ## Dependencies
 
