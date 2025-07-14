@@ -4,9 +4,9 @@
 Metal Gear 1 MSX2 remake of the first floor of Outer Heaven. It is written in C++ with, except for a template and an audio library, no external dependencies. Not even STL.
 
 ### Screenshots
-| ![Opening screen](examples/opening.png) | ![Landmine](examples/landmine.png) |
+| ![Opening screen](docs/screenshots/opening.png) | ![Landmine](docs/screenshots/landmine.png) |
 | -------------------------------------- | ---------------------------------- |
-| ![Scope](examples/scope.png)          | ![Game Over](examples/gameover.png) |
+| ![Scope](docs/screenshots/scope.png)          | ![Game Over](docs/screenshots/gameover.png) |
 
 ## Installation and Setup
 Clone the repository, open the MSVS2022 solution, and press `F5`.
