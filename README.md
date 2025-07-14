@@ -15,7 +15,7 @@ Metal Gear 1 MSX2 remake of the first floor of Outer Heaven. It is written in C+
 <h2>Installation and Setup</h2>
 Clone the repository, open the MSVS2022 solution and press F5.<br>
 At the moment the project works on (most) Windows systems. This project might get a CMake later on, to support more systems and version numbers.
-<h2>Usage Constructions</h2>
+<h2>Controls</h2>
 <table>
   <tr>
     <th>Action</th>
