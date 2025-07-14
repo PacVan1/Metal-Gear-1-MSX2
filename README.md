@@ -1,114 +1,44 @@
-<h1>Metal Gear 1 MSX2 Outer Heaven Remake</h1>
-<h2>Description</h2>
-Metal Gear 1 MSX2 remake of the first floor of Outer Heaven. It is written in C++ with, except for a template and an audio library, no external dependencies. Not even STL.
-<br><br>
-<table>
-  <tr>
-    <th><img src="examples/opening.png" alt="Opening screen"></th>
-    <th><img src="examples/landmine.png" alt="Opening screen"></th>
-  </tr>
-  <tr>
-    <th><img src="examples/scope.png" alt="Opening screen"></th>
-    <th><img src="examples/gameover.png" alt="Opening screen"></th>
-  </tr>
-</table>
-<h2>Installation and Setup</h2>
-Clone the repository, open the MSVS2022 solution and press F5.<br>
-At the moment the project works on (most) Windows systems. This project might get a CMake later on, to support more systems and version numbers.
-<h2>Controls</h2>
-<table>
-  <tr>
-    <th>Action</th>
-    <th>Key</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>Walk Right</td>
-    <td>D</td>
-    <td>Player walks right</td>
-  </tr>
-  <tr>
-    <td>Walk Up</td>
-    <td>W</td>
-    <td>Player walks up</td>
-  </tr>
-  <tr>
-    <td>Walk Left</td>
-    <td>A</td>
-    <td>Player walks left</td>
-  </tr>
-  <tr>
-    <td>Walk Down</td>
-    <td>S</td>
-    <td>Player walks down</td>
-  </tr>
-  <tr>
-    <td>Pickup Item</td>
-    <td>Q</td>
-    <td>If the player is close to an item, then it will be picked up and added to the inventory</td>
-  </tr>
-  <tr>
-    <td>Use Weapon</td>
-    <td>G</td>
-    <td>Player uses the weapon that is selected from the weapon inventory</td>
-  </tr>
-  <tr>
-    <td>Use Equipment</td>
-    <td>E</td>
-    <td>Player uses the equipment that is selected from the equipment inventory</td>
-  </tr>
-  <tr>
-    <td>Exit</td>
-    <td>Backspace</td>
-    <td>Exits a menu</td>
-  </tr>
-  <tr>
-    <td>Inventory Toggle</td>
-    <td>Tab</td>
-    <td>Opens or closes the inventory</td>
-  </tr>
-  <tr>
-    <td>Inventory Up</td>
-    <td>Arrow Up</td>
-    <td>Moves the inventory cursor up</td>
-  </tr>
-  <tr>
-    <td>Inventory Down</td>
-    <td>Arrow Down</td>
-    <td>Moves the inventory cursor down</td>
-  </tr>
-  <tr>
-    <td>Inventory Select</td>
-    <td>Enter</td>
-    <td>Selects the equipment/weapon the cursor is currently on</td>
-  </tr>
-  <tr>
-    <td>Inventory Switch</td>
-    <td>M</td>
-    <td>Switches between the equipment and weapon inventory when the inventory is opened</td>
-  </tr>
-  <tr>
-    <td>Punch</td>
-    <td>Space</td>
-    <td>The player punches and hits enemies within its punch proximity</td>
-  </tr>
-  <tr>
-    <td>Game Start</td>
-    <td>Enter</td>
-    <td>Starts the game when in the opening screen</td>
-  </tr>
-  <tr>
-    <td>Game Restart</td>
-    <td>Enter</td>
-    <td>Restarts the game when in the game over screen</td>
-  </tr>
-</table>
-<h2>Dependencies</h2>
-This project depends on a template and one external library:
-<ul>
-  <li>The <a href="https://github.com/jbikker/tmpl8">template</a> (Tmpl8) written by Jacco Bikker for BUas;</li>
-  <li>A <a href="https://github.com/jpvanoosten/Audio">minimalistic audio library</a> written by Jeremiah van Oosten.</li>
-</ul>
-<h2>Cause</h2>
-This project was created for BUas' CMGT Year 1 Block A assignment.
+# Metal Gear 1 MSX2 Outer Heaven Remake
 
+## Description
+Metal Gear 1 MSX2 remake of the first floor of Outer Heaven. It is written in C++ with, except for a template and an audio library, no external dependencies. Not even STL.
+
+### Screenshots
+| ![Opening screen](examples/opening.png) | ![Landmine](examples/landmine.png) |
+| -------------------------------------- | ---------------------------------- |
+| ![Scope](examples/scope.png)          | ![Game Over](examples/gameover.png) |
+
+## Installation and Setup
+Clone the repository, open the MSVS2022 solution, and press `F5`.
+> Currently works on most Windows systems. Future updates may include a CMake setup to support more platforms.
+
+## Controls
+
+| Action             | Key         | Description                                                                            |
+|--------------------|-------------|----------------------------------------------------------------------------------------|
+| Walk Right         | `D`         | Player walks right                                                                     |
+| Walk Up            | `W`         | Player walks up                                                                        |
+| Walk Left          | `A`         | Player walks left                                                                      |
+| Walk Down          | `S`         | Player walks down                                                                      |
+| Pickup Item        | `Q`         | Picks up item when nearby and adds it to inventory                                     |
+| Use Weapon         | `G`         | Uses selected weapon from weapon inventory                                             |
+| Use Equipment      | `E`         | Uses selected equipment from equipment inventory                                       |
+| Exit               | `Backspace` | Exits a menu                                                                           |
+| Inventory Toggle   | `Tab`       | Opens or closes the inventory                                                          |
+| Inventory Up       | `Arrow Up`  | Moves inventory cursor up                                                              |
+| Inventory Down     | `Arrow Down`| Moves inventory cursor down                                                            |
+| Inventory Select   | `Enter`     | Selects the item currently highlighted                                                 |
+| Inventory Switch   | `M`         | Switches between equipment and weapon inventory                                        |
+| Punch              | `Space`     | Player punches and hits enemies within range                                           |
+| Game Start         | `Enter`     | Starts game from the opening screen                                                    |
+| Game Restart       | `Enter`     | Restarts game from the game over screen                                                |
+
+## Dependencies
+
+This project depends on:
+
+- [Tmpl8 Template](https://github.com/jbikker/tmpl8) by Jacco Bikker for BUas
+- [Minimalistic Audio Library](https://github.com/jpvanoosten/Audio) by Jeremiah van Oosten
+
+## Cause
+This project was created for BUas' CMGT Year 1 Block A assignment.
