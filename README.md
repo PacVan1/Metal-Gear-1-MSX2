@@ -21,6 +21,9 @@ This project depends on:
 
 - [Tmpl8 Template](https://github.com/jbikker/tmpl8) by Jacco Bikker for BUas
 - [Minimalistic Audio Library](https://github.com/jpvanoosten/Audio) by Jeremiah van Oosten
+- [Graphics Library Framework (GLFW)](https://www.glfw.org/download)
+- [OpenGL](https://www.opengl.org/)
+- Probably more that I forgot to mention...
 
 ## Cause
 This project was created for BUas' CMGT Year 1 Block A assignment.
